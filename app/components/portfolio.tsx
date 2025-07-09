@@ -16,6 +16,7 @@ const Portfolio = ({
   phone = true,
   buttonText = null,
   buttonURL = null,
+  icon: Icon = null,
 }: {
   imageSource: string;
   title: string;
@@ -26,6 +27,7 @@ const Portfolio = ({
   phone: boolean;
   buttonText: string | null;
   buttonURL: string | null;
+  icon?: React.ElementType | null;
 }) => {
   return (
     <div className="p-4 sm:p-8 md:p-12 lg:p-20 min-h-screen gap-10 md:gap-16 lg:gap-20 grid grid-cols-1 lg:grid-cols-2 items-center border-b border-zinc-600">
@@ -106,7 +108,7 @@ const Portfolio = ({
                 className="btn rounded-2xl text-sm sm:text-base"
                 href={buttonURL ?? undefined}
               >
-                <SiGithub />
+                {Icon ? <Icon /> : <SiGithub />}
                 {buttonText}
               </a>
             ) : (

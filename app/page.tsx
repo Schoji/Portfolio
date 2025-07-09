@@ -1,5 +1,5 @@
 "use client";
-import { Code, Cpu, LucideMail, Move3D } from "lucide-react";
+import { Code, Cpu, FolderOpen, LucideMail, Move3D } from "lucide-react";
 import Image from "next/image";
 import CustomBadge from "./components/badge";
 import { motion } from "framer-motion";
@@ -87,6 +87,26 @@ const portfolioList = [
     phone: false,
     buttonText: "Github",
     buttonURL: "https://github.com/grzjan5219/InvestMe",
+  },
+  {
+    imageSource: "/sortra.png",
+    title: "Sortra",
+    description:
+      "Sortra is a modern, cross-platform file organizer that lets you quickly sort and categorize files using a clean and intuitive interface. Whether you're organizing documents, media, or downloads, Sortra simplifies the process with drag-and-drop functionality and customizable sorting rules.",
+    features: [
+      "Drag-and-Drop File Sorting",
+      "Smart Grouping by Extension or File Type",
+      "Real-Time UI Updates",
+      "Cross-Platform Support (Windows, macOS, Linux)",
+      "Fully Offline & Private",
+      "Clean and Responsive Interface",
+    ],
+    technologies: ["Tauri", "React", "TypeScript", "Tailwind CSS", "DaisyUI"],
+    invertOrder: false,
+    phone: false,
+    buttonText: "View on sortra.tech",
+    buttonURL: "https://www.sortra.tech/",
+    icon: FolderOpen,
   },
 ];
 
