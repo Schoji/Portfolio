@@ -112,7 +112,7 @@ export default function Home() {
         </div>
       </div>
       {/* Dummy spacing for navbar */}
-      <div className="h-16 w-full" />
+      <div className="h-12 w-full" />
       {/* Hero */}
       <div
         className="hero min-h-screen"
