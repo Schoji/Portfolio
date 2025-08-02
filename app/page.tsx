@@ -108,6 +108,23 @@ const portfolioList = [
     buttonURL: "https://www.sortra.tech/",
     icon: FolderOpen,
   },
+  {
+    imageSource: "/doorbell.jpeg",
+    title: "Smart doorbell",
+    description:
+      "This is a smart doorbell built upon the ESP32-CAM module, which instantly captures a photo and sends it as a notification to a Discord server when the button is pressed. The device is optimized for maximum power efficiency using deep sleep mode while also providing immediate, hardware-level feedback through light and sound.",
+    features: [
+      "Visual and audio feedback",
+      "ESP32 Deep sleep feature",
+      "Discord integration",
+      "Sleek and modular design",
+    ],
+    technologies: ["ESP32-CAM", "Discord", "Arduino IDE", "C++ Embedded"],
+    invertOrder: true,
+    phone: false,
+    buttonText: "Github",
+    buttonURL: "https://github.com/Schoji/esp32cam-doorbell",
+  },
 ];
 
 export default function Home() {
