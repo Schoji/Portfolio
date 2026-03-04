@@ -39,17 +39,10 @@ const Portfolio = ({
 }) => {
   const images = Array.isArray(imageSource) ? imageSource : [imageSource];
   const [current, setCurrent] = useState(0);
-  const [dir, setDir] = useState(1);
   const multi = images.length > 1;
 
-  const prev = () => {
-    setDir(-1);
-    setCurrent((i) => (i - 1 + images.length) % images.length);
-  };
-  const next = () => {
-    setDir(1);
-    setCurrent((i) => (i + 1) % images.length);
-  };
+  const prev = () => setCurrent((i) => (i - 1 + images.length) % images.length);
+  const next = () => setCurrent((i) => (i + 1) % images.length);
 
   return (
     <div
