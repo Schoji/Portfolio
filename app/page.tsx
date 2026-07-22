@@ -49,7 +49,7 @@ export default function Home() {
             <a className="link link-hover text-sm" href="#">Home</a>
             <a className="link link-hover text-sm" href="#about">About</a>
             <a className="link link-hover text-sm" href="#projects">Projects</a>
-            <a className="link link-hover text-sm" href="#contact">Contact</a>
+            <a className="link link-hover text-sm" href="#getintouch">Contact</a>
           </div>
           {/* Hamburger button - mobile only */}
           <button
@@ -86,7 +86,7 @@ export default function Home() {
             </a>
             <a
               className="px-6 py-4 text-sm hover:bg-zinc-800/50 transition-colors"
-              href="#contact"
+              href="#getintouch"
               onClick={() => setMenuOpen(false)}
             >
               Contact
@@ -201,7 +201,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="relative">
-              <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden ring-2 ring-offset-4 ring-offset-black ring-[#22d3ee]">
+              <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden ring-2 ring-offset-4 ring-offset-black ring-[color:var(--accent)]">
                 <Image
                   src="/prof_square.webp"
                   alt="Piotr Wittig"
@@ -246,7 +246,7 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 flex flex-col gap-4">
+            <div className="hover-glow w-full rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 flex flex-col gap-4">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
                 Quick Facts
               </p>
@@ -313,7 +313,7 @@ export default function Home() {
                 ].map((tech) => (
                   <span
                     key={tech.name}
-                    className="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors"
+                    className="tech-pill rounded-full border px-4 py-1.5 text-sm font-medium"
                     style={
                       tech.highlight
                         ? {
@@ -380,7 +380,7 @@ export default function Home() {
             </p>
 
             {/* Contribution calendar */}
-            <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 overflow-x-auto">
+            <div className="hover-glow mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 overflow-x-auto">
               <GitHubCalendar
                 username="Schoji"
                 blockSize={12}
@@ -466,7 +466,6 @@ export default function Home() {
             }
           />
         </div>
-        <div></div>
         <p className="text-zinc-400 text-center">
           Prefer a more direct approach? Send me an email and I&apos;ll get back
           to you within 24 hours.

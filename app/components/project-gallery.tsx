@@ -55,7 +55,7 @@ export default function ProjectGallery({
             key={i}
             onClick={() => setOpen(i)}
             aria-label={`Open ${title} screenshot ${i + 1}`}
-            className={`group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 transition-colors hover:border-cyan-400/50 ${
+            className={`hover-glow group relative cursor-pointer overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 ${
               phone ? "aspect-[9/19.5]" : "aspect-video"
             }`}
           >
@@ -85,7 +85,7 @@ export default function ProjectGallery({
             <button
               onClick={close}
               aria-label="Close"
-              className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+              className="absolute right-4 top-4 z-10 grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
             >
               <X size={20} />
             </button>
@@ -98,7 +98,7 @@ export default function ProjectGallery({
                     step(-1);
                   }}
                   aria-label="Previous"
-                  className="absolute left-4 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                  className="absolute left-4 top-1/2 grid h-10 w-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <ChevronLeft size={22} />
                 </button>
@@ -108,7 +108,7 @@ export default function ProjectGallery({
                     step(1);
                   }}
                   aria-label="Next"
-                  className="absolute right-4 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+                  className="absolute right-4 top-1/2 grid h-10 w-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <ChevronRight size={22} />
                 </button>

@@ -100,7 +100,7 @@ const Portfolio = ({
               {technologies.map((technology, index) => (
                 <span
                   key={index}
-                  className="rounded-full border px-4 py-1.5 text-sm font-medium"
+                  className="tech-pill rounded-full border px-4 py-1.5 text-sm font-medium"
                   style={{
                     borderColor: "rgba(34,211,238,0.5)",
                     color: "var(--accent)",

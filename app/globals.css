@@ -63,6 +63,22 @@ html {
   height: 11%;
   width: 5px;
 }
+/* Pop animation on hover, like the iOS Simulator side buttons. */
+.phone-side-btn {
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+.phone-side-btn.is-left {
+  transform-origin: right center;
+}
+.phone-side-btn.is-right {
+  transform-origin: left center;
+}
+.phone-side-btn:hover {
+  transform: scale(1.3);
+  background: linear-gradient(90deg, #52525b, #71717a);
+}
 
 :root {
   --background: #ffffff;
@@ -89,6 +105,33 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+}
+
+/* On hover, bordered "section" cards get a cyan outline + soft glow. The
+   resting look is left untouched. */
+.hover-glow {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+.hover-glow:hover {
+  border-color: rgba(34, 211, 238, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.2),
+    0 0 30px -6px rgba(34, 211, 238, 0.5);
+}
+
+/* Technology pills: lift + glow on hover. */
+.tech-pill {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+.tech-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px -3px rgba(34, 211, 238, 0.55);
 }
 
 /* Hero accent text: cyan gradient with a soft glow */

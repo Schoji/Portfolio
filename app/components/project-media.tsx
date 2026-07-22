@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus, X } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function ProjectMedia({
@@ -42,7 +42,7 @@ export default function ProjectMedia({
               >
                 <Image
                   src={src}
-                  alt="Portfolio"
+                  alt={title ? `${title} screenshot ${i + 1}` : "Project screenshot"}
                   fill={true}
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 400px"
                   style={{ objectFit: "cover" }}
@@ -52,16 +52,30 @@ export default function ProjectMedia({
           </div>
         </div>
       ) : (
-        <div className="w-full overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl">
+        <div className="hover-glow w-full overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl">
           {/* macOS-style title bar: traffic lights left, centered title */}
           <div className="relative flex items-center h-9 px-3 border-b border-zinc-700/80 bg-gradient-to-b from-zinc-700/70 to-zinc-800/90">
-            <div className="flex items-center gap-2">
-              {["#ff5f57", "#febc2e", "#28c840"].map((color) => (
+            <div className="group flex items-center gap-2">
+              {(["close", "min", "full"] as const).map((type, i) => (
                 <span
-                  key={color}
-                  className="w-3 h-3 rounded-full"
-                  style={{ background: color }}
-                />
+                  key={type}
+                  className="flex h-3 w-3 cursor-pointer items-center justify-center rounded-full"
+                  style={{ background: ["#ff5f57", "#febc2e", "#28c840"][i] }}
+                >
+                  <span
+                    className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                    style={{ color: "rgba(0,0,0,0.55)" }}
+                  >
+                    {type === "close" && <X size={9} strokeWidth={3.5} />}
+                    {type === "min" && <Minus size={9} strokeWidth={3.5} />}
+                    {type === "full" && (
+                      <svg width={9} height={9} viewBox="0 0 10 10" fill="currentColor">
+                        <path d="M1.5 4.5V1.5H4.5z" />
+                        <path d="M8.5 5.5V8.5H5.5z" />
+                      </svg>
+                    )}
+                  </span>
+                </span>
               ))}
             </div>
             {title && (
@@ -87,7 +101,7 @@ export default function ProjectMedia({
                 <Image
                   className="object-contain w-full h-auto"
                   src={src}
-                  alt="Portfolio"
+                  alt={title ? `${title} screenshot ${i + 1}` : "Project screenshot"}
                   width={3796}
                   height={1842}
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 900px"
@@ -102,7 +116,7 @@ export default function ProjectMedia({
         <>
           <button
             onClick={prev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1.5 transition-all z-10 group cursor-w-resize"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1.5 transition-all z-10 group cursor-pointer"
             aria-label="Previous image"
           >
             <ChevronLeft
@@ -112,7 +126,7 @@ export default function ProjectMedia({
           </button>
           <button
             onClick={next}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1.5 transition-all z-10 group cursor-e-resize"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1.5 transition-all z-10 group cursor-pointer"
             aria-label="Next image"
           >
             <ChevronRight
@@ -125,7 +139,7 @@ export default function ProjectMedia({
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${i === current ? "bg-white" : "bg-white/30"}`}
+                className={`w-1.5 h-1.5 cursor-pointer rounded-full transition-colors ${i === current ? "bg-white" : "bg-white/30"}`}
                 aria-label={`Go to image ${i + 1}`}
               />
             ))}

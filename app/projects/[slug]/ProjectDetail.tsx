@@ -220,7 +220,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                 return (
                   <div
                     key={i}
-                    className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3.5 transition-colors hover:border-zinc-700"
+                    className="hover-glow flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3.5"
                   >
                     <Check
                       size={18}
@@ -243,7 +243,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         </div>
 
         {/* Tech stack card */}
-        <aside className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 lg:sticky lg:top-24">
+        <aside className="hover-glow rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 lg:sticky lg:top-24">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
             Tech Stack
           </p>
@@ -251,7 +251,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             {technologies.map((t, i) => (
               <span
                 key={i}
-                className="rounded-full border px-3.5 py-1.5 text-sm font-medium"
+                className="tech-pill rounded-full border px-3.5 py-1.5 text-sm font-medium"
                 style={{ borderColor: ACCENT_BORDER, color: ACCENT }}
               >
                 {t}
@@ -312,7 +312,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
       {/* Download CTA */}
       {downloads && downloads.length > 0 && (
         <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8">
-          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/40 p-8 text-center md:p-12">
+          <div className="hover-glow rounded-3xl border border-zinc-800 bg-zinc-900/40 p-8 text-center md:p-12">
             <span
               className="font-mono text-xs uppercase tracking-[0.25em]"
               style={{ color: ACCENT }}
@@ -357,7 +357,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         <div className="grid grid-cols-2 gap-4 border-t border-zinc-800 pt-8">
           <a
             href={`/projects/${prev.slug}`}
-            className="group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 transition-colors hover:border-zinc-700"
+            className="hover-glow group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5"
           >
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
               <ChevronLeft size={14} style={{ color: ACCENT }} />
@@ -369,7 +369,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           </a>
           <a
             href={`/projects/${next.slug}`}
-            className="group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 text-right transition-colors hover:border-zinc-700"
+            className="hover-glow group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 text-right"
           >
             <div className="flex items-center justify-end gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
               Next
