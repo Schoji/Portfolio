@@ -1,22 +1,21 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
-import CustomBadge from "./badge";
-import { ChevronDown, ChevronLeft, ChevronRight, Code } from "lucide-react";
+import React from "react";
+import { ArrowRight, ChevronDown, ChevronRight, Code } from "lucide-react";
 import { motion } from "motion/react";
-import { SiGithub, SiAppstore, SiGoogleplay } from "react-icons/si";
+import ProjectMedia from "./project-media";
+import ProjectActions from "./project-actions";
 
 const Portfolio = ({
   imageSource,
   title,
   description,
-  features,
   technologies,
   invertOrder = false,
   phone = true,
   buttonText = null,
   buttonURL = null,
   icon: Icon = null,
+  slug,
   id,
   nextHref,
   appStoreURL = null,
@@ -25,29 +24,27 @@ const Portfolio = ({
   imageSource: string | string[];
   title: string;
   description: string;
-  features: Array<string>;
   technologies: Array<string>;
   invertOrder: boolean;
   phone: boolean;
   buttonText: string | null;
   buttonURL: string | null;
   icon?: React.ElementType | null;
+  slug: string;
   id?: string;
   nextHref?: string;
   appStoreURL?: string | null;
   playStoreURL?: string | null;
 }) => {
-  const images = Array.isArray(imageSource) ? imageSource : [imageSource];
-  const [current, setCurrent] = useState(0);
-  const multi = images.length > 1;
-
-  const prev = () => setCurrent((i) => (i - 1 + images.length) % images.length);
-  const next = () => setCurrent((i) => (i + 1) % images.length);
+  // Two-tone title: last word rendered in the accent color.
+  const words = title.trim().split(" ");
+  const titleHead = words.slice(0, -1).join(" ");
+  const titleTail = words[words.length - 1];
 
   return (
     <div
       id={id}
-      className="relative p-4 sm:p-8 md:p-12 lg:p-20 min-h-screen gap-10 md:gap-16 lg:gap-20 grid grid-cols-1 lg:grid-cols-2 items-center border-b border-zinc-600 overflow-hidden"
+      className="relative px-4 sm:px-8 md:px-12 lg:px-20 pt-24 pb-16 lg:pt-20 lg:pb-12 min-h-[100svh] gap-8 md:gap-12 lg:gap-16 grid grid-cols-1 lg:grid-cols-2 items-center border-b border-zinc-800 overflow-hidden"
     >
       <div className={invertOrder ? "lg:order-2" : "lg:order-1"}>
         <motion.div
@@ -57,177 +54,85 @@ const Portfolio = ({
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <div className="relative overflow-hidden">
-            {phone ? (
-              <div className="mockup-phone border-2">
-                <div className="mockup-phone-display relative overflow-hidden">
-                  {images.map((src, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute inset-0"
-                      animate={{
-                        opacity: i === current ? 1 : 0,
-                        x: i === current ? 0 : i < current ? -40 : 40,
-                      }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
-                    >
-                      <Image
-                        src={src}
-                        alt="Portfolio"
-                        fill={true}
-                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 400px"
-                        style={{ objectFit: "cover" }}
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="mockup-window border border-zinc-500">
-                <div className="relative w-full p-2 overflow-hidden">
-                  {images.map((src, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{
-                        opacity: i === current ? 1 : 0,
-                        x: i === current ? 0 : i < current ? -40 : 40,
-                      }}
-                      transition={{ duration: 0.25, ease: "easeInOut" }}
-                      style={{
-                        position: i === 0 ? "relative" : "absolute",
-                        inset: 0,
-                      }}
-                    >
-                      <Image
-                        className="object-contain w-full h-auto"
-                        src={src}
-                        alt="Portfolio"
-                        width={3796}
-                        height={1842}
-                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 900px"
-                      />
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {multi && (
-              <>
-                <button
-                  onClick={prev}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1.5 transition-all z-10 group cursor-w-resize"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft
-                    size={18}
-                    className="transition-transform duration-200 group-hover:-translate-x-0.5"
-                  />
-                </button>
-                <button
-                  onClick={next}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1.5 transition-all z-10 group cursor-e-resize"
-                  aria-label="Next image"
-                >
-                  <ChevronRight
-                    size={18}
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  />
-                </button>
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                  {images.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrent(i)}
-                      className={`w-1.5 h-1.5 rounded-full transition-colors ${i === current ? "bg-white" : "bg-white/30"}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+          <ProjectMedia imageSource={imageSource} phone={phone} title={title} />
         </motion.div>
       </div>
 
       <div className={invertOrder ? "lg:order-1" : "lg:order-2"}>
         <motion.div
-          className="flex flex-col p-2 sm:p-4 md:p-6 justify-center gap-4 md:gap-5"
+          className="flex flex-col p-2 sm:p-3 justify-center gap-5 min-w-0"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h1 className="text-2xl sm:text-3xl font-bold">{title}</h1>
-          <p className="text-zinc-400 text-base sm:text-lg">{description}</p>
-          <div></div>
-          <div className="flex gap-2 items-center">
-            <ChevronRight size={18} />
-            <p className="font-bold">Key Features</p>
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-zinc-500">Projects</span>
+            <ChevronRight size={14} className="text-zinc-600" />
+            <span style={{ color: "var(--accent)" }}>{title}</span>
           </div>
-          <ul className="list-disc grid grid-cols-1 sm:grid-cols-2 grid-rows-3 gap-2 sm:gap-3 text-zinc-400 pl-5">
-            {features.map((feature, index) => (
-              <li key={index} className="text-zinc-400 p-1">
-                {feature}
-              </li>
-            ))}
-          </ul>
-          <div></div>
-          <div className="flex gap-2 items-center">
-            <Code size={18} />
-            <p className="font-bold">Technologies</p>
-          </div>
-          <div className="flex flex-wrap gap-2 items-center">
-            {technologies.map((technology, index) => (
-              <CustomBadge key={index} content={technology} />
-            ))}
-          </div>
-          <div></div>
-          <div className="flex flex-wrap gap-2">
-            {buttonText != null ? (
-              <a
-                className="flex items-center gap-3 px-4 py-2 rounded-xl border border-zinc-600 bg-black text-white text-sm transition-all duration-150 hover:scale-105 hover:border-zinc-400 active:scale-95 cursor-pointer"
-                href={buttonURL ?? undefined}
-              >
-                <span className="text-lg">
-                  {Icon ? <Icon /> : <SiGithub />}
+
+          {/* Title */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05]">
+            {titleHead && <span className="text-white">{titleHead} </span>}
+            <span
+              style={{
+                color: "var(--accent)",
+                textShadow: "0 0 25px rgba(34,211,238,0.5)",
+              }}
+            >
+              {titleTail}
+            </span>
+          </h1>
+
+          <p className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-2xl">
+            {description}
+          </p>
+
+          {/* Technologies */}
+          <div className="mt-2 flex flex-col gap-4">
+            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-zinc-300">
+              <Code size={16} style={{ color: "var(--accent)" }} />
+              Technologies
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {technologies.map((technology, index) => (
+                <span
+                  key={index}
+                  className="rounded-full border px-4 py-1.5 text-sm font-medium"
+                  style={{
+                    borderColor: "rgba(34,211,238,0.5)",
+                    color: "var(--accent)",
+                  }}
+                >
+                  {technology}
                 </span>
-                <span className="font-semibold text-base">{buttonText}</span>
-              </a>
-            ) : !appStoreURL && !playStoreURL ? (
-              <div className="flex items-center gap-3 px-4 py-2 rounded-xl border border-zinc-700 bg-black text-zinc-500 text-sm cursor-not-allowed opacity-60">
-                <span className="font-semibold text-base">
-                  Currently in development
-                </span>
-              </div>
-            ) : null}
-            {appStoreURL && (
-              <a
-                className="flex items-center gap-3 px-4 py-2 rounded-xl border border-zinc-600 bg-black text-white text-sm transition-all duration-150 hover:scale-105 hover:border-zinc-400 active:scale-95 cursor-pointer"
-                href={appStoreURL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SiAppstore size={24} />
-                <div className="flex flex-col leading-tight text-left">
-                  <span className="text-zinc-400 text-xs">Download on the</span>
-                  <span className="font-semibold text-base">App Store</span>
-                </div>
-              </a>
-            )}
-            {playStoreURL && (
-              <a
-                className="flex items-center gap-3 px-4 py-2 rounded-xl border border-zinc-600 bg-black text-white text-sm transition-all duration-150 hover:scale-105 hover:border-zinc-400 active:scale-95 cursor-pointer"
-                href={playStoreURL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SiGoogleplay size={24} />
-                <div className="flex flex-col leading-tight text-left">
-                  <span className="text-zinc-400 text-xs">GET IT ON</span>
-                  <span className="font-semibold text-base">Google Play</span>
-                </div>
-              </a>
-            )}
+              ))}
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-wrap gap-3 mt-4">
+            {/* A native navigation avoids a Firefox hang in Next's client router. */}
+            <a
+              href={`/projects/${slug}`}
+              className="flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold text-black transition-all duration-150 hover:scale-105 active:scale-95"
+              style={{
+                background: "var(--accent)",
+                boxShadow: "0 0 25px rgba(34,211,238,0.35)",
+              }}
+            >
+              Read more
+              <ArrowRight size={18} />
+            </a>
+            <ProjectActions
+              buttonText={buttonText}
+              buttonURL={buttonURL}
+              icon={Icon}
+              appStoreURL={appStoreURL}
+              playStoreURL={playStoreURL}
+            />
           </div>
         </motion.div>
       </div>

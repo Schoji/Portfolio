@@ -5,19 +5,36 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Keep anchored sections clear of the fixed navbar. */
+  scroll-padding-top: 4rem;
+}
+
+/* daisyUI's phone mockup is a fixed 390x845px — far taller than most
+   laptop viewports. Scale it to the viewport height (keeping the aspect
+   ratio) so project sections fit without top/bottom clipping on any screen. */
+.mockup-phone-display {
+  /* Leave room for the fixed navbar (~3.5rem) and section padding. */
+  height: min(845px, calc(78svh - 3.5rem));
+  width: auto;
+  aspect-ratio: 390 / 845;
+}
+.mockup-phone-camera {
+  width: 32%;
+  height: 3.8%;
 }
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #22d3ee;
+  --secondary: #a855f7;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-grotesk);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,5 +47,15 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+}
+
+/* Hero accent text: cyan gradient with a soft glow */
+.hero-accent {
+  background: linear-gradient(180deg, #67e8f9 0%, #22d3ee 55%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.55))
+    drop-shadow(0 0 45px rgba(34, 211, 238, 0.28));
 }

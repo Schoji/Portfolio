@@ -83,23 +83,37 @@ export default function GitHubActivity() {
 
   if (loading)
     return (
-      <div className="flex flex-col gap-2">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-8 rounded-md bg-zinc-800/60 animate-pulse" />
+      <div className="flex flex-col gap-3">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="h-14 rounded-xl bg-zinc-800/40 animate-pulse"
+          />
         ))}
       </div>
     );
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       {items.map((item) => (
-        <div key={item.id} className="flex items-center gap-3 text-sm text-zinc-400 group">
-          <span className="text-zinc-500 shrink-0">{item.icon}</span>
-          <span className="truncate flex-1 group-hover:text-zinc-200 transition-colors">
-            <span className="text-zinc-500 text-xs mr-1.5">{item.repo}</span>
-            {item.label}
-          </span>
-          <span className="text-zinc-600 text-xs shrink-0">{item.time}</span>
+        <div
+          key={item.id}
+          className="flex items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 px-5 py-4 transition-colors hover:border-zinc-700"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <span
+              className="w-2 h-2 rounded-full shrink-0"
+              style={{
+                background: "var(--accent)",
+                boxShadow: "0 0 8px var(--accent)",
+              }}
+            />
+            <span className="truncate text-zinc-200">
+              {item.label}{" "}
+              <span style={{ color: "var(--accent)" }}>{item.repo}</span>
+            </span>
+          </div>
+          <span className="text-zinc-500 text-sm shrink-0">{item.time}</span>
         </div>
       ))}
     </div>

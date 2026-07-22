@@ -1,16 +1,17 @@
 "use client";
 import { useState } from "react";
 import {
-  ChevronDown,
+  Activity,
   Code,
-  Cpu,
-  FolderOpen,
+  Coffee,
+  GraduationCap,
+  Heart,
   LucideMail,
+  MapPin,
   Menu,
   X,
 } from "lucide-react";
 import Image from "next/image";
-import CustomBadge from "./components/badge";
 import SnakeGame from "./components/snake-game";
 import { motion } from "framer-motion";
 import GitHubCalendar from "react-github-calendar";
@@ -20,196 +21,9 @@ import Card from "./components/card";
 import { FaFacebook } from "react-icons/fa";
 import { BsDiscord } from "react-icons/bs";
 import { LiaLinkedinIn } from "react-icons/lia";
+import { SiGithub, SiLinkedin } from "react-icons/si";
+import { projects } from "./projects/projects";
 
-const portfolioList = [
-  {
-    imageSource: [
-      "/plan_pm/1.png",
-      "/plan_pm/3.png",
-      "/plan_pm/4.png",
-      "/plan_pm/5.png",
-      "/plan_pm/6.png",
-    ],
-    title: "Plan PM",
-    description:
-      "An intuitive mobile app designed for students of Politechnika Morska to efficiently manage their academic schedules. Plan PM provides real-time access to class timetables, personalized notifications for upcoming lectures, and tools to organize coursework, ensuring students stay on top of their studies.",
-    features: [
-      "Class Schedule Viewer",
-      "Personalized Notifications",
-      "Coursework Organizer",
-      "Real-Time Updates",
-      "User Profiles",
-      "Offline Access",
-    ],
-    technologies: ["Flutter", "Supabase", "Python", "Selenium"],
-    invertOrder: false,
-    phone: true,
-    buttonText: "Github",
-    buttonURL: "https://github.com/KNI-PM-Szczecin/plan_pm",
-    appStoreURL: "https://apps.apple.com/pl/app/plan-pm/id6736966745",
-    playStoreURL:
-      "https://play.google.com/store/apps/details?id=com.knipm.plan_pm",
-  },
-  {
-    imageSource: [
-      "/until_done/1.png",
-      "/until_done/2.png",
-      "/until_done/3.png",
-      "/until_done/4.png",
-      "/until_done/5.png",
-    ],
-    title: "Until Done",
-    description:
-      "Until Done is an anti-procrastination task manager built for people who can't stop swiping away reminders. It doesn't ask nicely — it escalates. Miss a deadline and the app fires notifications with increasing frequency until you open it and check the task off. No snooze. No dismiss. No excuses.",
-    features: [
-      "No Snooze — Complete or Nothing",
-      "Escalating Notification Spam",
-      "Offline-First with SQLite",
-      "Background Escalation Engine",
-      "Grouped Timeline UI",
-      "6 Languages Supported",
-    ],
-    technologies: [
-      "Flutter",
-      "SQLite",
-      "flutter_local_notifications",
-      "RxDart",
-      "background_fetch",
-    ],
-    invertOrder: true,
-    phone: true,
-    buttonText: null,
-    buttonURL: null,
-    appStoreURL: "https://apps.apple.com/us/app/until-done/id6752790841",
-    playStoreURL:
-      "https://play.google.com/store/apps/details?id=com.piotrwittig.untildone",
-  },
-  {
-    imageSource: [
-      "/your_path/1.webp",
-      "/your_path/2.webp",
-      "/your_path/3.webp",
-      "/your_path/4.webp",
-    ],
-    title: "Your Path",
-    description:
-      "Your Path is a guidance platform for young immigrants navigating life in Germany. Built for Ukrainian refugees and others unfamiliar with the German system, it breaks down complex decisions — education, career, language learning — into clear, personalized step-by-step pathways. A non-commercial project by Piotr Wittig and Stephan Wittig.",
-    features: [
-      "Pathfinder Quiz (Decision Tree)",
-      "Browsable Pathways Guide",
-      "Curated External Resources",
-      "4 Languages (EN, DE, UK, RU)",
-      "Fully Localized Content",
-      "No Account Required",
-    ],
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "DaisyUI",
-      "Framer Motion",
-      "next-intl",
-    ],
-    invertOrder: false,
-    phone: false,
-    buttonText: "Visit lifepath-zeta.vercel.app",
-    buttonURL: "https://lifepath-zeta.vercel.app/en",
-  },
-  {
-    imageSource: "/kanar_radar.png",
-    title: "KanarRadar",
-    description:
-      "A mobile app designed to help public transport users avoid fines by offering real-time alerts about ticket inspections. It provides tools like a control feed, map with inspection locations, and account settings for a seamless and worry-free travel experience.",
-    features: [
-      "Fine Avoidance",
-      "User Accounts",
-      "Interactive Map",
-      "Real Time Feed",
-      "Push Notifications",
-      "Offline Mode",
-    ],
-    technologies: ["Flask", "Firebase", "OpenStreetMaps", "Flutter"],
-    invertOrder: true,
-    phone: true,
-    buttonText: null,
-    buttonURL: null,
-  },
-  {
-    imageSource: "/juan_note.png",
-    title: "Juan Note",
-    description:
-      "Juan Note is a user-friendly note-taking app designed to eliminate the clutter and bloatware found in traditional apps. Its primary focus is seamless collaboration, allowing users to easily share, edit, and organize notes together in real time without distractions.",
-    features: [
-      "Real-Time Collaboration",
-      "Minimalist, Intuitive Interface",
-      "Instant Sharing and Permissions",
-      "No Bloatware or Unnecessary Features",
-      "Organize Notes with Tags and Folders",
-      "Cross-Platform Sync",
-    ],
-    technologies: ["Next.js", "Firebase", "Tailwind"],
-    invertOrder: false,
-    phone: false,
-    buttonText: null,
-    buttonURL: null,
-  },
-  {
-    imageSource: "/invest_me.png",
-    title: "Invest Me",
-    description:
-      "Invest Me is a comprehensive platform for tracking and analyzing the cryptocurrency market. It provides real-time price updates, interactive charts, and detailed analytics for a wide range of crypto coins, empowering users to make informed investment decisions.",
-    features: [
-      "Live Crypto Price Tracking",
-      "Interactive Price Charts",
-      "Historical Data Analysis",
-      "Multi-Coin Support",
-      "Customizable Watchlists",
-      "Responsive Design",
-    ],
-    technologies: ["Flask", "Pandas", "yahooFinance", "HTML/CSS/JavaScript"],
-    invertOrder: true,
-    phone: false,
-    buttonText: "Github",
-    buttonURL: "https://github.com/grzjan5219/InvestMe",
-  },
-  {
-    imageSource: "/sortra.png",
-    title: "Sortra",
-    description:
-      "Sortra is a modern, cross-platform file organizer that lets you quickly sort and categorize files using a clean and intuitive interface. Whether you're organizing documents, media, or downloads, Sortra simplifies the process with drag-and-drop functionality and customizable sorting rules.",
-    features: [
-      "Drag-and-Drop File Sorting",
-      "Smart Grouping by Extension or File Type",
-      "Real-Time UI Updates",
-      "Cross-Platform Support (Windows, macOS, Linux)",
-      "Fully Offline & Private",
-      "Clean and Responsive Interface",
-    ],
-    technologies: ["Tauri", "React", "TypeScript", "Tailwind CSS", "DaisyUI"],
-    invertOrder: false,
-    phone: false,
-    buttonText: "View on sortra.tech",
-    buttonURL: "https://www.sortra.tech/",
-    icon: FolderOpen,
-  },
-  {
-    imageSource: "/doorbell.jpeg",
-    title: "Smart doorbell",
-    description:
-      "This is a smart doorbell built upon the ESP32-CAM module, which instantly captures a photo and sends it as a notification to a Discord server when the button is pressed. The device is optimized for maximum power efficiency using deep sleep mode while also providing immediate, hardware-level feedback through light and sound.",
-    features: [
-      "Visual and audio feedback",
-      "ESP32 Deep sleep feature",
-      "Discord integration",
-      "Sleek and modular design",
-    ],
-    technologies: ["ESP32-CAM", "Discord", "Arduino IDE", "C++ Embedded"],
-    invertOrder: true,
-    phone: false,
-    buttonText: "Github",
-    buttonURL: "https://github.com/Schoji/esp32cam-doorbell",
-  },
-];
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -225,7 +39,9 @@ export default function Home() {
       {/* Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 backdrop-blur-md bg-black/70">
         <div className="flex items-center justify-between px-5 h-14">
-          <h1 className="text-2xl font-semibold">Piotr Wittig</h1>
+          <h1 className="text-2xl font-semibold">
+            Piotr Wittig<span style={{ color: "var(--accent)" }}>.</span>
+          </h1>
           {/* Desktop links */}
           <div className="hidden sm:flex gap-6">
             <a className="link link-hover text-sm" href="#">Home</a>
@@ -279,137 +95,306 @@ export default function Home() {
       {/* Dummy spacing for navbar */}
       <div className="h-12 w-full" />
       {/* Hero */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden pb-16">
+      <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden py-20">
+        {/* Self-playing snake in the background */}
         <SnakeGame />
-        <div className="relative z-10 text-center px-4 sm:px-2 max-w-md mx-auto flex flex-col items-center">
-          <h1 className="mb-5 text-5xl font-bold text-wrap break-words sm:text-4xl xs:text-3xl">
-            I build digital stuff that actually works.
+        {/* Radial glow */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div
+            className="w-[900px] h-[900px] max-w-full rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(76,29,149,0.35) 0%, rgba(34,211,238,0.06) 42%, transparent 70%)",
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-8">
+          {/* Availability badge */}
+          <span
+            className="inline-flex items-center rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em]"
+            style={{
+              color: "var(--accent)",
+              borderColor: "rgba(34,211,238,0.55)",
+              boxShadow: "0 0 20px rgba(34,211,238,0.15)",
+            }}
+          >
+            Available for hire
+          </span>
+
+          {/* Heading */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.05] text-wrap break-words">
+            <span className="text-white">I build digital stuff </span>
+            <span className="hero-accent">that actually works.</span>
           </h1>
-          <p className="mb-8 text-zinc-400 text-base sm:text-sm">
+
+          <p className="text-zinc-400 text-base md:text-lg max-w-xl">
             Pragmatic developer focused on building solid software without the
             unnecessary fluff.
           </p>
-          <a
-            href="#about"
-            className="btn btn-outline rounded-full px-6 border-zinc-600 text-zinc-300 hover:bg-white hover:text-black hover:border-white transition-all"
-          >
-            About me
-          </a>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-4 justify-center">
+            <a
+              href="#about"
+              className="px-8 py-3 rounded-full font-bold text-black transition-transform hover:scale-105"
+              style={{
+                background: "var(--accent)",
+                boxShadow: "0 0 30px rgba(34,211,238,0.4)",
+              }}
+            >
+              About me
+            </a>
+            <a
+              href="#projects"
+              className="px-8 py-3 rounded-full font-bold text-white border border-zinc-600 transition-colors hover:border-cyan-400/70"
+            >
+              View projects
+            </a>
+          </div>
+
+          {/* Divider + stats */}
+          <div className="w-full max-w-lg mt-6">
+            <div className="h-px w-full bg-zinc-700/60 mb-8" />
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { value: "5+", label: "Projects shipped" },
+                { value: "542", label: "GitHub commits" },
+                { value: "3+", label: "Years coding" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="flex flex-col items-center gap-1"
+                >
+                  <span
+                    className="text-3xl md:text-4xl font-bold"
+                    style={{
+                      color: "var(--accent)",
+                      textShadow: "0 0 20px rgba(34,211,238,0.5)",
+                    }}
+                  >
+                    {stat.value}
+                  </span>
+                  <span className="text-zinc-500 text-xs sm:text-sm">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <a
-          href="#about"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-zinc-600 hover:text-zinc-400 transition-colors animate-bounce z-10"
-        >
-          <ChevronDown size={24} />
-        </a>
       </div>
       {/* About Me */}
-      <div
+      <section
         id="about"
-        className="relative p-4 sm:p-6 md:p-10 min-h-screen justify-center grid lg:grid-cols-2 gap-3 border-b-1 border-zinc-600 overflow-hidden"
+        className="relative border-b border-zinc-800 px-4 sm:px-6 md:px-10 lg:px-16 py-16 md:py-24"
       >
-        <motion.div
-          className="avatar items-center justify-center"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="ring-primary ring-offset-base-300 w-60 h-60 md:w-96 md:h-96 rounded-full ring-2 ring-offset-2 mx-auto">
-            <Image
-              src="/prof_square.png"
-              alt="Picture of the author"
-              width={384}
-              height={384}
-              className="object-cover w-full h-full"
-              priority
-            />
-          </div>
-        </motion.div>
-        <motion.div
-          className="flex flex-col p-2 md:p-5 justify-center gap-9 text-center lg:text-left min-w-0 w-full"
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex flex-col gap-5">
-            <h1 className="text-2xl md:text-3xl font-bold">About Me</h1>
-            <p className="text-xl md:text-2xl italic">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-16">
+          {/* Sidebar */}
+          <motion.aside
+            className="flex flex-col items-center lg:items-start gap-6"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <div className="relative">
+              <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden ring-2 ring-offset-4 ring-offset-black ring-[#22d3ee]">
+                <Image
+                  src="/prof_square.webp"
+                  alt="Piotr Wittig"
+                  width={384}
+                  height={384}
+                  className="object-cover w-full h-full"
+                  priority
+                />
+              </div>
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-zinc-900 border border-zinc-700 px-4 py-1.5 text-sm whitespace-nowrap">
+                <span
+                  className="w-2 h-2 rounded-full bg-green-400"
+                  style={{ boxShadow: "0 0 8px #4ade80" }}
+                />
+                Open to work
+              </div>
+            </div>
+
+            <div className="text-center lg:text-left mt-4">
+              <h2 className="text-3xl font-bold">Piotr Wittig</h2>
+              <p className="text-zinc-400 mt-1">
+                Full-Stack Developer &amp; AI Specialist
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <a
+                href="https://github.com/Schoji"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-cyan-400/70"
+              >
+                <SiGithub size={18} /> GitHub
+              </a>
+              <a
+                href="https://linkedin.com/in/piotr-wittig-357bb9369"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-cyan-400/70"
+              >
+                <SiLinkedin size={18} /> LinkedIn
+              </a>
+            </div>
+
+            <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 flex flex-col gap-4">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                Quick Facts
+              </p>
+              <div className="flex items-center gap-3 text-zinc-300">
+                <MapPin size={18} style={{ color: "var(--accent)" }} />
+                Szczecin, Poland
+              </div>
+              <div className="flex items-center gap-3 text-zinc-300">
+                <GraduationCap size={18} style={{ color: "var(--accent)" }} />
+                Politechnika Morska
+              </div>
+              <div className="flex items-center gap-3 text-zinc-300">
+                <Coffee size={18} style={{ color: "var(--accent)" }} />
+                Coffee-powered dev
+              </div>
+            </div>
+          </motion.aside>
+
+          {/* Main */}
+          <motion.div
+            className="min-w-0"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <p
+              className="text-sm font-bold tracking-[0.2em]"
+              style={{ color: "var(--accent)" }}
+            >
+              {"// ABOUT ME"}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mt-3">About Me</h1>
+            <p
+              className="text-2xl md:text-3xl italic mt-5"
+              style={{ color: "var(--accent)" }}
+            >
               &quot;I write code occasionally on purpose.&quot;
             </p>
-            <p className="text-zinc-400 text-base md:text-lg">
-              I&apos;m a developer who values pragmatism. I cut through the
-              visual noise to focus on what matters most: lightning-fast
-              performance, solid UX, and architecture that won&apos;t break
-              under pressure.
+            <p className="text-zinc-400 text-base md:text-lg leading-relaxed mt-6 max-w-2xl">
+              I&apos;m a developer and AI specialist who values pragmatism. I cut
+              through the visual noise to focus on what matters most:
+              lightning-fast performance, solid UX, and architecture that
+              won&apos;t break under pressure.
             </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-2 items-center justify-center lg:justify-start">
-              <Code size={18} />
-              <p className="font-bold">Technologies</p>
+
+            {/* Technologies */}
+            <div className="mt-12">
+              <h3 className="flex items-center gap-2 text-xl font-bold">
+                <Code size={20} style={{ color: "var(--accent)" }} />
+                Technologies
+              </h3>
+              <div className="flex flex-wrap gap-3 mt-5">
+                {[
+                  { name: "Flask", highlight: false },
+                  { name: "Next.js", highlight: true },
+                  { name: "React Native", highlight: false },
+                  { name: "Flutter", highlight: true },
+                  { name: "FastAPI", highlight: true },
+                  { name: "Python", highlight: false },
+                  { name: "Supabase", highlight: false },
+                ].map((tech) => (
+                  <span
+                    key={tech.name}
+                    className="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors"
+                    style={
+                      tech.highlight
+                        ? {
+                            borderColor: "var(--accent)",
+                            color: "var(--accent)",
+                            boxShadow: "0 0 14px rgba(34,211,238,0.18)",
+                          }
+                        : { borderColor: "#3f3f46", color: "#d4d4d8" }
+                    }
+                  >
+                    {tech.name}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2 items-center justify-center lg:justify-start">
-              <CustomBadge content="Flask" />
-              <CustomBadge content="Next.js" />
-              <CustomBadge content="React Native" />
-              <CustomBadge content="Flutter" />
-              <CustomBadge content="FastAPI" />
+
+            {/* Passions */}
+            <div className="mt-10">
+              <h3 className="flex items-center gap-2 text-xl font-bold">
+                <Heart size={20} style={{ color: "var(--accent)" }} />
+                Passions
+              </h3>
+              <div className="flex flex-wrap gap-3 mt-5">
+                {[
+                  "💻 Writing code",
+                  "🖨️ 3D Printing",
+                  "🔧 Tinkering",
+                  "🤖 AI chatbot solutions",
+                  "🏋️ Gym",
+                  "🎮 100% game completion",
+                ].map((passion) => (
+                  <span
+                    key={passion}
+                    className="rounded-full border border-zinc-700 bg-zinc-900/40 px-4 py-1.5 text-sm font-medium text-zinc-300"
+                  >
+                    {passion}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-2 items-center justify-center lg:justify-start">
-              <Cpu size={18} />
-              <p className="font-bold">Passions</p>
+
+            {/* GitHub Contributions */}
+            <div className="mt-10">
+              <h3 className="flex items-center gap-2 text-xl font-bold">
+                <SiGithub size={20} style={{ color: "var(--accent)" }} />
+                GitHub Contributions
+              </h3>
+              <div className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 overflow-x-auto">
+                <GitHubCalendar
+                  username="Schoji"
+                  blockSize={12}
+                  blockMargin={4}
+                  fontSize={13}
+                  theme={{
+                    // Cyan ramp from empty (dark) to the site accent (#22d3ee)
+                    dark: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
+                    light: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
+                  }}
+                  colorScheme="dark"
+                />
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-              <CustomBadge content="💻 Writing code" />
-              <CustomBadge content="🖨️ 3D Printing" />
-              <CustomBadge content="🔧 Tinkering" />
-              <CustomBadge content="🤖 AI chatbot solutions" />
-              <CustomBadge content="🏋️ Gym" />
-              <CustomBadge content="🎮 100% game completion" />
+
+            {/* Recent Activity */}
+            <div className="mt-10">
+              <h3 className="flex items-center gap-2 text-xl font-bold">
+                <Activity size={20} style={{ color: "var(--accent)" }} />
+                Recent Activity
+              </h3>
+              <div className="mt-5">
+                <GitHubActivity />
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-2 items-center justify-center lg:justify-start">
-              <Cpu size={18} />
-              <p className="font-bold">Github Contributions</p>
-            </div>
-            <div className="w-full overflow-x-auto">
-              <GitHubCalendar
-                username="Schoji"
-                blockSize={8}
-                blockMargin={4}
-                fontSize={11}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-2 items-center justify-center lg:justify-start">
-              <Cpu size={18} />
-              <p className="font-bold">Recent Activity</p>
-            </div>
-            <GitHubActivity />
-          </div>
-        </motion.div>
-        <a
-          href="#projects"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-zinc-600 hover:text-zinc-400 transition-colors animate-bounce"
-        >
-          <ChevronDown size={24} />
-        </a>
-      </div>
+          </motion.div>
+        </div>
+      </section>
       {/* Portfolio 1 */}
       <div id="projects" className="relative">
-        {portfolioList.map((portfolio, index) => (
+        {projects.map((project, index) => (
           <Portfolio
-            key={index}
-            {...portfolio}
+            key={project.slug}
+            {...project}
             id={`portfolio-${index}`}
             nextHref={
-              index < portfolioList.length - 1
+              index < projects.length - 1
                 ? `#portfolio-${index + 1}`
                 : "#getintouch"
             }
@@ -418,7 +403,7 @@ export default function Home() {
       </div>
       <div
         id="getintouch"
-        className="p-4 md:p-5 min-h-screen flex items-center justify-center flex-col gap-5"
+        className="px-4 md:px-5 py-20 min-h-[100svh] flex items-center justify-center flex-col gap-5"
       >
         <h1 className="text-3xl md:text-4xl font-bold">Get in Touch</h1>
         <p className="text-zinc-400 text-base md:text-xl text-center w-full md:w-2/3">
