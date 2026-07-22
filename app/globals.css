@@ -23,6 +23,47 @@ html {
   height: 3.8%;
 }
 
+/* iPhone-style side buttons on the phone mockup (mute switch + volume on the
+   left, side/power button on the right). Positioned on the frame's edge. */
+.mockup-phone {
+  overflow: visible;
+}
+.phone-side-btn {
+  position: absolute;
+  z-index: 5;
+  background: linear-gradient(90deg, #3f3f46, #52525b);
+}
+/* Buttons sit fully outside the frame: left:0 is the inner (padding) edge, so
+   the 4px border sits at -4..0; offsets below clear it and protrude beyond. */
+.phone-side-btn.is-left {
+  left: -8px;
+  border-radius: 2px 0 0 2px;
+}
+.phone-side-btn.is-right {
+  right: -8px;
+  border-radius: 0 2px 2px 0;
+}
+.phone-side-btn.silent {
+  top: 15%;
+  height: 3%;
+  width: 4px;
+}
+.phone-side-btn.vol-up {
+  top: 21.5%;
+  height: 7%;
+  width: 5px;
+}
+.phone-side-btn.vol-down {
+  top: 30.5%;
+  height: 7%;
+  width: 5px;
+}
+.phone-side-btn.power {
+  top: 25%;
+  height: 11%;
+  width: 5px;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

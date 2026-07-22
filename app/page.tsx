@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import SnakeGame from "./components/snake-game";
+import ScrollProgress from "./components/scroll-progress";
 import { motion } from "framer-motion";
 import GitHubCalendar from "react-github-calendar";
 import Portfolio from "./components/portfolio";
@@ -36,6 +37,7 @@ export default function Home() {
         backgroundAttachment: "fixed",
       }}
     >
+      <ScrollProgress />
       {/* Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 backdrop-blur-md bg-black/70">
         <div className="flex items-center justify-between px-5 h-14">
@@ -184,15 +186,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* About Me */}
+      {/* About Me + GitHub — sticky profile, scrolling content */}
       <section
         id="about"
         className="relative border-b border-zinc-800 px-4 sm:px-6 md:px-10 lg:px-16 py-16 md:py-24"
       >
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-16">
-          {/* Sidebar */}
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-16 items-start">
+          {/* Sticky profile card — pinned across the About + GitHub sections */}
           <motion.aside
-            className="flex flex-col items-center lg:items-start gap-6"
+            className="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -263,7 +265,9 @@ export default function Home() {
             </div>
           </motion.aside>
 
-          {/* Main */}
+          {/* Scrolling content column: About Me, then GitHub Contributions */}
+          <div className="min-w-0">
+          {/* About Me */}
           <motion.div
             className="min-w-0"
             initial={{ opacity: 0, x: 20 }}
@@ -351,26 +355,44 @@ export default function Home() {
               </div>
             </div>
 
-            {/* GitHub Contributions */}
-            <div className="mt-10">
-              <h3 className="flex items-center gap-2 text-xl font-bold">
-                <SiGithub size={20} style={{ color: "var(--accent)" }} />
-                GitHub Contributions
-              </h3>
-              <div className="mt-5 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 overflow-x-auto">
-                <GitHubCalendar
-                  username="Schoji"
-                  blockSize={12}
-                  blockMargin={4}
-                  fontSize={13}
-                  theme={{
-                    // Cyan ramp from empty (dark) to the site accent (#22d3ee)
-                    dark: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
-                    light: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
-                  }}
-                  colorScheme="dark"
-                />
-              </div>
+          </motion.div>
+
+          {/* GitHub Contributions — second scrolling section */}
+          <motion.div
+            id="github"
+            className="min-w-0 mt-20 md:mt-28 lg:mt-40 border-t border-zinc-800 pt-14 md:pt-20"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <p
+              className="text-sm font-bold tracking-[0.2em]"
+              style={{ color: "var(--accent)" }}
+            >
+              {"// GITHUB"}
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold mt-3">
+              GitHub Contributions
+            </h2>
+            <p className="text-zinc-400 text-base md:text-lg leading-relaxed mt-6 max-w-2xl">
+              A snapshot of what I&apos;ve been building lately.
+            </p>
+
+            {/* Contribution calendar */}
+            <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 overflow-x-auto">
+              <GitHubCalendar
+                username="Schoji"
+                blockSize={12}
+                blockMargin={4}
+                fontSize={13}
+                theme={{
+                  // Cyan ramp from empty (dark) to the site accent (#22d3ee)
+                  dark: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
+                  light: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
+                }}
+                colorScheme="dark"
+              />
             </div>
 
             {/* Recent Activity */}
@@ -384,6 +406,7 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
+          </div>
         </div>
       </section>
       {/* Portfolio 1 */}

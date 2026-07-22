@@ -23,7 +23,12 @@ export default function ProjectMedia({
   return (
     <div className="relative overflow-hidden">
       {phone ? (
-        <div className="mockup-phone border-2">
+        <div className="mockup-phone relative mx-4 border-4">
+          {/* iPhone-style side buttons */}
+          <span className="phone-side-btn is-left silent" />
+          <span className="phone-side-btn is-left vol-up" />
+          <span className="phone-side-btn is-left vol-down" />
+          <span className="phone-side-btn is-right power" />
           <div className="mockup-phone-display relative overflow-hidden">
             {images.map((src, i) => (
               <motion.div
