@@ -1,7 +1,9 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages -- Native navigations avoid a Firefox hang in Next's client router. */
 import { useState } from "react";
 import {
   Activity,
+  ArrowRight,
   Code,
   Coffee,
   GraduationCap,
@@ -24,6 +26,7 @@ import { BsDiscord } from "react-icons/bs";
 import { LiaLinkedinIn } from "react-icons/lia";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { projects } from "./projects/projects";
+import { formatDate, listedPosts } from "./blog/posts";
 
 
 export default function Home() {
@@ -49,6 +52,7 @@ export default function Home() {
             <a className="link link-hover text-sm" href="#">Home</a>
             <a className="link link-hover text-sm" href="#about">About</a>
             <a className="link link-hover text-sm" href="#projects">Projects</a>
+            <a className="link link-hover text-sm" href="/blog">Blog</a>
             <a className="link link-hover text-sm" href="#getintouch">Contact</a>
           </div>
           {/* Hamburger button - mobile only */}
@@ -83,6 +87,13 @@ export default function Home() {
               onClick={() => setMenuOpen(false)}
             >
               Projects
+            </a>
+            <a
+              className="px-6 py-4 text-sm border-b border-zinc-800/50 hover:bg-zinc-800/50 transition-colors"
+              href="/blog"
+              onClick={() => setMenuOpen(false)}
+            >
+              Blog
             </a>
             <a
               className="px-6 py-4 text-sm hover:bg-zinc-800/50 transition-colors"
@@ -424,6 +435,75 @@ export default function Home() {
           />
         ))}
       </div>
+      {/* From the blog — internal links into /blog for crawlers and readers */}
+      {listedPosts.length > 0 && (
+        <section
+          id="writing"
+          className="border-t border-zinc-800 px-4 sm:px-6 md:px-10 lg:px-16 py-16 md:py-24"
+        >
+          <motion.div
+            className="max-w-7xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <p
+              className="text-sm font-bold tracking-[0.2em]"
+              style={{ color: "var(--accent)" }}
+            >
+              {"// WRITING"}
+            </p>
+            <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
+              <h2 className="text-4xl md:text-5xl font-bold">From the blog</h2>
+              <a
+                href="/blog"
+                className="flex items-center gap-2 text-sm font-semibold transition-colors hover:text-white"
+                style={{ color: "var(--accent)" }}
+              >
+                All posts
+                <ArrowRight size={16} />
+              </a>
+            </div>
+            <p className="text-zinc-400 text-base md:text-lg leading-relaxed mt-6 max-w-2xl">
+              I write when I go looking for something and cannot find it.
+            </p>
+
+            <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5">
+              {listedPosts.slice(0, 2).map((post) => (
+                <a
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="hover-glow group flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6"
+                >
+                  <div className="flex items-center gap-3 text-xs text-zinc-500">
+                    <time dateTime={post.date}>{formatDate(post.date)}</time>
+                    <span>·</span>
+                    <span>{post.readingTime}</span>
+                  </div>
+                  <h3 className="text-xl font-bold leading-snug group-hover:text-cyan-200 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed line-clamp-3">
+                    {post.description}
+                  </p>
+                  <span
+                    className="mt-1 flex items-center gap-2 text-sm font-semibold"
+                    style={{ color: "var(--accent)" }}
+                  >
+                    Read the post
+                    <ArrowRight
+                      size={15}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+      )}
+
       <div
         id="getintouch"
         className="px-4 md:px-5 py-20 min-h-[100svh] flex items-center justify-center flex-col gap-5"

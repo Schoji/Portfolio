@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "./site";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -8,8 +9,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://piotrwittig.com"),
-  alternates: { canonical: "/" },
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+    // Feed autodiscovery — emitted on every page, which is what readers expect.
+    types: { "application/rss+xml": `${SITE_URL}/feed.xml` },
+  },
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
@@ -33,6 +38,8 @@ export const metadata: Metadata = {
     "software engineer",
     "React",
     "TypeScript",
+    "technical writing",
+    "ASD-STE100",
   ],
   authors: [{ name: "Piotr Wittig", url: "https://github.com/Schoji" }],
   creator: "Piotr Wittig",
@@ -81,6 +88,8 @@ const jsonLd = {
   ],
   jobTitle: "Software Developer",
   knowsAbout: [
+    "Technical Writing",
+    "ASD-STE100 Simplified Technical English",
     "Flutter",
     "Next.js",
     "React",
