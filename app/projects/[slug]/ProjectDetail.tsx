@@ -16,7 +16,7 @@ import ProjectGallery from "../../components/project-gallery";
 import { projects, type Project } from "../projects";
 
 const ACCENT = "var(--accent)";
-const ACCENT_BORDER = "rgba(34,211,238,0.5)";
+const ACCENT_BORDER = "rgb(var(--accent-rgb) / 0.5)";
 
 const OS_ICON: Record<string, ElementType> = {
   Windows: FaWindows,
@@ -51,7 +51,7 @@ function DownloadButtons({
             className="flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold text-black transition-all duration-150 hover:scale-105 active:scale-95"
             style={{
               background: "var(--accent)",
-              boxShadow: "0 0 20px rgba(34,211,238,0.35)",
+              boxShadow: "0 0 20px rgb(var(--accent-rgb) / calc(0.35 * var(--glow-strength)))",
             }}
           >
             {OsIcon ? <OsIcon size={18} /> : <Download size={18} />}
@@ -98,8 +98,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
     <div
       className="min-h-screen"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 0%, #1c1c2e 0%, #0a0a0a 60%)",
+        background: "var(--page-gradient)",
         backgroundAttachment: "fixed",
       }}
     >
@@ -139,22 +138,15 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           <div className="flex items-center gap-2 text-sm">
             <a
               href="/#projects"
-              className="text-zinc-500 transition-colors hover:text-zinc-300"
+              className="text-[var(--text-muted)] transition-colors hover:text-zinc-300"
             >
               Projects
             </a>
-            <ChevronRight size={14} className="text-zinc-600" />
+            <ChevronRight size={14} className="text-zinc-500" />
             <span style={{ color: ACCENT }}>{title}</span>
           </div>
 
-          <span
-            className="mt-6 inline-block rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-[0.15em]"
-            style={{ borderColor: ACCENT_BORDER, color: ACCENT }}
-          >
-            {category}
-          </span>
-
-          <h1 className="mt-5 text-5xl font-bold leading-[1.02] text-white sm:text-6xl md:text-7xl">
+          <h1 className="mt-6 text-5xl font-bold leading-[1.02] text-white sm:text-6xl md:text-7xl">
             {title}
           </h1>
 
@@ -187,19 +179,13 @@ export default function ProjectDetail({ slug }: { slug: string }) {
       {/* Body: description + highlights | tech stack */}
       <section className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
         <div className="flex min-w-0 flex-col gap-12">
-          <p className="text-lg leading-relaxed text-zinc-300 md:text-xl">
+          <p className="max-w-[70ch] text-lg leading-relaxed text-zinc-300 md:text-xl">
             {description}
           </p>
 
           {/* The Story / Backstory */}
           {story && (
             <div>
-              <span
-                className="font-mono text-xs uppercase tracking-[0.25em]"
-                style={{ color: ACCENT }}
-              >
-                {"// The Story"}
-              </span>
               <h2 className="mt-2 text-2xl font-bold md:text-3xl">Backstory</h2>
               <p className="mt-5 leading-relaxed text-zinc-400">{story}</p>
             </div>
@@ -230,7 +216,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                     <div className="min-w-0">
                       <p className="font-medium leading-snug">{f.title}</p>
                       {f.subtitle && (
-                        <p className="mt-1 text-sm text-zinc-500">
+                        <p className="mt-1 text-sm text-[var(--text-muted)]">
                           {f.subtitle}
                         </p>
                       )}
@@ -244,7 +230,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
 
         {/* Tech stack card */}
         <aside className="hover-glow rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 lg:sticky lg:top-24">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
             Tech Stack
           </p>
           <div className="mt-4 flex flex-wrap gap-2.5">
@@ -260,14 +246,14 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           </div>
           <div className="mt-6 flex flex-col gap-5 border-t border-zinc-800 pt-5">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                 Platform
               </p>
               <p className="mt-1.5 text-zinc-200">{category}</p>
             </div>
             {year && (
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                   Year
                 </p>
                 <p className="mt-1.5 text-zinc-200">{year}</p>
@@ -275,7 +261,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             )}
             {status && (
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                   Status
                 </p>
                 <p className="mt-1.5 text-zinc-200">{status}</p>
@@ -283,7 +269,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             )}
             {role && (
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                   Role
                 </p>
                 <p className="mt-1.5 text-zinc-200">{role}</p>
@@ -296,12 +282,6 @@ export default function ProjectDetail({ slug }: { slug: string }) {
       {/* Gallery */}
       <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8">
         <div className="border-t border-zinc-800 pt-14">
-          <span
-            className="font-mono text-xs uppercase tracking-[0.25em]"
-            style={{ color: ACCENT }}
-          >
-            {"// Gallery"}
-          </span>
           <h2 className="mt-2 text-3xl font-bold md:text-4xl">Screenshots</h2>
           <div className="mt-8">
             <ProjectGallery images={images} phone={phone} title={title} />
@@ -312,13 +292,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
       {/* Download CTA */}
       {downloads && downloads.length > 0 && (
         <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8">
-          <div className="hover-glow rounded-3xl border border-zinc-800 bg-zinc-900/40 p-8 text-center md:p-12">
-            <span
-              className="font-mono text-xs uppercase tracking-[0.25em]"
-              style={{ color: ACCENT }}
-            >
-              {"// Download"}
-            </span>
+          <div className="hover-glow rounded-2xl border border-zinc-800 bg-zinc-900/40 p-8 text-center md:p-12">
             <h2 className="mt-2 text-3xl font-bold md:text-4xl">
               Get {title}
             </h2>
@@ -336,7 +310,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                   href={donateURL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition-colors hover:border-cyan-400/70"
+                  className="flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition-colors hover:border-[rgb(var(--accent-rgb)/0.7)]"
                 >
                   <Heart size={16} style={{ color: ACCENT }} />
                   Support with a donation
@@ -344,7 +318,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
               </div>
             )}
 
-            <p className="mx-auto mt-6 max-w-xl text-xs leading-relaxed text-zinc-600">
+            <p className="mx-auto mt-6 max-w-xl text-xs leading-relaxed text-[var(--text-muted)]">
               Provided “as is”, without warranty. Back up your files before use
               — by downloading you accept that you use it at your own risk.
             </p>
@@ -359,7 +333,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             href={`/projects/${prev.slug}`}
             className="hover-glow group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5"
           >
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
               <ChevronLeft size={14} style={{ color: ACCENT }} />
               Previous
             </div>
@@ -371,7 +345,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             href={`/projects/${next.slug}`}
             className="hover-glow group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 text-right"
           >
-            <div className="flex items-center justify-end gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+            <div className="flex items-center justify-end gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
               Next
               <ChevronRight size={14} style={{ color: ACCENT }} />
             </div>

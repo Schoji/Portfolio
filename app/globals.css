@@ -9,6 +9,34 @@ html {
   scroll-padding-top: 4rem;
 }
 
+/* Framer Motion's scroll reveals render `style="opacity:0;transform:…"` into
+   the server HTML, so without JS the page would show the hero and then blank
+   space — the copy is in the markup but invisible. `layout.tsx` adds `.js` to
+   <html> from a blocking inline script, so these two rules are the safety net:
+   no script, no hidden content. Keep the selector in sync with what Motion
+   emits (currently `opacity:0`, no space). */
+html:not(.js) [style*="opacity:0"] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Motion does not honour this on its own, and a reveal that never resolves is
+   worse than no reveal at all. */
+@media (prefers-reduced-motion: reduce) {
+  [style*="opacity:0"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* daisyUI's phone mockup is a fixed 390x845px — far taller than most
    laptop viewports. Scale it to the viewport height (keeping the aspect
    ratio) so project sections fit without top/bottom clipping on any screen. */
@@ -83,15 +111,45 @@ html {
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --accent: #22d3ee;
-  --secondary: #a855f7;
+
+  /* Brand accent — brass. `--accent` stays a full color because Tailwind
+     arbitrary values need one (e.g. ring-[color:var(--accent)]); `--accent-rgb`
+     carries the same hue as bare channels so every translucent variant derives
+     from the token instead of a hand-written rgba() literal. */
+  --accent: #e0a33e;
+  --accent-rgb: 224 163 62;
+  --accent-light: #f2c97a;
+  --accent-dark: #b8801f;
+
+  /* One dial for every accent glow on the site: 1 = full bloom, 0 = none.
+     Glows are an atmosphere, not a way to define an edge — borders and 1px
+     rings stay at full alpha and do not scale with this. */
+  --glow-strength: 0.35;
+
+  /* Muted body text. `zinc-500` measured 3.94:1 on the card ground (#101011)
+     and `zinc-600` 2.46:1 — both under the 4.5:1 AA floor. This sits at 5.20:1
+     while staying ~2.2 steps darker than zinc-400, so the muted/body contrast
+     step survives. Decorative glyphs (breadcrumb chevrons) may stay on
+     zinc-500: they only owe the 3:1 non-text threshold. */
+  --text-muted: #85858e;
+
+  /* Page ground, shared by every route. The OG images repeat these two values
+     as literals because Satori does not resolve CSS custom properties — keep
+     them in sync with app/blog/opengraph-image.tsx and [slug]/opengraph-image.tsx. */
+  --page-bg-top: #17171a;
+  --page-bg: #0a0a0a;
+  --page-gradient: radial-gradient(
+    ellipse at 50% 0%,
+    var(--page-bg-top) 0%,
+    var(--page-bg) 60%
+  );
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-grotesk);
-  --font-mono: var(--font-space-grotesk);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -104,7 +162,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
 }
 
 /* On hover, bordered "section" cards get a cyan outline + soft glow. The
@@ -116,10 +174,20 @@ body {
     background-color 0.25s ease;
 }
 .hover-glow:hover {
-  border-color: rgba(34, 211, 238, 0.6);
+  /* A defined edge plus a short, directional lift. The previous 30px bloom
+     paired a hairline border with soft atmosphere, which reads as generated;
+     elevation should come from a shadow that has a direction. */
+  border-color: rgb(var(--accent-rgb) / 0.6);
   box-shadow:
-    0 0 0 1px rgba(34, 211, 238, 0.2),
-    0 0 30px -6px rgba(34, 211, 238, 0.5);
+    0 0 0 1px rgb(var(--accent-rgb) / 0.2),
+    0 4px 12px -4px rgb(0 0 0 / 0.6);
+}
+
+/* react-github-calendar puts the horizontal scroll on an inner element, so
+   the wrapper's padding collapses and the graph touches the edge once you
+   scroll to the end. Pad the scroller itself instead. */
+.react-activity-calendar__scroll-container {
+  padding-right: 1.25rem;
 }
 
 /* Technology pills: lift + glow on hover. */
@@ -131,15 +199,14 @@ body {
 }
 .tech-pill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 16px -3px rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 16px -3px
+    rgb(var(--accent-rgb) / calc(0.55 * var(--glow-strength)));
 }
 
-/* Hero accent text: cyan gradient with a soft glow */
+/* Hero accent text: the accent colour, flat. A vertical gradient inside a word
+   and a glow behind it are both decoration on type that already carries the
+   emphasis by being a different colour from the rest of the heading. Kept as a
+   class so the four headings that use it stay in one place. */
 .hero-accent {
-  background: linear-gradient(180deg, #67e8f9 0%, #22d3ee 55%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.55))
-    drop-shadow(0 0 45px rgba(34, 211, 238, 0.28));
+  color: var(--accent);
 }

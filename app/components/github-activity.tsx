@@ -113,7 +113,7 @@ export default function GitHubActivity() {
               <span style={{ color: "var(--accent)" }}>{item.repo}</span>
             </span>
           </div>
-          <span className="text-zinc-500 text-sm shrink-0">{item.time}</span>
+          <span className="text-[var(--text-muted)] text-sm shrink-0">{item.time}</span>
         </div>
       ))}
     </div>

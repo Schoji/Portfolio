@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import GitHubCalendar from "react-github-calendar";
 import Portfolio from "./components/portfolio";
 import GitHubActivity from "./components/github-activity";
-import Card from "./components/card";
+import ContactLink from "./components/contact-link";
 import { FaFacebook } from "react-icons/fa";
 import { BsDiscord } from "react-icons/bs";
 import { LiaLinkedinIn } from "react-icons/lia";
@@ -35,8 +35,7 @@ export default function Home() {
     <div
       className="w-full h-full grid grid-cols-1 gap-5"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 0%, #1c1c2e 0%, #0a0a0a 60%)",
+        background: "var(--page-gradient)",
         backgroundAttachment: "fixed",
       }}
     >
@@ -44,9 +43,9 @@ export default function Home() {
       {/* Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 backdrop-blur-md bg-black/70">
         <div className="flex items-center justify-between px-5 h-14">
-          <h1 className="text-2xl font-semibold">
+          <span className="text-2xl font-semibold">
             Piotr Wittig<span style={{ color: "var(--accent)" }}>.</span>
-          </h1>
+          </span>
           {/* Desktop links */}
           <div className="hidden sm:flex gap-6">
             <a className="link link-hover text-sm" href="#">Home</a>
@@ -111,89 +110,35 @@ export default function Home() {
       <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden py-20">
         {/* Self-playing snake in the background */}
         <SnakeGame />
-        {/* Radial glow */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div
-            className="w-[900px] h-[900px] max-w-full rounded-full opacity-50"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(76,29,149,0.35) 0%, rgba(34,211,238,0.06) 42%, transparent 70%)",
-            }}
-          />
-        </div>
 
-        <div className="relative z-10 text-center px-4 max-w-3xl mx-auto flex flex-col items-center gap-8">
-          {/* Availability badge */}
-          <span
-            className="inline-flex items-center rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em]"
-            style={{
-              color: "var(--accent)",
-              borderColor: "rgba(34,211,238,0.55)",
-              boxShadow: "0 0 20px rgba(34,211,238,0.15)",
-            }}
-          >
-            Available for hire
-          </span>
-
-          {/* Heading */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold leading-[1.05] text-wrap break-words">
-            <span className="text-white">I build digital stuff </span>
-            <span className="hero-accent">that actually works.</span>
+        <div className="relative z-10 px-4 max-w-3xl mx-auto flex flex-col items-start gap-7">
+          {/* The name is the thesis of a portfolio hero, so it is the h1 — not a
+              full sentence set at display size. */}
+          <h1 className="text-5xl sm:text-6xl font-semibold leading-[1.05] tracking-tight">
+            <span className="text-white">Piotr </span>
+            <span className="hero-accent">Wittig</span>
           </h1>
 
-          <p className="text-zinc-400 text-base md:text-lg max-w-xl">
-            Pragmatic developer focused on building solid software without the
-            unnecessary fluff.
+          <p className="text-zinc-300 text-lg md:text-xl leading-relaxed max-w-xl">
+            I build mobile apps, web platforms and embedded systems — mostly
+            Flutter, Next.js and Python.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a
-              href="#about"
-              className="px-8 py-3 rounded-full font-bold text-black transition-transform hover:scale-105"
-              style={{
-                background: "var(--accent)",
-                boxShadow: "0 0 30px rgba(34,211,238,0.4)",
-              }}
-            >
-              About me
-            </a>
+          <div className="flex flex-wrap gap-3">
             <a
               href="#projects"
-              className="px-8 py-3 rounded-full font-bold text-white border border-zinc-600 transition-colors hover:border-cyan-400/70"
+              className="px-7 py-3 rounded-full font-semibold text-black transition-transform hover:scale-105"
+              style={{ background: "var(--accent)" }}
             >
               View projects
             </a>
-          </div>
-
-          {/* Divider + stats */}
-          <div className="w-full max-w-lg mt-6">
-            <div className="h-px w-full bg-zinc-700/60 mb-8" />
-            <div className="grid grid-cols-3 gap-4">
-              {[
-                { value: "5+", label: "Projects shipped" },
-                { value: "542", label: "GitHub commits" },
-                { value: "3+", label: "Years coding" },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center gap-1"
-                >
-                  <span
-                    className="text-3xl md:text-4xl font-bold"
-                    style={{
-                      color: "var(--accent)",
-                      textShadow: "0 0 20px rgba(34,211,238,0.5)",
-                    }}
-                  >
-                    {stat.value}
-                  </span>
-                  <span className="text-zinc-500 text-xs sm:text-sm">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <a
+              href="#getintouch"
+              className="px-7 py-3 rounded-full font-semibold text-white border border-zinc-600 transition-colors hover:border-[rgb(var(--accent-rgb)/0.7)]"
+            >
+              Get in touch
+            </a>
           </div>
         </div>
       </div>
@@ -211,27 +156,18 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="relative">
-              <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden ring-2 ring-offset-4 ring-offset-black ring-[color:var(--accent)]">
-                <Image
-                  src="/prof_square.webp"
-                  alt="Piotr Wittig"
-                  width={384}
-                  height={384}
-                  className="object-cover w-full h-full"
-                  priority
-                />
-              </div>
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-zinc-900 border border-zinc-700 px-4 py-1.5 text-sm whitespace-nowrap">
-                <span
-                  className="w-2 h-2 rounded-full bg-green-400"
-                  style={{ boxShadow: "0 0 8px #4ade80" }}
-                />
-                Open to work
-              </div>
+            <div className="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden ring-2 ring-offset-4 ring-offset-black ring-[color:var(--accent)]">
+              <Image
+                src="/prof_square.webp"
+                alt="Piotr Wittig"
+                width={384}
+                height={384}
+                className="object-cover w-full h-full"
+                priority
+              />
             </div>
 
-            <div className="text-center lg:text-left mt-4">
+            <div className="text-center lg:text-left">
               <h2 className="text-3xl font-bold">Piotr Wittig</h2>
               <p className="text-zinc-400 mt-1">
                 Full-Stack Developer &amp; AI Specialist
@@ -243,7 +179,7 @@ export default function Home() {
                 href="https://github.com/Schoji"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-cyan-400/70"
+                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-[rgb(var(--accent-rgb)/0.7)]"
               >
                 <SiGithub size={18} /> GitHub
               </a>
@@ -251,14 +187,14 @@ export default function Home() {
                 href="https://linkedin.com/in/piotr-wittig-357bb9369"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-cyan-400/70"
+                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/60 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-[rgb(var(--accent-rgb)/0.7)]"
               >
                 <SiLinkedin size={18} /> LinkedIn
               </a>
             </div>
 
             <div className="hover-glow w-full rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 flex flex-col gap-4">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                 Quick Facts
               </p>
               <div className="flex items-center gap-3 text-zinc-300">
@@ -286,24 +222,17 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
+            <h2 className="text-4xl md:text-5xl font-bold mt-3">About Me</h2>
             <p
-              className="text-sm font-bold tracking-[0.2em]"
-              style={{ color: "var(--accent)" }}
-            >
-              {"// ABOUT ME"}
-            </p>
-            <h1 className="text-4xl md:text-5xl font-bold mt-3">About Me</h1>
-            <p
-              className="text-2xl md:text-3xl italic mt-5"
+              className="text-2xl md:text-3xl italic leading-snug mt-5"
               style={{ color: "var(--accent)" }}
             >
               &quot;I write code occasionally on purpose.&quot;
             </p>
             <p className="text-zinc-400 text-base md:text-lg leading-relaxed mt-6 max-w-2xl">
-              I&apos;m a developer and AI specialist who values pragmatism. I cut
-              through the visual noise to focus on what matters most:
-              lightning-fast performance, solid UX, and architecture that
-              won&apos;t break under pressure.
+              I&apos;m a developer and AI specialist who values pragmatism. I care
+              about performance, interfaces people can actually use, and
+              architecture that still makes sense a year later.
             </p>
 
             {/* Technologies */}
@@ -330,7 +259,7 @@ export default function Home() {
                         ? {
                             borderColor: "var(--accent)",
                             color: "var(--accent)",
-                            boxShadow: "0 0 14px rgba(34,211,238,0.18)",
+                            boxShadow: "0 0 14px rgb(var(--accent-rgb) / calc(0.18 * var(--glow-strength)))",
                           }
                         : { borderColor: "#3f3f46", color: "#d4d4d8" }
                     }
@@ -377,12 +306,6 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <p
-              className="text-sm font-bold tracking-[0.2em]"
-              style={{ color: "var(--accent)" }}
-            >
-              {"// GITHUB"}
-            </p>
             <h2 className="text-4xl md:text-5xl font-bold mt-3">
               GitHub Contributions
             </h2>
@@ -396,11 +319,12 @@ export default function Home() {
                 username="Schoji"
                 blockSize={12}
                 blockMargin={4}
-                fontSize={13}
+                fontSize={12}
                 theme={{
-                  // Cyan ramp from empty (dark) to the site accent (#22d3ee)
-                  dark: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
-                  light: ["#1b2530", "#0e5063", "#0891b2", "#06b6d4", "#22d3ee"],
+                  // Brass ramp from empty (dark) to the site accent (#e0a33e).
+                  // Literals: the library takes an array, not CSS vars.
+                  dark: ["#241c0c", "#5c4207", "#a87a11", "#c99327", "#e0a33e"],
+                  light: ["#241c0c", "#5c4207", "#a87a11", "#c99327", "#e0a33e"],
                 }}
                 colorScheme="dark"
               />
@@ -439,7 +363,10 @@ export default function Home() {
       {listedPosts.length > 0 && (
         <section
           id="writing"
-          className="border-t border-zinc-800 px-4 sm:px-6 md:px-10 lg:px-16 py-16 md:py-24"
+          /* No border-t: the last project card's own border-b already draws the
+             separator, and the root grid's gap-5 sits between them — a border on
+             both sides renders two parallel rules 20px apart. */
+          className="px-4 sm:px-6 md:px-10 lg:px-16 py-16 md:py-24"
         >
           <motion.div
             className="max-w-7xl mx-auto"
@@ -448,12 +375,6 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <p
-              className="text-sm font-bold tracking-[0.2em]"
-              style={{ color: "var(--accent)" }}
-            >
-              {"// WRITING"}
-            </p>
             <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
               <h2 className="text-4xl md:text-5xl font-bold">From the blog</h2>
               <a
@@ -476,12 +397,12 @@ export default function Home() {
                   href={`/blog/${post.slug}`}
                   className="hover-glow group flex flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6"
                 >
-                  <div className="flex items-center gap-3 text-xs text-zinc-500">
+                  <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
                     <time dateTime={post.date}>{formatDate(post.date)}</time>
                     <span>·</span>
                     <span>{post.readingTime}</span>
                   </div>
-                  <h3 className="text-xl font-bold leading-snug group-hover:text-cyan-200 transition-colors">
+                  <h3 className="text-xl font-bold leading-snug group-hover:text-[var(--accent-light)] transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-zinc-400 text-sm leading-relaxed line-clamp-3">
@@ -506,57 +427,73 @@ export default function Home() {
 
       <div
         id="getintouch"
-        className="px-4 md:px-5 py-20 min-h-[100svh] flex items-center justify-center flex-col gap-5"
+        className="px-4 md:px-5 py-20 min-h-[100svh] flex items-center justify-center"
       >
-        <h1 className="text-3xl md:text-4xl font-bold">Get in Touch</h1>
-        <p className="text-zinc-400 text-base md:text-xl text-center w-full md:w-2/3">
-          I&apos;m always open to discussing new opportunities, interesting
-          projects, or just having a chat about technology and development. Feel
-          free to reach out through any of these channels.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 p-2 md:p-5 w-full">
-          <Card
-            icon={LucideMail}
-            title={"Email"}
-            description={"Drop me a line anytime"}
-            name={"piotr.wittig@gmail.com"}
-            url={"mailto:piotr.wittig@gmail.com"}
-          />
-          <Card
-            icon={BsDiscord}
-            title={"Discord"}
-            description={"Let's chat on Discord"}
-            name={"schoji"}
-            url={null}
-          />
-          <Card
-            icon={LiaLinkedinIn}
-            title={"LinkedIn"}
-            description={"Connect professionally"}
-            name={"linkedin.com/in/piotr-wittig-357bb9369"}
-            url={"https://linkedin.com/in/piotr-wittig-357bb9369"}
-          />
-          <Card
-            icon={FaFacebook}
-            title={"Facebook"}
-            description={"Follow my updates"}
-            name={"facebook.com/profile.php?id=100010308513992"}
-            url={
-              "https://www.facebook.com/profile.php?id=100010308513992&locale=pl_PL"
-            }
-          />
+        <div className="w-full max-w-3xl flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-3xl md:text-4xl font-semibold">Get in Touch</h2>
+            <p className="text-zinc-400 text-lg leading-relaxed max-w-2xl">
+              Open to new opportunities and interesting projects, or just a
+              conversation about what you are building. Email is the surest way
+              to reach me and I answer within a day.
+            </p>
+          </div>
+
+          {/* Email is the channel that actually gets used, so it gets the
+              weight instead of being one of four matching tiles. */}
+          <a
+            href="mailto:piotr.wittig@gmail.com"
+            className="hover-glow group flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6"
+          >
+            <span className="flex min-w-0 items-center gap-4">
+              <LucideMail
+                size={22}
+                style={{ color: "var(--accent)" }}
+                className="shrink-0"
+              />
+              <span className="flex min-w-0 flex-col">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+                  Email
+                </span>
+                <span className="truncate text-lg font-medium text-zinc-100">
+                  piotr.wittig@gmail.com
+                </span>
+              </span>
+            </span>
+            <span
+              className="flex shrink-0 items-center gap-2 text-sm font-semibold"
+              style={{ color: "var(--accent)" }}
+            >
+              Write to me
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </span>
+          </a>
+
+          {/* The rest are a list, not a second grid of identical cards. */}
+          <div className="flex flex-col border-t border-zinc-800 pt-4">
+            <ContactLink
+              icon={LiaLinkedinIn}
+              label="LinkedIn"
+              handle="linkedin.com/in/piotr-wittig-357bb9369"
+              url="https://linkedin.com/in/piotr-wittig-357bb9369"
+            />
+            <ContactLink
+              icon={BsDiscord}
+              label="Discord"
+              handle="schoji"
+              url={null}
+            />
+            <ContactLink
+              icon={FaFacebook}
+              label="Facebook"
+              handle="facebook.com/profile.php?id=100010308513992"
+              url="https://www.facebook.com/profile.php?id=100010308513992&locale=pl_PL"
+            />
+          </div>
         </div>
-        <p className="text-zinc-400 text-center">
-          Prefer a more direct approach? Send me an email and I&apos;ll get back
-          to you within 24 hours.
-        </p>
-        <a
-          className="btn bg-white text-black rounded-3xl p-4 md:p-6 font-semibold hover:bg-gray-200"
-          href="mailto:piotr.wittig@gmail.com"
-        >
-          <LucideMail size={16} />
-          <span className="hidden sm:inline">Send Email</span>
-        </a>
       </div>
 
       <footer
@@ -564,7 +501,7 @@ export default function Home() {
         className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-2 md:p-4 border-t-1 border-zinc-700"
       >
         <aside>
-          <p className="text-zinc-500 text-xs md:text-base">
+          <p className="text-[var(--text-muted)] text-xs md:text-base">
             © {new Date().getFullYear()} Piotr Wittig. All rights reserved.
           </p>
         </aside>

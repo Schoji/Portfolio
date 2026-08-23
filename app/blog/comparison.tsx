@@ -97,18 +97,18 @@ function Panel({
     <div
       className="flex min-w-0 flex-col rounded-2xl border p-5"
       style={{
-        borderColor: ste ? "rgba(34,211,238,0.35)" : "rgba(244,63,94,0.28)",
-        background: ste ? "rgba(34,211,238,0.04)" : "rgba(244,63,94,0.04)",
+        borderColor: ste ? "rgb(var(--accent-rgb) / 0.35)" : "rgba(244,63,94,0.28)",
+        background: ste ? "rgb(var(--accent-rgb) / 0.04)" : "rgba(244,63,94,0.04)",
       }}
     >
       <div className="flex items-baseline justify-between gap-3 border-b border-zinc-800/80 pb-3">
         <span
-          className="font-mono text-[0.7rem] font-bold uppercase tracking-[0.2em]"
-          style={{ color: ste ? "#67e8f9" : "#fda4af" }}
+          className="font-mono text-xs font-bold uppercase tracking-[0.2em]"
+          style={{ color: ste ? "var(--accent-light)" : "#fda4af" }}
         >
           {title}
         </span>
-        <span className="shrink-0 font-mono text-[0.7rem] text-zinc-500">
+        <span className="shrink-0 font-mono text-xs text-[var(--text-muted)]">
           {words}w · longest {longest}
         </span>
       </div>
@@ -123,7 +123,7 @@ function Panel({
         <ol className="mt-4 flex flex-col gap-2">
           {paragraphs.map((p, i) => (
             <li key={i} className="flex gap-3 leading-relaxed text-zinc-300">
-              <span className="font-mono text-sm text-zinc-500">{i + 1}.</span>
+              <span className="font-mono text-sm text-[var(--text-muted)]">{i + 1}.</span>
               <span className="min-w-0">{p}</span>
             </li>
           ))}
@@ -155,7 +155,7 @@ export default function Comparison({
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm text-[var(--text-muted)]">
           {examples.length} texts, same job, two styles.
         </p>
         <button
@@ -164,7 +164,7 @@ export default function Comparison({
           aria-pressed={highlight}
           className="flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-colors"
           style={{
-            borderColor: highlight ? "rgba(34,211,238,0.5)" : "#3f3f46",
+            borderColor: highlight ? "rgb(var(--accent-rgb) / 0.5)" : "#3f3f46",
             color: highlight ? ACCENT : "#a1a1aa",
           }}
         >
@@ -183,7 +183,9 @@ export default function Comparison({
             <h3 className="text-lg font-bold text-white md:text-xl">
               {example.label}
             </h3>
-            <p className="mt-1 text-sm text-zinc-500">{example.context}</p>
+            <p className="mt-1 max-w-[72ch] text-sm leading-relaxed text-[var(--text-muted)]">
+              {example.context}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
@@ -203,7 +205,7 @@ export default function Comparison({
             />
           </div>
 
-          <p className="text-sm leading-relaxed text-zinc-400">
+          <p className="max-w-[72ch] text-sm leading-relaxed text-zinc-400">
             <span
               className="font-mono text-xs uppercase tracking-[0.15em]"
               style={{ color: ACCENT }}

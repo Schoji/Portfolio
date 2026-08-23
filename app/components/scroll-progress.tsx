@@ -2,7 +2,7 @@
 import { motion, useScroll } from "motion/react";
 
 /**
- * Thin cyan (site accent) bar pinned to the bottom edge of the navbar that
+ * Thin accent-colored bar pinned to the bottom edge of the navbar that
  * fills from left to right as the user scrolls toward the bottom of the page.
  */
 export default function ScrollProgress() {
@@ -15,8 +15,8 @@ export default function ScrollProgress() {
       style={{
         scaleX: scrollYProgress,
         background:
-          "linear-gradient(90deg, #06b6d4 0%, #22d3ee 55%, #67e8f9 100%)",
-        boxShadow: "0 0 10px rgba(34,211,238,0.7)",
+          "linear-gradient(90deg, var(--accent-dark) 0%, var(--accent) 55%, var(--accent-light) 100%)",
+        boxShadow: "0 0 10px rgb(var(--accent-rgb) / calc(0.7 * var(--glow-strength)))",
       }}
     />
   );

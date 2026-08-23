@@ -19,8 +19,7 @@ export default function Error({
     <div
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden px-6 text-center"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 0%, #1c1c2e 0%, #0a0a0a 60%)",
+        background: "var(--page-gradient)",
       }}
     >
       {/* Logo */}
@@ -31,24 +30,13 @@ export default function Error({
         Piotr Wittig<span style={{ color: "var(--accent)" }}>.</span>
       </Link>
 
-      {/* Radial glow behind the code */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div
-          className="h-[700px] w-[700px] max-w-full rounded-full opacity-40"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(76,29,149,0.35) 0%, rgba(34,211,238,0.06) 42%, transparent 70%)",
-          }}
-        />
-      </div>
-
       <div className="relative z-10 flex flex-col items-center gap-6">
         <span
           className="inline-flex items-center rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em]"
           style={{
             color: "var(--accent)",
-            borderColor: "rgba(34,211,238,0.55)",
-            boxShadow: "0 0 20px rgba(34,211,238,0.15)",
+            borderColor: "rgb(var(--accent-rgb) / 0.55)",
+            boxShadow: "0 0 20px rgb(var(--accent-rgb) / calc(0.15 * var(--glow-strength)))",
           }}
         >
           Something went wrong
@@ -69,7 +57,7 @@ export default function Error({
             className="flex items-center gap-2 rounded-full px-8 py-3 font-bold text-black transition-transform hover:scale-105"
             style={{
               background: "var(--accent)",
-              boxShadow: "0 0 30px rgba(34,211,238,0.4)",
+              boxShadow: "0 0 30px rgb(var(--accent-rgb) / calc(0.4 * var(--glow-strength)))",
             }}
           >
             <RotateCcw size={18} />
@@ -77,7 +65,7 @@ export default function Error({
           </button>
           <Link
             href="/"
-            className="flex items-center gap-2 rounded-full border border-zinc-600 px-8 py-3 font-bold text-white transition-colors hover:border-cyan-400/70"
+            className="flex items-center gap-2 rounded-full border border-zinc-600 px-8 py-3 font-bold text-white transition-colors hover:border-[rgb(var(--accent-rgb)/0.7)]"
           >
             <ArrowLeft size={18} />
             Back home

@@ -6,7 +6,7 @@ import { formatDate, listedPosts } from "./posts";
 import { SITE_AUTHOR, SITE_URL } from "../site";
 
 const ACCENT = "var(--accent)";
-const ACCENT_BORDER = "rgba(34,211,238,0.5)";
+const ACCENT_BORDER = "rgb(var(--accent-rgb) / 0.5)";
 
 export const metadata: Metadata = {
   title: "Blog — Writing, Tools & Build Notes",
@@ -68,8 +68,7 @@ export default function BlogIndex() {
     <div
       className="min-h-screen"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 0%, #1c1c2e 0%, #0a0a0a 60%)",
+        background: "var(--page-gradient)",
         backgroundAttachment: "fixed",
       }}
     >
@@ -96,12 +95,6 @@ export default function BlogIndex() {
 
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-5 pb-10 pt-36 sm:px-8 md:pt-40">
-        <span
-          className="font-mono text-xs uppercase tracking-[0.25em]"
-          style={{ color: ACCENT }}
-        >
-          {"// Blog"}
-        </span>
         <h1 className="mt-3 text-5xl font-bold leading-[1.05] md:text-6xl">
           <span className="text-white">Things I figured out </span>
           <span className="hero-accent">and wrote down.</span>
@@ -114,7 +107,7 @@ export default function BlogIndex() {
 
         <a
           href="/feed.xml"
-          className="mt-6 inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/60 px-4 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-cyan-400/70"
+          className="mt-6 inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/60 px-4 py-2 text-sm font-semibold text-zinc-300 transition-colors hover:border-[rgb(var(--accent-rgb)/0.7)]"
         >
           <Rss size={15} style={{ color: ACCENT }} />
           RSS feed
@@ -125,7 +118,7 @@ export default function BlogIndex() {
       <section className="mx-auto max-w-4xl px-5 pb-24 sm:px-8">
         <div className="flex flex-col gap-5 border-t border-zinc-800 pt-10">
           {listedPosts.length === 0 && (
-            <p className="text-zinc-500">Nothing published yet.</p>
+            <p className="text-[var(--text-muted)]">Nothing published yet.</p>
           )}
 
           {listedPosts.map((post) => (
@@ -134,8 +127,10 @@ export default function BlogIndex() {
               href={`/blog/${post.slug}`}
               className="hover-glow group flex flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 md:p-8"
             >
+              {/* The frame carries no border: the card around it already has
+                  one, and two concentric borders read as a card in a card. */}
               {post.cover && (
-                <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl border border-zinc-800">
+                <div className="relative aspect-[2/1] w-full overflow-hidden rounded-xl">
                   <Image
                     src={post.cover}
                     alt={post.coverAlt ?? post.title}
@@ -146,7 +141,7 @@ export default function BlogIndex() {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-zinc-500">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[var(--text-muted)]">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span className="flex items-center gap-1.5">
                   <Clock size={13} />
@@ -159,7 +154,7 @@ export default function BlogIndex() {
                 )}
               </div>
 
-              <h2 className="text-2xl font-bold leading-snug text-white transition-colors group-hover:text-cyan-200 md:text-3xl">
+              <h2 className="text-2xl font-bold leading-snug text-white transition-colors group-hover:text-[var(--accent-light)] md:text-3xl">
                 {post.title}
               </h2>
 

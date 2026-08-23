@@ -9,7 +9,7 @@ import type { ElementType, ReactNode } from "react";
  */
 
 const ACCENT = "var(--accent)";
-const ACCENT_BORDER = "rgba(34,211,238,0.5)";
+const ACCENT_BORDER = "rgb(var(--accent-rgb) / 0.5)";
 
 /** Big opening paragraph, one per post. */
 export function Lead({ children }: { children: ReactNode }) {
@@ -25,31 +25,20 @@ export function P({ children }: { children: ReactNode }) {
 }
 
 /**
- * A titled block. `eyebrow` renders the `// LABEL` marker used across the
- * site; `id` is the TOC anchor target.
+ * A titled block. `id` is the TOC anchor target.
  */
 export function Section({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   children: ReactNode;
 }) {
   return (
     <section id={id} className="scroll-mt-24">
-      {eyebrow && (
-        <span
-          className="font-mono text-xs uppercase tracking-[0.25em]"
-          style={{ color: ACCENT }}
-        >
-          {`// ${eyebrow}`}
-        </span>
-      )}
-      <h2 className="mt-2 text-2xl font-bold text-white md:text-3xl">
+      <h2 className="text-2xl font-bold text-white md:text-3xl">
         {title}
       </h2>
       <div className="mt-5 flex flex-col gap-5">{children}</div>
@@ -116,7 +105,7 @@ export function A({ href, children }: { href: string; children: ReactNode }) {
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
         : undefined)}
-      className="underline decoration-cyan-400/40 underline-offset-4 transition-colors hover:decoration-cyan-400"
+      className="underline decoration-[rgb(var(--accent-rgb)/0.4)] underline-offset-4 transition-colors hover:decoration-[var(--accent)]"
       style={{ color: ACCENT }}
     >
       {children}
@@ -164,7 +153,7 @@ export function Quote({
     >
       {children}
       {cite && (
-        <footer className="mt-2 text-sm not-italic text-zinc-500">
+        <footer className="mt-2 text-sm not-italic text-[var(--text-muted)]">
           — {cite}
         </footer>
       )}
@@ -193,7 +182,7 @@ export function RuleTable({ rules }: { rules: Rule[] }) {
           className="hover-glow flex flex-col gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4"
         >
           <div>
-            <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-zinc-500">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">
               {r.group}
             </span>
             <p className="mt-1 font-semibold leading-snug text-zinc-100">
@@ -205,8 +194,8 @@ export function RuleTable({ rules }: { rules: Rule[] }) {
               <span className="font-mono text-xs text-rose-400/70">✗ </span>
               {r.avoid}
             </p>
-            <p className="text-cyan-200/90">
-              <span className="font-mono text-xs text-cyan-400/70">✓ </span>
+            <p className="text-[var(--accent-light)]">
+              <span className="font-mono text-xs text-[rgb(var(--accent-rgb)/0.7)]">✓ </span>
               {r.use}
             </p>
           </div>
@@ -244,7 +233,7 @@ export function Figure({
         className="w-full rounded-2xl border border-zinc-800"
       />
       {caption && (
-        <figcaption className="text-sm text-zinc-500">{caption}</figcaption>
+        <figcaption className="text-sm text-[var(--text-muted)]">{caption}</figcaption>
       )}
     </figure>
   );
@@ -260,7 +249,7 @@ export function Table({ head, rows }: { head: string[]; rows: string[][] }) {
             {head.map((h) => (
               <th
                 key={h}
-                className="px-4 py-3 font-mono text-xs uppercase tracking-[0.15em] text-zinc-500"
+                className="px-4 py-3 font-mono text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]"
               >
                 {h}
               </th>
@@ -326,12 +315,12 @@ export function StatRow({
             className="text-2xl font-bold md:text-3xl"
             style={{
               color: ACCENT,
-              textShadow: "0 0 20px rgba(34,211,238,0.4)",
+              textShadow: "0 0 20px rgb(var(--accent-rgb) / calc(0.4 * var(--glow-strength)))",
             }}
           >
             {s.value}
           </span>
-          <span className="text-center text-xs text-zinc-500">{s.label}</span>
+          <span className="text-center text-xs text-[var(--text-muted)]">{s.label}</span>
         </div>
       ))}
     </div>

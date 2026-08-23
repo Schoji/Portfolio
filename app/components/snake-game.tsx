@@ -98,6 +98,16 @@ export default function SnakeGame() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
 
+    // Canvas cannot read CSS custom properties, so resolve the accent tokens
+    // once here instead of hardcoding the hue a second time. Fallbacks match
+    // globals.css in case the stylesheet has not applied yet.
+    const rootStyle = getComputedStyle(document.documentElement);
+    const token = (name: string, fallback: string) =>
+      rootStyle.getPropertyValue(name).trim() || fallback;
+    const ACCENT_RGB = token("--accent-rgb", "224 163 62");
+    const ACCENT_LIGHT = token("--accent-light", "#f2c97a");
+    const GLOW = Number(token("--glow-strength", "0.35")) || 0.35;
+
     const resize = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -160,15 +170,15 @@ export default function SnakeGame() {
         const fx = s.food.x * CELL + CELL / 2;
         const fy = s.food.y * CELL + CELL / 2;
         const glow = ctx.createRadialGradient(fx, fy, 1, fx, fy, CELL);
-        glow.addColorStop(0, "rgba(34,211,238,0.6)");
-        glow.addColorStop(1, "rgba(34,211,238,0)");
+        glow.addColorStop(0, `rgb(${ACCENT_RGB} / ${0.6 * GLOW})`);
+        glow.addColorStop(1, `rgb(${ACCENT_RGB} / 0)`);
         ctx.beginPath();
         ctx.arc(fx, fy, CELL, 0, Math.PI * 2);
         ctx.fillStyle = glow;
         ctx.fill();
         ctx.beginPath();
         ctx.arc(fx, fy, CELL / 2 - 3, 0, Math.PI * 2);
-        ctx.fillStyle = "#67e8f9";
+        ctx.fillStyle = ACCENT_LIGHT;
         ctx.fill();
 
         // snake
@@ -177,7 +187,7 @@ export default function SnakeGame() {
           const alpha = s.dead ? 0.25 : 1 - t * 0.65;
           ctx.fillStyle = s.dead
             ? `rgba(239,68,68,${alpha})`
-            : `rgba(34,211,238,${alpha})`;
+            : `rgb(${ACCENT_RGB} / ${alpha})`;
           const pad = i === 0 ? 2 : 3;
           ctx.beginPath();
           ctx.roundRect(p.x * CELL + pad, p.y * CELL + pad, CELL - pad * 2, CELL - pad * 2, 4);

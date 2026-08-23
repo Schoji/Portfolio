@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SITE_URL } from "./site";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// IBM Plex is a superfamily, so the mono is a real monospace sibling of the
+// sans rather than an unrelated face bolted on. Neither is a variable font on
+// Google Fonts, hence the explicit weights.
+const plexSans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -106,15 +116,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // suppressHydrationWarning on <html>: the inline script in <head> adds the
+  // `js` class before React hydrates, which React would otherwise report as a
+  // server/client attribute mismatch.
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Marks that scripting is live, before first paint. Everything Framer
+            Motion reveals on scroll ships as opacity:0 in the server HTML, so
+            globals.css keeps that content visible until this class appears. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("js")`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${spaceGrotesk.variable} antialiased`}>
+      <body className={`${plexSans.variable} ${plexMono.variable} antialiased`}>
         {children}
         <Analytics />
       </body>

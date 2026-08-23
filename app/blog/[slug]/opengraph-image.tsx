@@ -41,7 +41,7 @@ export default async function Image({
           justifyContent: "space-between",
           padding: "72px 80px",
           background:
-            "radial-gradient(ellipse at 50% 0%, #1c1c2e 0%, #0a0a0a 65%)",
+            "radial-gradient(ellipse at 50% 0%, #17171a 0%, #0a0a0a 65%)",
           color: "#fafafa",
         }}
       >
@@ -54,7 +54,7 @@ export default async function Image({
             color: "#a1a1aa",
           }}
         >
-          <span style={{ color: "#22d3ee", fontSize: 40 }}>{"//"}</span>
+          <span style={{ color: "#e0a33e", fontSize: 40 }}>{"//"}</span>
           <span>{`piotrwittig.com${post ? ` — ${post.readingTime}` : ""}`}</span>
         </div>
 
@@ -97,7 +97,7 @@ export default async function Image({
         >
           <div style={{ display: "flex" }}>
             <span style={{ fontWeight: 700 }}>Piotr Wittig</span>
-            <span style={{ fontWeight: 700, color: "#22d3ee" }}>.</span>
+            <span style={{ fontWeight: 700, color: "#e0a33e" }}>.</span>
           </div>
           <div style={{ color: "#71717a" }}>
             {post ? formatDate(post.date) : ""}

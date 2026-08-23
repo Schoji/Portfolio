@@ -331,7 +331,7 @@ export default function Body() {
         rule numbers so you can check me.
       </Lead>
 
-      <Section id="why" eyebrow="Why" title="Why I wrote this comparison">
+      <Section id="why" title="Why I wrote this comparison">
         <P>
           I found ASD-STE100 through{" "}
           <A href="https://www.youtube.com/watch?v=uJblcC4lKYw">
@@ -356,7 +356,7 @@ export default function Body() {
         </P>
       </Section>
 
-      <Section id="what" eyebrow="Background" title="What is ASD-STE100?">
+      <Section id="what" title="What is ASD-STE100?">
         <P>
           ASD-STE100 is a controlled language: a fixed dictionary plus a set of
           writing rules. The European aerospace industry started work on it in
@@ -399,7 +399,6 @@ export default function Body() {
 
       <Section
         id="not-plain-english"
-        eyebrow="Distinction"
         title="Plain language and STE are not the same thing"
       >
         <P>
@@ -424,7 +423,7 @@ export default function Body() {
         </P>
       </Section>
 
-      <Section id="rules" eyebrow="Reference" title="The ASD-STE100 rules that matter most">
+      <Section id="rules" title="The ASD-STE100 rules that matter most">
         <P>
           Issue 9 has 53 numbered writing rules in nine sections, plus the
           dictionary. Below are the ones that change how ordinary technical text
@@ -454,7 +453,6 @@ export default function Body() {
 
       <Section
         id="side-by-side"
-        eyebrow="The comparison"
         title="A typical draft vs ASD-STE100, side by side"
       >
         <P>
@@ -478,7 +476,6 @@ export default function Body() {
 
       <Section
         id="slop"
-        eyebrow="The argument"
         title="Why STE removes the common AI-writing tics"
       >
         <P>
@@ -532,7 +529,6 @@ export default function Body() {
 
       <Section
         id="wrong-tool"
-        eyebrow="Limits"
         title="Where ASD-STE100 is the wrong tool"
       >
         <P>
@@ -583,7 +579,7 @@ export default function Body() {
         </P>
       </Section>
 
-      <Section id="checklist" eyebrow="Practice" title="A 6-step STE-inspired check">
+      <Section id="checklist" title="A 6-step STE-inspired check">
         <P>
           This is my editing shortcut, not a compliance test. Procedures have a
           20-word limit, descriptions have a 25-word limit, and full compliance
@@ -626,13 +622,12 @@ export default function Body() {
 
       <Section
         id="faq"
-        eyebrow="FAQ"
         title="Questions people actually ask about ASD-STE100"
       >
         <Faq items={faq} />
       </Section>
 
-      <Section id="sources" eyebrow="Sources" title="Sources">
+      <Section id="sources" title="Sources">
         <UL>
           <LI>
             <A href="https://asd-ste100.org">asd-ste100.org</A> — the official

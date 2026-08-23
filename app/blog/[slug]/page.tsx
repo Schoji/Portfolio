@@ -9,7 +9,7 @@ import { postContent } from "../content";
 import { SITE_AUTHOR, SITE_URL } from "../../site";
 
 const ACCENT = "var(--accent)";
-const ACCENT_BORDER = "rgba(34,211,238,0.5)";
+const ACCENT_BORDER = "rgb(var(--accent-rgb) / 0.5)";
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
@@ -140,8 +140,7 @@ export default async function Page({
     <div
       className="min-h-screen"
       style={{
-        background:
-          "radial-gradient(ellipse at 50% 0%, #1c1c2e 0%, #0a0a0a 60%)",
+        background: "var(--page-gradient)",
         backgroundAttachment: "fixed",
       }}
     >
@@ -173,17 +172,17 @@ export default async function Page({
           <div className="flex items-center gap-2 text-sm">
             <a
               href="/blog"
-              className="text-zinc-500 transition-colors hover:text-zinc-300"
+              className="text-[var(--text-muted)] transition-colors hover:text-zinc-300"
             >
               Blog
             </a>
-            <ChevronRight size={14} className="text-zinc-600" />
+            <ChevronRight size={14} className="text-zinc-500" />
             <span className="truncate" style={{ color: ACCENT }}>
               {post.title}
             </span>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-zinc-500">
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[var(--text-muted)]">
             <span className="font-semibold text-zinc-400">
               By {SITE_AUTHOR}
             </span>
@@ -235,7 +234,7 @@ export default async function Page({
             />
           </div>
           {post.coverCredit && (
-            <p className="mt-2 text-xs text-zinc-600">{post.coverCredit}</p>
+            <p className="mt-2 text-xs text-[var(--text-muted)]">{post.coverCredit}</p>
           )}
         </div>
       )}
@@ -248,7 +247,7 @@ export default async function Page({
 
         {toc && toc.length > 0 && (
           <aside className="order-first hover-glow rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 lg:order-none lg:sticky lg:top-24">
-            <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+            <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
               <List size={14} style={{ color: ACCENT }} />
               Contents
             </p>
@@ -257,7 +256,7 @@ export default async function Page({
                 <a
                   key={entry.id}
                   href={`#${entry.id}`}
-                  className="text-zinc-400 transition-colors hover:text-cyan-200"
+                  className="text-zinc-400 transition-colors hover:text-[var(--accent-light)]"
                 >
                   {entry.label}
                 </a>
@@ -270,7 +269,7 @@ export default async function Page({
       {/* Prev / next + CTA */}
       <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-8">
         <div className="border-t border-zinc-800 pt-10">
-          <div className="hover-glow rounded-3xl border border-zinc-800 bg-zinc-900/40 p-8 text-center md:p-10">
+          <div className="hover-glow rounded-2xl border border-zinc-800 bg-zinc-900/40 p-8 text-center md:p-10">
             <h2 className="text-2xl font-bold md:text-3xl">
               Disagree with any of this?
             </h2>
@@ -283,7 +282,7 @@ export default async function Page({
               className="mt-6 inline-block rounded-full px-7 py-3 font-bold text-black transition-transform hover:scale-105"
               style={{
                 background: ACCENT,
-                boxShadow: "0 0 30px rgba(34,211,238,0.35)",
+                boxShadow: "0 0 30px rgb(var(--accent-rgb) / calc(0.35 * var(--glow-strength)))",
               }}
             >
               Send a correction
@@ -297,7 +296,7 @@ export default async function Page({
                   href={`/blog/${prev.slug}`}
                   className="hover-glow group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5"
                 >
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                     <ChevronLeft size={14} style={{ color: ACCENT }} />
                     Older
                   </div>
@@ -311,7 +310,7 @@ export default async function Page({
                   href={`/blog/${next.slug}`}
                   className="hover-glow group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-5 text-right sm:col-start-2"
                 >
-                  <div className="flex items-center justify-end gap-2 text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                  <div className="flex items-center justify-end gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                     Newer
                     <ChevronRight size={14} style={{ color: ACCENT }} />
                   </div>

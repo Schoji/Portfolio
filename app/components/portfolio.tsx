@@ -68,23 +68,23 @@ const Portfolio = ({
         >
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-zinc-500">Projects</span>
-            <ChevronRight size={14} className="text-zinc-600" />
+            <span className="text-[var(--text-muted)]">Projects</span>
+            <ChevronRight size={14} className="text-zinc-500" />
             <span style={{ color: "var(--accent)" }}>{title}</span>
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05]">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05]">
             {titleHead && <span className="text-white">{titleHead} </span>}
             <span
               style={{
                 color: "var(--accent)",
-                textShadow: "0 0 25px rgba(34,211,238,0.5)",
+                textShadow: "0 0 25px rgb(var(--accent-rgb) / calc(0.5 * var(--glow-strength)))",
               }}
             >
               {titleTail}
             </span>
-          </h1>
+          </h2>
 
           <p className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-2xl">
             {description}
@@ -102,7 +102,7 @@ const Portfolio = ({
                   key={index}
                   className="tech-pill rounded-full border px-4 py-1.5 text-sm font-medium"
                   style={{
-                    borderColor: "rgba(34,211,238,0.5)",
+                    borderColor: "rgb(var(--accent-rgb) / 0.5)",
                     color: "var(--accent)",
                   }}
                 >
@@ -120,7 +120,7 @@ const Portfolio = ({
               className="flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold text-black transition-all duration-150 hover:scale-105 active:scale-95"
               style={{
                 background: "var(--accent)",
-                boxShadow: "0 0 25px rgba(34,211,238,0.35)",
+                boxShadow: "0 0 25px rgb(var(--accent-rgb) / calc(0.35 * var(--glow-strength)))",
               }}
             >
               Read more
@@ -140,7 +140,7 @@ const Portfolio = ({
       {nextHref && (
         <a
           href={nextHref}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-zinc-600 hover:text-zinc-400 transition-colors animate-bounce"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-zinc-500 transition-colors hover:text-zinc-300"
         >
           <ChevronDown size={24} />
         </a>

@@ -88,7 +88,7 @@ export default function Body() {
         and this is the honest write-up of why.
       </Lead>
 
-      <Section id="inheritance" eyebrow="Backstory" title="The inheritance">
+      <Section id="inheritance" title="The inheritance">
         <P>
           What I received was the whole nervous system of a mouse and no body:
           the PCB with the sensor and the switches on it, the cable, the clear
@@ -111,7 +111,6 @@ export default function Body() {
 
       <Section
         id="constraints"
-        eyebrow="The problem"
         title="What a mouse shell actually has to hold"
       >
         <P>
@@ -160,7 +159,7 @@ export default function Body() {
         </P>
       </Section>
 
-      <Section id="design" eyebrow="CAD" title="Designing it">
+      <Section id="design" title="Designing it">
         <P>
           I did not start from a blank file. The shape is a remix of{" "}
           <A href={ORIGINAL}>EOS, a barebones mouse shell</A> — all credit for
@@ -191,7 +190,7 @@ export default function Body() {
         </Callout>
       </Section>
 
-      <Section id="assembly" eyebrow="Build" title="Parts and assembly">
+      <Section id="assembly" title="Parts and assembly">
         <P>
           Four printed parts, two optional printed side buttons, eleven screws
           in three sizes, and the donor electronics. The part names below match the
@@ -237,7 +236,7 @@ export default function Body() {
         </div>
       </Section>
 
-      <Section id="crimes" eyebrow="Honesty" title="The crimes">
+      <Section id="crimes" title="The crimes">
         <P>
           Full disclosure, because anyone who prints this deserves to know what
           they are getting:
@@ -282,7 +281,7 @@ export default function Body() {
         />
       </Section>
 
-      <Section id="lessons" eyebrow="Retrospective" title="What I would change">
+      <Section id="lessons" title="What I would change">
         <H3>Design for the bed, not only for the board</H3>
         <P>
           The single biggest mistake. Fit and printability are not competing
@@ -330,7 +329,7 @@ export default function Body() {
         </P>
       </Section>
 
-      <Section id="why" eyebrow="The argument" title="Why publish it broken">
+      <Section id="why" title="Why publish it broken">
         <P>
           The obvious move is to sit on a model until it is good. I think that
           is usually the wrong one for a project like this.
@@ -356,13 +355,12 @@ export default function Body() {
 
       <Section
         id="faq"
-        eyebrow="FAQ"
         title="Questions about the DeathAdder shell"
       >
         <Faq items={faq} />
       </Section>
 
-      <Section id="files" eyebrow="Downloads" title="Get the files">
+      <Section id="files" title="Get the files">
         <UL>
           <LI>
             <A href={PRINTABLES}>

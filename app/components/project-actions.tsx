@@ -55,7 +55,7 @@ export default function ProjectActions({
             accentPrimary
               ? {
                   background: "var(--accent)",
-                  boxShadow: "0 0 20px rgba(34,211,238,0.45)",
+                  boxShadow: "0 0 20px rgb(var(--accent-rgb) / calc(0.45 * var(--glow-strength)))",
                 }
               : undefined
           }
@@ -64,7 +64,7 @@ export default function ProjectActions({
           <span>{buttonText}</span>
         </a>
       ) : !appStoreURL && !playStoreURL ? (
-        <div className="flex items-center gap-3 px-6 py-3 rounded-full border border-zinc-800 bg-zinc-900 text-zinc-500 text-sm cursor-not-allowed opacity-60">
+        <div className="flex items-center gap-3 px-6 py-3 rounded-full border border-zinc-800 bg-zinc-900 text-[var(--text-muted)] text-sm cursor-not-allowed opacity-60">
           <span className="font-semibold">{noLinksLabel}</span>
         </div>
       ) : null}
