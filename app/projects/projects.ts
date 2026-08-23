@@ -1,4 +1,14 @@
-import { CalendarDays, FolderOpen, User, Users, WifiOff } from "lucide-react";
+import {
+  CalendarDays,
+  Flag,
+  FolderOpen,
+  Heart,
+  Shuffle,
+  Trophy,
+  User,
+  Users,
+  WifiOff,
+} from "lucide-react";
 import type { ElementType } from "react";
 
 export type Feature =
@@ -194,7 +204,7 @@ export const projects: Project[] = [
     story:
       "KanarRadar was the first app a friend and I set out to actually ship to the App Store, and my first serious project built on Firebase. The idea was local and practical: warn people in Szczecin about ticket inspections before they ran into one. We learned a lot getting it working, but it eventually got shelved — and honestly, I'm not sure we'll ever come back to it.",
     description:
-      "A mobile app designed to help public transport users avoid fines by offering real-time alerts about ticket inspections. It provides tools like a control feed, map with inspection locations, and account settings for a seamless and worry-free travel experience.",
+      "Warns public transport users in Szczecin about ticket inspections before they walk into one. A live feed of reported sightings, a map of where they were reported, and accounts so a report from one rider reaches the rest.",
     features: [
       "Fine Avoidance",
       "User Accounts",
@@ -223,7 +233,7 @@ export const projects: Project[] = [
     story:
       "Juan Note came straight out of my frustration with OneNote — its syncing was miserable and real-time collaboration constantly ended in conflicts. I wanted something similar but done right, so I started building my own clean, conflict-free take on collaborative notes. I got it moving, but eventually set it aside and never came back to finish it.",
     description:
-      "Juan Note is a user-friendly note-taking app designed to eliminate the clutter and bloatware found in traditional apps. Its primary focus is seamless collaboration, allowing users to easily share, edit, and organize notes together in real time without distractions.",
+      "A note-taking app built around collaboration that does not end in sync conflicts. Two people can edit the same note at the same time, share it with per-person permissions, and organise notes without fighting a sync queue.",
     features: [
       "Real-Time Collaboration",
       "Minimalist, Intuitive Interface",
@@ -252,7 +262,7 @@ export const projects: Project[] = [
     story:
       "Invest Me was a group project built during a GL training program. The brief: a Python web app that pulls live and historical cryptocurrency prices from an open API and presents them as interactive charts and tables — then analyses the trends to hint at when to buy or sell. As a team we settled the key choices along the way: Yahoo Finance (via yfinance) for the data after testing several crypto APIs, Flask over Django for a lighter, easier stack, and Plotly for the charts because it was the one library that stayed genuinely interactive on hover.",
     description:
-      "Invest Me is a comprehensive platform for tracking and analyzing the cryptocurrency market. It provides real-time price updates, interactive charts, and detailed analytics for a wide range of crypto coins, empowering users to make informed investment decisions.",
+      "Tracks live and historical cryptocurrency prices and plots them as interactive charts and tables. Pulls its data from Yahoo Finance, then analyses the trend to mark possible buy and sell points.",
     features: [
       "Live Crypto Price Tracking",
       "Interactive Price Charts",
@@ -332,7 +342,7 @@ export const projects: Project[] = [
     description:
       "This is a smart doorbell built upon the ESP32-CAM module, which instantly captures a photo and sends it as a notification to a Discord server when the button is pressed. The device is optimized for maximum power efficiency using deep sleep mode while also providing immediate, hardware-level feedback through light and sound.",
     story:
-      "A battery-powered smart doorbell built around an ESP32-CAM. Press the button and the hardware instantly fires the LEDs and buzzer — no waiting for the chip to wake — while the ESP32 boots, connects to Wi-Fi, snaps a photo of whoever's at the door, and pushes it to a Discord channel via webhook before dropping back into deep sleep. The interesting part was the electronics around it: a transistor acting as an electronic relay so the tiny touch signal can safely switch the high-current LEDs, a resistor divider that scales the 4.2V battery down to safe ADC levels so the firmware can estimate remaining charge, and a hinged battery compartment so swapping the 18650 cell doesn't mean tearing the whole thing apart. Deep sleep keeps it going for a long time between presses.",
+      "A battery-powered smart doorbell built around an ESP32-CAM. Press the button and the hardware fires the LEDs and buzzer immediately, without waiting for the chip to wake, while the ESP32 boots, connects to Wi-Fi, snaps a photo of whoever's at the door, and pushes it to a Discord channel via webhook before dropping back into deep sleep. The interesting part was the electronics around it: a transistor acting as an electronic relay so the tiny touch signal can safely switch the high-current LEDs, a resistor divider that scales the 4.2V battery down to safe ADC levels so the firmware can estimate remaining charge, and a hinged battery compartment so swapping the 18650 cell doesn't mean tearing the whole thing apart. Deep sleep keeps it going for a long time between presses.",
     features: [
       "Instant hardware feedback — LEDs & buzzer fire without waking the CPU",
       "Deep-sleep power optimization",
@@ -345,5 +355,53 @@ export const projects: Project[] = [
     phone: false,
     buttonText: "Github",
     buttonURL: "https://github.com/Schoji/esp32cam-doorbell",
+  },
+  {
+    slug: "linuxinder",
+    imageSource: ["/linuxinder/1.webp", "/linuxinder/2.webp", "/linuxinder/3.webp"],
+    title: "Linuxinder",
+    seoTitle: "Linuxinder — Tinder, but for Linux Distributions",
+    seoDescription:
+      "A satirical dating-app parody: swipe through 83 Linux distro profiles with in-character bios and tags, then match with a red flag revealed only afterward.",
+    tagline: "Tinder, but for Linux distributions — 83 dating profiles, one red flag per match.",
+    year: "2026",
+    status: "Live · open source",
+    role: "Solo project",
+    description:
+      "Linuxinder is a satirical dating-app parody: swipe through a deck of 83 Linux distributions, each with a desktop screenshot, a tagline written in its own voice, a short bio, and personality tags. Like enough of them and you get a match — plus two runner-ups and a verdict on your taste, and a red flag your new distro only admits to once you're already committed.",
+    story:
+      "Linuxinder started as a joke that wouldn't leave me alone: what if every Linux distro had a dating profile? So I built one for 83 of them, pulling base data from DistroWatch with a small scraper and rewriting each into its own voice, bio, and self-deprecating red flag. Swiping runs through a small scoring algorithm that tallies which tags you keep liking, so the eventual match reflects the taste you reveal one swipe at a time. It's a solo project, and it's traveled further than I expected — a post on r/DistroHopping, a share on LinkedIn, and a small but genuine trickle of GitHub stars.",
+    features: [
+      {
+        title: "83 Distro Dating Profiles",
+        subtitle: "Screenshot, in-character bio, and tags for each",
+        icon: Users,
+      },
+      {
+        title: "Swipe-to-Match Deck",
+        subtitle: "Tinder-style drag gestures, built with Motion",
+        icon: Heart,
+      },
+      {
+        title: "Preference-Weighted Matching",
+        subtitle: "Scores your match from every tag you liked",
+        icon: Shuffle,
+      },
+      {
+        title: "Red Flag Reveal",
+        subtitle: "Every distro's dealbreaker, shown only after you match",
+        icon: Flag,
+      },
+      {
+        title: "Runner-Ups & Verdict",
+        subtitle: "Two runner-up matches and a judgmental read on your taste",
+        icon: Trophy,
+      },
+    ],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion", "Vitest"],
+    invertOrder: false,
+    phone: false,
+    buttonText: "Visit linuxinder.vercel.app",
+    buttonURL: "https://linuxinder.vercel.app",
   },
 ];
