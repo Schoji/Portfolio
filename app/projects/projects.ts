@@ -359,8 +359,8 @@ export const projects: Project[] = [
   {
     slug: "linuxinder",
     imageSource: ["/linuxinder/1.webp", "/linuxinder/2.webp", "/linuxinder/3.webp"],
-    title: "Linuxinder",
-    seoTitle: "Linuxinder — Tinder, but for Linux Distributions",
+    title: "Linder",
+    seoTitle: "Linder — Tinder, but for Linux Distributions",
     seoDescription:
       "A satirical dating-app parody: swipe through 83 Linux distro profiles with in-character bios and tags, then match with a red flag revealed only afterward.",
     tagline: "Tinder, but for Linux distributions — 83 dating profiles, one red flag per match.",
@@ -368,9 +368,9 @@ export const projects: Project[] = [
     status: "Live · open source",
     role: "Solo project",
     description:
-      "Linuxinder is a satirical dating-app parody: swipe through a deck of 83 Linux distributions, each with a desktop screenshot, a tagline written in its own voice, a short bio, and personality tags. Like enough of them and you get a match — plus two runner-ups and a verdict on your taste, and a red flag your new distro only admits to once you're already committed.",
+      "Linder is a satirical dating-app parody: swipe through a deck of 83 Linux distributions, each with a desktop screenshot, a tagline written in its own voice, a short bio, and personality tags. Like enough of them and you get a match — plus two runner-ups and a verdict on your taste, and a red flag your new distro only admits to once you're already committed.",
     story:
-      "Linuxinder started as a joke that wouldn't leave me alone: what if every Linux distro had a dating profile? So I built one for 83 of them, pulling base data from DistroWatch with a small scraper and rewriting each into its own voice, bio, and self-deprecating red flag. Swiping runs through a small scoring algorithm that tallies which tags you keep liking, so the eventual match reflects the taste you reveal one swipe at a time. It's a solo project, and it's traveled further than I expected — a post on r/DistroHopping, a share on LinkedIn, and a small but genuine trickle of GitHub stars.",
+      "Linder started as a joke that wouldn't leave me alone: what if every Linux distro had a dating profile? So I built one for 83 of them, pulling base data from DistroWatch with a small scraper and rewriting each into its own voice, bio, and self-deprecating red flag. Swiping runs through a small scoring algorithm that tallies which tags you keep liking, so the eventual match reflects the taste you reveal one swipe at a time. It's a solo project, and it's traveled further than I expected — a post on r/DistroHopping, a share on LinkedIn, and a small but genuine trickle of GitHub stars.",
     features: [
       {
         title: "83 Distro Dating Profiles",
