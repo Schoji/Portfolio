@@ -7,7 +7,9 @@ import {
   ChevronRight,
   Download,
   Heart,
+  Lightbulb,
   Sparkles,
+  TriangleAlert,
 } from "lucide-react";
 import { FaApple, FaLinux, FaWindows } from "react-icons/fa";
 import type { ElementType } from "react";
@@ -29,7 +31,7 @@ function deriveCategory(p: Project): string {
   if (p.phone) return "Mobile App";
   const tech = p.technologies.join(" ").toLowerCase();
   if (/tauri|electron/.test(tech)) return "Desktop App";
-  if (/esp32|arduino|embedded/.test(tech)) return "Hardware";
+  if (/esp32|arduino|embedded|raspberry|jetson/.test(tech)) return "Hardware";
   return "Web App";
 }
 
@@ -87,6 +89,9 @@ export default function ProjectDetail({ slug }: { slug: string }) {
     playStoreURL,
     downloads,
     donateURL,
+    video,
+    problems,
+    takeaways,
   } = project;
 
   const images = Array.isArray(imageSource) ? imageSource : [imageSource];
@@ -191,6 +196,47 @@ export default function ProjectDetail({ slug }: { slug: string }) {
             </div>
           )}
 
+          {/* Problems along the way */}
+          {problems && problems.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 text-lg font-bold">
+                <TriangleAlert size={18} style={{ color: ACCENT }} />
+                Problems along the way
+              </div>
+              <ul className="mt-5 flex flex-col gap-3">
+                {problems.map((item, i) => (
+                  <li
+                    key={i}
+                    className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3.5 leading-relaxed text-zinc-400"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Takeaways */}
+          {takeaways && takeaways.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 text-lg font-bold">
+                <Lightbulb size={18} style={{ color: ACCENT }} />
+                Takeaways
+              </div>
+              <ul className="mt-5 flex flex-col gap-3">
+                {takeaways.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 leading-relaxed text-zinc-400">
+                    <span
+                      className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                      style={{ background: ACCENT }}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Highlights (from existing features) */}
           <div>
             <div className="flex items-center gap-2 text-lg font-bold">
@@ -278,6 +324,32 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           </div>
         </aside>
       </section>
+
+      {/* Video demo */}
+      {video && (
+        <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8">
+          <div className="border-t border-zinc-800 pt-14">
+            <h2 className="mt-2 text-3xl font-bold md:text-4xl">Demo</h2>
+            <div
+              className={`hover-glow mt-8 overflow-hidden rounded-2xl border border-zinc-800 bg-black ${
+                video.vertical
+                  ? "mx-auto aspect-[9/16] w-full max-w-sm"
+                  : "aspect-video w-full"
+              }`}
+            >
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                title={`${title} demo video`}
+                className="h-full w-full"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Gallery */}
       <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8">
