@@ -30,7 +30,8 @@ const OS_ICON: Record<string, ElementType> = {
 function deriveCategory(p: Project): string {
   if (p.phone) return "Mobile App";
   const tech = p.technologies.join(" ").toLowerCase();
-  if (/tauri|electron/.test(tech)) return "Desktop App";
+  if (/godot|unity/.test(tech)) return "Game";
+  if (/tauri|electron|raylib/.test(tech)) return "Desktop App";
   if (/esp32|arduino|embedded|raspberry|jetson/.test(tech)) return "Hardware";
   return "Web App";
 }
