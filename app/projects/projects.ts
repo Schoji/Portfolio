@@ -1,12 +1,21 @@
 import {
+  AudioLines,
+  Bluetooth,
   CalendarDays,
+  Cpu,
   Flag,
   FolderOpen,
   Heart,
+  History,
+  Mic,
+  Shield,
   Shuffle,
+  Smile,
+  Timer,
   Trophy,
   User,
   Users,
+  Wifi,
   WifiOff,
 } from "lucide-react";
 import type { ElementType } from "react";
@@ -40,6 +49,12 @@ export type Project = {
   downloads?: { os: string; url: string }[];
   /** Optional donation link (e.g. PayPal) shown alongside the downloads. */
   donateURL?: string;
+  /** What went wrong — shown as "Problems along the way" on the detail page. */
+  problems?: string[];
+  /** Lessons learned — shown as "Takeaways" on the detail page. */
+  takeaways?: string[];
+  /** Optional YouTube demo embedded on the detail page. `vertical` for Shorts (9:16). */
+  video?: { youtubeId: string; vertical?: boolean };
   features: Feature[];
   technologies: string[];
   invertOrder: boolean;
@@ -403,5 +418,160 @@ export const projects: Project[] = [
     phone: false,
     buttonText: "Visit linuxinder.vercel.app",
     buttonURL: "https://linuxinder.vercel.app",
+  },
+  {
+    slug: "aleksy-v2",
+    imageSource: [
+      "/aleksy_v2/1.webp",
+      "/aleksy_v2/2.webp",
+      "/aleksy_v2/3.webp",
+      "/aleksy_v2/4.webp",
+      "/aleksy_v2/5.webp",
+    ],
+    title: "A.L.E.K.S.Y v2",
+    seoTitle: "A.L.E.K.S.Y v2 — Polish Voice Assistant on Raspberry Pi",
+    seoDescription:
+      "A Polish voice assistant on a Raspberry Pi 5 with an OLED face. It answers in a cloned voice, with speech and language models on a Mac mini.",
+    tagline: "A Polish voice assistant that answers in the cloned voice of a real friend.",
+    year: "2026",
+    status: "Completed — built for a university event",
+    role: "Solo project — case reprint by Scarlet",
+    description:
+      "A Polish-speaking voice assistant for the KNI science club stand at the Maritime University of Szczecin. Say \"Aleksy\", ask a question, and it answers out loud in the cloned voice of the real Aleksy. A Raspberry Pi 5 handles the wake word, audio and an OLED face, and a Mac mini runs the speech and language models over the network.",
+    story:
+      "The first version ran fully offline on an NVIDIA Jetson Xavier NX. It took 20 to 30 seconds to answer, the local model could barely hold a conversation, and the homemade amplifier picked up noise from the board. For v2 I split the work in two: the Pi only does what has to happen in the room, and everything heavy runs on a Mac mini M2 over a WebSocket. I had about a week before the university's adaptation days, so most of it was a race: an OLED that showed a single column until I swapped the power supply, an Audio HAT that took the whole GPIO header, and a 3D-printed case that went through several iterations before it fit. At the event the AI was fine. What failed was the room: the speakers were too quiet for a hall full of stands, and there was no internet. After I got home I added a Bluetooth speaker option and a fallback Wi-Fi hotspot, so the next venue cannot break it the same way.",
+    features: [
+      {
+        title: "Cloned Voice",
+        subtitle: "Answers in the voice of the real Aleksy (OmniVoice)",
+        icon: AudioLines,
+      },
+      {
+        title: "Wake Word & Filler Words",
+        subtitle: "Says \"chwileczkę\" right away to cover the wait",
+        icon: Mic,
+      },
+      {
+        title: "OLED Face",
+        subtitle: "Six states: idle, listening, thinking, talking, asleep, error",
+        icon: Smile,
+      },
+      {
+        title: "Own Wi-Fi Hotspot",
+        subtitle: "Pick a network from the panel when no known one is around",
+        icon: Wifi,
+      },
+      {
+        title: "Bluetooth Speaker",
+        subtitle: "Selected from the built-in web panel",
+        icon: Bluetooth,
+      },
+    ],
+    technologies: [
+      "Python",
+      "Raspberry Pi 5",
+      "MLX",
+      "Qwen3-ASR",
+      "OpenAI API",
+      "OmniVoice",
+      "WebSockets",
+      "Flask",
+      "Jenkins",
+    ],
+    invertOrder: true,
+    phone: false,
+    buttonText: "Github",
+    buttonURL: "https://github.com/Schoji/voice-assistant-v2",
+    problems: [
+      "The OLED showed a single column. It was not the display or the wiring but the power supply. With the official 27 W supply it worked on the first try.",
+      "The Audio HAT takes the whole GPIO header, so the OLED had to share the I2C bus with the audio codec, and the standoffs between the boards had to go.",
+      "The case took several iterations. The first did not fit the display or the speakers, the first full print was on bad filament with painful supports, and the M3 holes were too small.",
+      "The Mac mini M2 is slow next to my M5 Pro laptop. To keep answers under a few seconds, TTS runs at 16 diffusion steps instead of 32 and answers are capped at 300 characters.",
+      "Speaking sentence by sentence made it worse. It started sooner, but synthesis barely kept up with playback, so there were pauses. The whole answer is now synthesized at once.",
+      "At the event the speakers were too quiet for a hall full of stands, and with no internet it could not reach the server at all.",
+    ],
+    takeaways: [
+      "Splitting the device from the compute was the right call. The Pi stays cheap, small and cool, and the models can change without touching the hardware.",
+      "Latency matters more than answer quality. A short filler word right after you stop talking does more for how it feels than a better model.",
+      "A demo device has to work in the worst room, not on the desk at home. Volume and connectivity failed at the event, not the AI.",
+      "Power problems look like software problems. Rule out the power supply first.",
+      "Measure on the target hardware early, and give 3D-printed holes some slack: 3.5 mm for M3 screws, not 3.2 mm.",
+    ],
+  },
+  {
+    slug: "aleksy-v1",
+    imageSource: [
+      "/aleksy_v1/1.webp",
+      "/aleksy_v1/2.webp",
+      "/aleksy_v1/3.webp",
+      "/aleksy_v1/4.webp",
+    ],
+    title: "A.L.E.K.S.Y v1",
+    seoTitle: "A.L.E.K.S.Y v1 — Offline Polish Voice Assistant on Jetson",
+    seoDescription:
+      "A fully offline Polish voice assistant on an NVIDIA Jetson Xavier NX: wake word, Whisper, the Bielik LLM and Piper TTS, all running on-device.",
+    tagline: "A fully offline Polish voice assistant. No cloud, no API keys, nothing leaves the device.",
+    year: "2026",
+    status: "Completed — university course project, succeeded by v2",
+    role: "Team of 4 on paper — hardware, case and most of the code by me",
+    description:
+      "A Polish voice assistant where every stage runs on the device: wake word, speech recognition, the language model and speech synthesis. It runs on an NVIDIA Jetson Xavier NX inside an orange 3D-printed case with built-in speakers, powered from a USB-C power bank.",
+    story:
+      "A.L.E.K.S.Y started in a computer security course. The assignment was to design a secure system on paper, but I thought it was meant to be real, so we started building one. The idea was a voice assistant with a strong privacy guarantee: if nothing is ever sent anywhere, there is nothing to intercept. A Raspberry Pi 5 with an AI HAT was not enough, so we moved to an NVIDIA Jetson Xavier NX borrowed from the university. The name came from our friend Aleksy, because Amazon Alexa sounded like him. A teammate set up the first wake word code, and from there the build was mostly mine. The Jetson quickly turned out to be the weakest part of the whole build. It worked, we got top marks, and I happily gave the Jetson back. What went wrong is below, and it is the reason v2 moved the heavy work to a server.",
+    features: [
+      {
+        title: "Fully Offline",
+        subtitle: "Wake word, STT, LLM and TTS all run on the Jetson",
+        icon: Shield,
+      },
+      {
+        title: "Polish End to End",
+        subtitle: "Bielik LLM through Ollama, Piper TTS with a Polish voice",
+        icon: Mic,
+      },
+      {
+        title: "Conversation Memory",
+        subtitle: "Last five exchanges, kept in RAM only",
+        icon: History,
+      },
+      {
+        title: "Voice Timers & Self-Awareness",
+        subtitle: "Sets timers and reports its own CPU temperature and RAM",
+        icon: Timer,
+      },
+      {
+        title: "Edge Hardware",
+        subtitle: "Jetson Xavier NX in a custom case, on a power bank",
+        icon: Cpu,
+      },
+    ],
+    technologies: [
+      "Python",
+      "NVIDIA Jetson Xavier NX",
+      "openWakeWord",
+      "faster-whisper",
+      "Ollama",
+      "Bielik",
+      "Piper TTS",
+    ],
+    invertOrder: false,
+    phone: false,
+    buttonText: "Github",
+    buttonURL: "https://github.com/MiniowaPM/voice-assistant",
+    problems: [
+      "The Jetson Xavier NX is bad at LLMs. On a 7B model quantized to 3 bits it made 1 to 2 tokens per second, so a single answer took 20 to 30 seconds. My MacBook Air beat it at everything.",
+      "JetPack 5 locks the board to an old software stack. Ollama was stuck at 0.1.46 without tool calling, onnxruntime had to be pinned, and newer Polish models like Bielik v3 did not run at all. The best working option was Bielik 7B v0.1 in Q3_K_M, which could barely hold a conversation or keep track of much context.",
+      "Speech-to-text was just as slow. The GPU was reserved for the LLM, so Whisper ran on the CPU and needed 5 to 8 seconds to transcribe a 2-second sentence.",
+      "The Raspberry Pi 5 with an AI HAT, the first plan, could not run an LLM at all. The HAT accelerates vision models, not language models.",
+      "The audio was improvised. The lavalier microphone ran on batteries and was flat the morning after I left it on, and the speakers came from a seven-year-old project with an amplifier that hissed whenever the board worked hard.",
+    ],
+    takeaways: [
+      "Check what software a board actually supports before you buy into it. Specs on paper meant nothing when the newest Ollama and models would not install.",
+      "An edge board from 2019 is not an LLM machine. For a conversation that feels natural you need far faster inference than it can give.",
+      "A fully offline device is a real privacy guarantee, but it caps the quality at what the local hardware can run. That trade-off is why v2 moved the heavy work to a server.",
+      "Latency is the whole experience. A 20-second wait kills a voice assistant no matter how good the answer is.",
+      "Audio hardware is not an afterthought. A cheap microphone and a noisy amplifier make even good answers sound bad.",
+    ],
+    video: { youtubeId: "V51wDqSVl7A", vertical: true },
   },
 ];
