@@ -49,8 +49,12 @@ export type Feature =
   | string
   | { title: string; subtitle?: string; icon?: ElementType };
 
+export type ProjectKind = "web" | "mobile" | "desktop" | "hardware" | "game";
+
 export type Project = {
   slug: string;
+  /** What kind of thing it is. Drives the filters on /projects and the breakdown on the home page. */
+  kind: ProjectKind;
   imageSource: string | string[];
   title: string;
   /** SEO-optimized <title> (~50–60 chars, keyword-first, descriptive). Falls back to `title` if unset. */
@@ -93,13 +97,71 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "plan-pm",
+    slug: "hubmi",
+    kind: "web",
     imageSource: [
-      "/plan_pm/1.webp",
-      "/plan_pm/3.webp",
-      "/plan_pm/4.webp",
-      "/plan_pm/5.webp",
-      "/plan_pm/6.webp",
+      "/hubmi/home.webp",
+      "/hubmi/problem.webp",
+      "/hubmi/canvas.webp",
+      "/hubmi/submissions.webp",
+      "/hubmi/needs-map.webp",
+      "/hubmi/reports.webp",
+    ],
+    title: "hubmi.pl",
+    seoTitle: "hubmi.pl — AI-Powered Social Innovation Hub",
+    seoDescription:
+      "A HackYeah 2026 prototype connecting residents' needs with social innovations through AI conversations, semantic matching and regional maps.",
+    tagline: "Turn a local problem into a concrete proposal for social change.",
+    year: "2026",
+    status: "Hackathon prototype — HackYeah 2026",
+    role: "Team of 6 — UI, AI chat integration & admin workflows",
+    description:
+      "A social innovation hub built for the Regional Social Policy Centre in Kraków. Residents describe a problem or an idea in their own words. An AI assistant helps structure it and finds relevant solutions from the ROPS innovation library. Institutions get an admin panel with summaries, risk assessments, matching innovations and a map of regional needs.",
+    story:
+      "We built hubmi.pl as JSON Derulo, a six-person team from Szczecin, for the Małopolska challenge at HackYeah 2026. The goal was to connect everyday problems with social innovations that already exist, while helping residents develop new ideas. My work covered the public chat screens and API integration, accessibility controls, the admin submissions and needs map, and later the idea canvas and AI-drafted grant applications. I also worked on semantic matching between submissions and innovations. The prototype received a weighted jury score of 7.35 out of 10; we did not reach the final pitches.",
+    features: [
+      {
+        title: "AI-Assisted Submissions",
+        subtitle: "A conversation becomes a structured problem or idea",
+        icon: Sparkles,
+      },
+      {
+        title: "Semantic Innovation Matching",
+        subtitle: "Finds relevant solutions in the ROPS library",
+        icon: Shuffle,
+      },
+      {
+        title: "Idea Canvas & Grant Applications",
+        subtitle: "Develop an idea and draft an application with AI",
+        icon: ClipboardCheck,
+      },
+      {
+        title: "Institution Dashboard",
+        subtitle: "Submissions, risk assessments, regional maps and reports",
+        icon: LayoutGrid,
+      },
+      {
+        title: "Accessibility Controls",
+        subtitle: "Adjustable text size and high contrast",
+        icon: Accessibility,
+      },
+    ],
+    technologies: ["Next.js", "OpenAI API", "TypeScript", "Tailwind CSS", "PostgreSQL", "pgvector", "Drizzle ORM", "Motion"],
+    video: { youtubeId: "q_ZCYjqOdYQ" },
+    invertOrder: false,
+    phone: false,
+    buttonText: "Github",
+    buttonURL: "https://github.com/MasterSun8/hubmi.pl",
+  },
+  {
+    slug: "plan-pm",
+    kind: "mobile",
+    imageSource: [
+      "/plan_pm/lectures.webp",
+      "/plan_pm/home.webp",
+      "/plan_pm/news.webp",
+      "/plan_pm/sidebar.webp",
+      "/plan_pm/settings.webp",
     ],
     title: "Plan PM",
     seoTitle: "Plan PM — Student Timetable App",
@@ -108,7 +170,7 @@ export const projects: Project[] = [
     tagline: "The Politechnika Morska timetable — personalized, offline, and finally fast.",
     year: "2025",
     status: "Live on the App Store & Google Play",
-    role: "Team of 4 — lead & core developer",
+    role: "Team of 4 — lead developer & project manager",
     description:
       "An intuitive mobile app for students and lecturers at Politechnika Morska. Instead of fighting a slow, impersonal university portal, Plan PM serves a personalized timetable that's saved on your device and fully available offline.",
     story:
@@ -135,7 +197,7 @@ export const projects: Project[] = [
         icon: WifiOff,
       },
     ],
-    technologies: ["Flutter", "Supabase", "Python", "Selenium"],
+    technologies: ["Flutter", "Supabase", "Python", "Beautiful Soup", "Flask"],
     invertOrder: false,
     phone: true,
     buttonText: "Github",
@@ -146,6 +208,7 @@ export const projects: Project[] = [
   },
   {
     slug: "until-done",
+    kind: "mobile",
     imageSource: [
       "/until_done/1.webp",
       "/until_done/2.webp",
@@ -191,6 +254,7 @@ export const projects: Project[] = [
   },
   {
     slug: "your-path",
+    kind: "web",
     imageSource: [
       "/your_path/1.webp",
       "/your_path/2.webp",
@@ -232,6 +296,7 @@ export const projects: Project[] = [
   },
   {
     slug: "kanarradar",
+    kind: "mobile",
     imageSource: "/kanar_radar.webp",
     title: "KanarRadar",
     seoTitle: "KanarRadar — Ticket Inspection Alerts App",
@@ -253,7 +318,7 @@ export const projects: Project[] = [
       "Push Notifications",
       "Offline Mode",
     ],
-    technologies: ["Flask", "Firebase", "OpenStreetMaps", "Flutter"],
+    technologies: ["Flutter", "Firebase", "OpenStreetMaps"],
     invertOrder: true,
     phone: true,
     buttonText: null,
@@ -261,6 +326,7 @@ export const projects: Project[] = [
   },
   {
     slug: "juan-note",
+    kind: "web",
     imageSource: "/juan_note.webp",
     title: "Juan Note",
     seoTitle: "Juan Note — Collaborative Note-Taking App",
@@ -290,6 +356,7 @@ export const projects: Project[] = [
   },
   {
     slug: "invest-me",
+    kind: "web",
     imageSource: "/invest_me.webp",
     title: "Invest Me",
     seoTitle: "Invest Me — Crypto Market Tracker",
@@ -319,6 +386,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sortra",
+    kind: "desktop",
     imageSource: [
       "/sortra/1.webp",
       "/sortra/2.webp",
@@ -370,6 +438,7 @@ export const projects: Project[] = [
   },
   {
     slug: "smart-doorbell",
+    kind: "hardware",
     imageSource: "/doorbell.webp",
     title: "Smart doorbell",
     seoTitle: "Smart Doorbell — ESP32-CAM IoT Project",
@@ -398,6 +467,7 @@ export const projects: Project[] = [
   },
   {
     slug: "linuxinder",
+    kind: "web",
     imageSource: ["/linuxinder/1.webp", "/linuxinder/2.webp", "/linuxinder/3.webp"],
     title: "Linder",
     seoTitle: "Linder — Tinder, but for Linux Distributions",
@@ -446,6 +516,7 @@ export const projects: Project[] = [
   },
   {
     slug: "aleksy-v2",
+    kind: "hardware",
     imageSource: [
       "/aleksy_v2/1.webp",
       "/aleksy_v2/2.webp",
@@ -525,6 +596,7 @@ export const projects: Project[] = [
   },
   {
     slug: "aleksy-v1",
+    kind: "hardware",
     imageSource: [
       "/aleksy_v1/1.webp",
       "/aleksy_v1/2.webp",
@@ -601,6 +673,7 @@ export const projects: Project[] = [
   },
   {
     slug: "soundnest",
+    kind: "desktop",
     imageSource: [
       "/soundnest/1.webp",
       "/soundnest/2.webp",
@@ -671,6 +744,7 @@ export const projects: Project[] = [
   },
   {
     slug: "navigator-pm",
+    kind: "web",
     imageSource: "/navigator_pm/1.webp",
     title: "NavigatorPM",
     seoTitle: "NavigatorPM — Indoor Navigation with QR Codes",
@@ -724,6 +798,7 @@ export const projects: Project[] = [
   },
   {
     slug: "latwa-ustawa",
+    kind: "mobile",
     imageSource: [
       "/latwa_ustawa/1.webp",
       "/latwa_ustawa/2.webp",
@@ -771,6 +846,7 @@ export const projects: Project[] = [
   },
   {
     slug: "horouge",
+    kind: "game",
     imageSource: ["/horouge/1.webp", "/horouge/2.webp", "/horouge/3.webp"],
     title: "Horouge",
     seoTitle: "Horouge — Horror Roguelike Made in 24h (Godot)",
@@ -814,6 +890,7 @@ export const projects: Project[] = [
   },
   {
     slug: "gcodec",
+    kind: "desktop",
     imageSource: "/gcodec/1.webp",
     title: "gcodec",
     seoTitle: "gcodec — 3D G-code Viewer in C with raylib",
@@ -852,6 +929,7 @@ export const projects: Project[] = [
   },
   {
     slug: "kni-website",
+    kind: "web",
     imageSource: ["/kni_site/1.webp", "/kni_site/2.webp", "/kni_site/3.webp"],
     title: "KNI Website",
     seoTitle: "KNI Website — Science Club Site in Next.js 16",

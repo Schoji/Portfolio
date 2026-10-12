@@ -1,5 +1,5 @@
 import { Bug, Skull, Wrench } from "lucide-react";
-import ProjectGallery from "../../components/project-gallery";
+import ScreenshotGallery from "../../_v2/components/screenshot-gallery";
 import {
   A,
   C,
@@ -228,7 +228,7 @@ export default function Body() {
           ]}
         />
         <div className="mt-2">
-          <ProjectGallery
+          <ScreenshotGallery
             images={GALLERY}
             phone={false}
             title="DeathAdder Essential shell transplant"

@@ -11,21 +11,22 @@ export default function Image() {
 
   return new ImageResponse(
     (
+      <div style={{ width: "100%", height: "100%", display: "flex", padding: 24, background: "#000" }}>
       <div
         style={{
-          width: "100%",
-          height: "100%",
+          flex: 1,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "72px 80px",
-          background:
-            "radial-gradient(ellipse at 50% 0%, #17171a 0%, #0a0a0a 65%)",
-          color: "#fafafa",
+          padding: "64px 72px",
+          // The v2 paper segment, inset on the black page like on the site.
+          // Satori cannot read CSS variables, so v2.css's colours repeat here.
+          background: "#f2f2f0",
+          borderRadius: 32,
+          color: "#000",
         }}
       >
-        <div style={{ display: "flex", gap: 16, fontSize: 30, color: "#a1a1aa" }}>
-          <span style={{ color: "#e0a33e", fontSize: 40 }}>{"//"}</span>
+        <div style={{ display: "flex", fontSize: 30, color: "rgba(0,0,0,0.55)" }}>
           <span>piotrwittig.com/blog</span>
         </div>
 
@@ -40,7 +41,7 @@ export default function Image() {
           >
             Things I figured out
           </div>
-          <div style={{ fontSize: 100, fontWeight: 700, color: "#e0a33e" }}>
+          <div style={{ fontSize: 100, fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
             and wrote down.
           </div>
         </div>
@@ -50,19 +51,19 @@ export default function Image() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "2px solid #27272a",
+            borderTop: "2px solid rgba(0,0,0,0.1)",
             paddingTop: 32,
             fontSize: 30,
           }}
         >
           <div style={{ display: "flex" }}>
             <span style={{ fontWeight: 700 }}>Piotr Wittig</span>
-            <span style={{ fontWeight: 700, color: "#e0a33e" }}>.</span>
           </div>
-          <div style={{ color: "#71717a" }}>
+          <div style={{ color: "rgba(0,0,0,0.55)" }}>
             {`${count} ${count === 1 ? "post" : "posts"}`}
           </div>
         </div>
+      </div>
       </div>
     ),
     size,
