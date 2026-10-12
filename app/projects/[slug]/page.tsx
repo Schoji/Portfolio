@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { projects } from "../projects";
-import ProjectDetail from "./ProjectDetail";
+import ProjectPage from "../../_v2/project-page";
+import Shell, { darkViewport } from "../../_v2/shell";
+
+export const viewport = darkViewport;
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -57,5 +60,9 @@ export default async function Page({
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
-  return <ProjectDetail slug={slug} />;
+  return (
+    <Shell>
+      <ProjectPage slug={slug} />
+    </Shell>
+  );
 }

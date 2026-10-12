@@ -1,27 +1,24 @@
 import Image from "next/image";
+import { Check, X } from "lucide-react";
 import type { ElementType, ReactNode } from "react";
 
 /**
  * Hand-rolled prose primitives for blog posts. The project has no MDX and no
- * @tailwindcss/typography, so post bodies compose these instead of raw tags —
- * that keeps every post on the same rhythm and the same zinc/cyan palette.
- * All of these are server-safe (no hooks).
+ * @tailwindcss/typography, so post bodies compose these instead of raw tags,
+ * which keeps every post on the same rhythm. They render inside the v2 shell:
+ * Bricolage for headings, Geist for text, white at reduced opacity for body
+ * copy, dark #1C1C1E blocks for asides. All of these are server-safe (no hooks).
  */
-
-const ACCENT = "var(--accent)";
-const ACCENT_BORDER = "rgb(var(--accent-rgb) / 0.5)";
 
 /** Big opening paragraph, one per post. */
 export function Lead({ children }: { children: ReactNode }) {
   return (
-    <p className="text-lg leading-relaxed text-zinc-300 md:text-xl">
-      {children}
-    </p>
+<p className="t-lead text-white">{children}</p>
   );
 }
 
 export function P({ children }: { children: ReactNode }) {
-  return <p className="leading-relaxed text-zinc-400">{children}</p>;
+  return <p className="t-body text-[18px] leading-[1.6] text-white/72">{children}</p>;
 }
 
 /**
@@ -37,33 +34,29 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-24">
-      <h2 className="text-2xl font-bold text-white md:text-3xl">
-        {title}
-      </h2>
-      <div className="mt-5 flex flex-col gap-5">{children}</div>
+    <section id={id} className="scroll-mt-28">
+      <h2 className="font-display t-title">{title}</h2>
+      <div className="mt-6 flex flex-col gap-5">{children}</div>
     </section>
   );
 }
 
 export function H3({ children }: { children: ReactNode }) {
   return (
-    <h3 className="mt-2 text-lg font-bold text-zinc-100 md:text-xl">
+    <h3 className="font-display mt-2 text-[24px] leading-[1.15] tracking-[-0.02em] text-white">
       {children}
     </h3>
   );
 }
 
 export function UL({ children }: { children: ReactNode }) {
-  return <ul className="flex flex-col gap-2.5">{children}</ul>;
+  return <ul className="flex flex-col gap-3">{children}</ul>;
 }
 
 export function LI({ children }: { children: ReactNode }) {
   return (
-    <li className="flex gap-3 leading-relaxed text-zinc-400">
-      <span aria-hidden className="mt-2.5 shrink-0" style={{ color: ACCENT }}>
-        <span className="block h-1.5 w-1.5 rounded-full bg-current" />
-      </span>
+    <li className="t-body flex gap-3.5 text-[18px] leading-[1.6] text-white/72">
+      <span aria-hidden className="mt-[11px] block size-1.5 shrink-0 rounded-full bg-white/45" />
       <span className="min-w-0">{children}</span>
     </li>
   );
@@ -75,23 +68,20 @@ export function Steps({ items }: { items: ReactNode[] }) {
     <ol className="flex flex-col gap-3">
       {items.map((item, i) => (
         <li key={i} className="flex gap-3.5">
-          <span
-            className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-xs font-bold"
-            style={{ borderColor: ACCENT_BORDER, color: ACCENT }}
-          >
+          <span className="t-numeral mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-white/12 text-[13px] text-white">
             {i + 1}
           </span>
-          <span className="min-w-0 leading-relaxed text-zinc-400">{item}</span>
+          <span className="t-body min-w-0 text-[18px] leading-[1.6] text-white/72">{item}</span>
         </li>
       ))}
     </ol>
   );
 }
 
-/** Inline monospace. Space Grotesk is the mono face here, so add a tint. */
+/** Inline code: a quiet chip, not a second typeface fighting the text. */
 export function C({ children }: { children: ReactNode }) {
   return (
-    <code className="rounded-md border border-zinc-800 bg-zinc-900/70 px-1.5 py-0.5 text-[0.9em] text-zinc-200">
+    <code className="rounded-md bg-white/10 px-1.5 py-0.5 font-mono text-[0.86em] text-white">
       {children}
     </code>
   );
@@ -105,8 +95,7 @@ export function A({ href, children }: { href: string; children: ReactNode }) {
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
         : undefined)}
-      className="underline decoration-[rgb(var(--accent-rgb)/0.4)] underline-offset-4 transition-colors hover:decoration-[var(--accent)]"
-      style={{ color: ACCENT }}
+      className="text-white underline decoration-white/35 underline-offset-4 transition-colors hover:decoration-white"
     >
       {children}
     </a>
@@ -124,14 +113,14 @@ export function Callout({
   children: ReactNode;
 }) {
   return (
-    <div className="hover-glow rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 md:p-6">
+    <div className="rounded-[24px] bg-[var(--bg-elevated)] p-6 md:p-7">
       {title && (
-        <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-zinc-300">
-          {Icon && <Icon size={16} style={{ color: ACCENT }} />}
+        <p className="t-button flex items-center gap-2.5 text-white">
+          {Icon && <Icon size={18} className="shrink-0 text-white/60" />}
           {title}
         </p>
       )}
-      <div className="mt-3 flex flex-col gap-3 text-sm leading-relaxed text-zinc-400 md:text-base">
+      <div className="t-body mt-3 flex flex-col gap-3 text-white/72">
         {children}
       </div>
     </div>
@@ -147,14 +136,11 @@ export function Quote({
   cite?: string;
 }) {
   return (
-    <blockquote
-      className="border-l-2 pl-5 text-lg italic leading-relaxed text-zinc-300 md:text-xl"
-      style={{ borderColor: ACCENT_BORDER }}
-    >
+    <blockquote className="font-display border-l-2 border-white/25 pl-6 text-[clamp(22px,2vw,28px)] leading-[1.25] tracking-[-0.015em] text-white">
       {children}
       {cite && (
-        <footer className="mt-2 text-sm not-italic text-[var(--text-muted)]">
-          — {cite}
+        <footer className="t-label mt-3 font-[family-name:var(--font-geist)] text-[color:var(--text-secondary)]">
+          {cite}
         </footer>
       )}
     </blockquote>
@@ -177,26 +163,19 @@ export function RuleTable({ rules }: { rules: Rule[] }) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {rules.map((r) => (
-        <div
-          key={r.rule}
-          className="hover-glow flex flex-col gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4"
-        >
-          <div>
-            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">
-              {r.group}
-            </span>
-            <p className="mt-1 font-semibold leading-snug text-zinc-100">
-              {r.rule}
-            </p>
+        <div key={r.rule} className="flex flex-col gap-4 rounded-[20px] bg-[var(--bg-elevated)] p-5">
+          <div className="flex flex-col gap-1">
+            <p className="t-body font-medium text-white">{r.rule}</p>
+            <span className="t-label text-[color:var(--text-secondary)]">{r.group}</span>
           </div>
-          <div className="flex flex-col gap-1.5 text-sm">
-            <p className="text-rose-300/80">
-              <span className="font-mono text-xs text-rose-400/70">✗ </span>
-              {r.avoid}
+          <div className="t-label flex flex-col gap-2 border-t border-white/10 pt-4 font-normal">
+            <p className="flex gap-2 text-white/60">
+              <X size={15} aria-label="Avoid" className="mt-[2px] shrink-0 text-[color:var(--seg-clay)]" />
+              <span>{r.avoid}</span>
             </p>
-            <p className="text-[var(--accent-light)]">
-              <span className="font-mono text-xs text-[rgb(var(--accent-rgb)/0.7)]">✓ </span>
-              {r.use}
+            <p className="flex gap-2 text-white">
+              <Check size={15} aria-label="Use" className="mt-[2px] shrink-0 text-[color:var(--seg-sage)]" />
+              <span>{r.use}</span>
             </p>
           </div>
         </div>
@@ -230,10 +209,10 @@ export function Figure({
         height={height}
         priority={priority}
         sizes="(max-width: 1024px) 100vw, 720px"
-        className="w-full rounded-2xl border border-zinc-800"
+        className="w-full rounded-[20px]"
       />
       {caption && (
-        <figcaption className="text-sm text-[var(--text-muted)]">{caption}</figcaption>
+        <figcaption className="t-label font-normal text-[color:var(--text-secondary)]">{caption}</figcaption>
       )}
     </figure>
   );
@@ -242,15 +221,12 @@ export function Figure({
 /** Small data table. Scrolls inside itself rather than widening the page. */
 export function Table({ head, rows }: { head: string[]; rows: string[][] }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-900/40">
-      <table className="w-full text-left text-sm">
+    <div className="overflow-x-auto rounded-[20px] bg-[var(--bg-elevated)]">
+      <table className="t-label w-full text-left font-normal">
         <thead>
-          <tr className="border-b border-zinc-800">
+          <tr className="border-b border-white/10">
             {head.map((h) => (
-              <th
-                key={h}
-                className="px-4 py-3 font-mono text-xs uppercase tracking-[0.15em] text-[var(--text-muted)]"
-              >
+              <th key={h} className="px-5 py-3.5 font-medium text-[color:var(--text-secondary)]">
                 {h}
               </th>
             ))}
@@ -258,14 +234,14 @@ export function Table({ head, rows }: { head: string[]; rows: string[][] }) {
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr key={i} className="border-b border-zinc-800/60 last:border-0">
+            <tr key={i} className="border-b border-white/[0.06] last:border-0">
               {row.map((cell, j) => (
                 <td
                   key={j}
                   className={
                     j === 0
-                      ? "whitespace-nowrap px-4 py-3 font-semibold text-zinc-200"
-                      : "px-4 py-3 text-zinc-400"
+                      ? "whitespace-nowrap px-5 py-3.5 font-medium text-white"
+                      : "px-5 py-3.5 text-white/72"
                   }
                 >
                   {cell}
@@ -288,13 +264,11 @@ export type FaqItem = { q: string; a: string };
 
 export function Faq({ items }: { items: FaqItem[] }) {
   return (
-    <div className="flex flex-col divide-y divide-zinc-800 border-y border-zinc-800">
+    <div className="flex flex-col divide-y divide-white/10 border-y border-white/10">
       {items.map((item) => (
-        <div key={item.q} className="py-5">
-          <h3 className="font-bold leading-snug text-zinc-100 md:text-lg">
-            {item.q}
-          </h3>
-          <p className="mt-2 leading-relaxed text-zinc-400">{item.a}</p>
+        <div key={item.q} className="py-6">
+          <h3 className="t-button text-[18px] text-white">{item.q}</h3>
+          <p className="t-body mt-2 text-white/72">{item.a}</p>
         </div>
       ))}
     </div>
@@ -308,19 +282,11 @@ export function StatRow({
   stats: { value: string; label: string }[];
 }) {
   return (
-    <div className="grid grid-cols-2 gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
       {stats.map((s) => (
-        <div key={s.label} className="flex flex-col items-center gap-1">
-          <span
-            className="text-2xl font-bold md:text-3xl"
-            style={{
-              color: ACCENT,
-              textShadow: "0 0 20px rgb(var(--accent-rgb) / calc(0.4 * var(--glow-strength)))",
-            }}
-          >
-            {s.value}
-          </span>
-          <span className="text-center text-xs text-[var(--text-muted)]">{s.label}</span>
+        <div key={s.label} className="flex flex-col gap-1 rounded-[20px] bg-[var(--bg-elevated)] p-5">
+          <span className="t-numeral text-[36px] leading-none tracking-[-0.03em] text-white">{s.value}</span>
+          <span className="t-label font-normal text-[color:var(--text-secondary)]">{s.label}</span>
         </div>
       ))}
     </div>
