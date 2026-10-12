@@ -14,7 +14,7 @@ colors:
   text-primary: "#FFFFFF"
   text-secondary: "#8E8E93"    # iOS gray; labels and meta on dark
   seg-paper: "#F2F2F0"         # light segment (hero)
-  seg-clay: "#D9734E"          # Plan PM / mobile
+  seg-clay: "#D9734E"          # mobile kind colour (Plan PM's stage is periwinkle #B4C6FB→#8197EE)
   seg-lilac: "#A98BEA"         # A.L.E.K.S.Y, SoundNest / desktop
   seg-butter: "#F4D46B"        # Linder, GitHub activity / hardware
   seg-sage: "#C6E7A2"          # About stats, NavigatorPM / web
@@ -121,8 +121,13 @@ white "Get in touch" pill on the right. No arrows in button labels.
   links between them. The counter follows the current featured count (01/05).
 - Featured set (chosen in the project picker): Plan PM, Until Done, Linder,
   A.L.E.K.S.Y v2, GCodec. Mobile apps use layout 03a, the rest use the stage layout.
-- Linder uses fresh captures of its TUXEDO OS, deepin and PureOS profiles, layered
-  as a deck on the lilac stage with perspective, reflections and shadows.
+- Linder's deck (Bazzite, TUXEDO OS, PureOS) is semi-interactive on the home page: pass, super
+  like and like swipe the front profile left, up or right, and it rejoins at the back, so the
+  distros loop. Nothing else is interactive.
+- Plan PM's stage is pastel periwinkle; two class cards, cut with transparent corners from the
+  dark timetable screenshot, lift off their own place on the phone screen.
+- Rows in long lists (/projects, the blog index) slide up from below one by one as they scroll
+  into view, instead of growing in place.
 - Every bento grows into place as it enters the viewport (96% → 100%, small rise, short
   stagger); devices slide up after their segment lands. Content stays visible without JS and
   under `prefers-reduced-motion`.
@@ -144,7 +149,12 @@ white "Get in touch" pill on the right. No arrows in button labels.
   filters by kind (web / mobile / desktop / hardware / game).
 - Kind colours: clay = mobile, sage = web, lilac = desktop, butter = hardware, paper = game
   (used for filter dots and highlight icons).
-- Every row on `/projects` has an **editorial cover** in the project's own palette: name with an
+- Covers carry **no text** (it is unreadable at thumbnail size): only a corner icon. The five
+  featured projects reuse their home composition, with its labels hidden and one light/grain layer
+  across the whole cover so there is a single uniform background.
+- **Every cover has a hover effect** — no exceptions. Featured covers zoom in and brighten; the
+  others move their pieces; every corner icon tilts.
+- Every other row on `/projects` has an **editorial cover** in the project's own palette: an
   icon, real screens tilted on a tinted ground and one project-specific detail. No feature-label
   chips: they read as filler. Data in `app/_v2/covers.ts`.
 - Cover hover (also on keyboard focus): phones fan apart, windows and photos straighten and lift,

@@ -90,7 +90,7 @@ export default function BlogIndex() {
         <ul className="flex flex-col gap-2">
           {listedPosts.map((post, i) => (
             <li key={post.slug}>
-              <Segment delay={Math.min(i, 6) * 0.04} className="bg-[var(--bg-elevated)]">
+              <Segment enter="slide" delay={Math.min(i, 3) * 0.08} className="bg-[var(--bg-elevated)]">
                 <Link
                   href={`/blog/${post.slug}`}
                   className="group grid gap-6 p-3 pb-7 transition-colors hover:bg-white/[0.03] md:grid-cols-[minmax(0,420px)_1fr] md:items-center md:pb-3 lg:gap-12"

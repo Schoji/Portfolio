@@ -271,9 +271,6 @@ html:not(.js) .v2 [data-reveal] {
   background: var(--bg-elevated);
   box-shadow: 0 15px 35px rgb(0 0 0 / 0.2);
 }
-.v2 .linder-card-back { transform: translate(8%, -8%) rotate(12deg) scale(0.94); }
-.v2 .linder-card-middle { transform: translate(-9%, -3%) rotate(-16deg) scale(0.97); }
-.v2 .linder-card-front { transform: rotateX(5deg) rotateY(-12deg) rotateZ(-5deg); }
 .v2 .linder-controls {
   position: absolute;
   bottom: 8%;
@@ -286,7 +283,7 @@ html:not(.js) .v2 [data-reveal] {
 }
 /* Width and height both come from --size, so flex never stretches a button
    into an oval. */
-.v2 .linder-controls span {
+.v2 .linder-controls :is(span, button) {
   --size: clamp(40px, 4vw, 58px);
   display: grid;
   flex: none;
@@ -301,6 +298,10 @@ html:not(.js) .v2 [data-reveal] {
 .v2 .linder-controls .linder-pass { color: #ec4899; }
 .v2 .linder-controls .linder-superlike { --size: clamp(36px, 3.5vw, 50px); color: #38bdf8; }
 .v2 .linder-controls .linder-like { color: #6ee7a0; }
+.v2 .linder-controls button { cursor: pointer; transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 200ms ease; }
+.v2 .linder-controls button:hover { transform: scale(1.1); background: #2c2c4e; }
+.v2 .linder-controls button:active { transform: scale(0.92); }
+.v2 .linder-controls button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 @media (max-width: 1023px) {
   .v2 .linder-deck { top: 23%; width: 56%; left: 22%; }
   .v2 .linder-controls { bottom: 5%; gap: 14px; }
@@ -512,10 +513,27 @@ html:not(.js) .v2 [data-reveal] {
 .v2 .soundnest-bars i { width: 1cqw; border-radius: 1cqw; background: #9c493b; }
 .v2 .thumbnail-sortra { background: radial-gradient(ellipse at 85% 100%, #8f91f1, transparent 65%), #d9d3ff; color: #352765; }
 .v2 .sortra-window { width: 86%; height: 82%; left: 7%; top: 26%; transform: rotate(-5deg); background: #191e25; }
-.v2 .sortra-files { right: 5%; bottom: 8%; display: flex; flex-direction: column; gap: 1.5cqw; padding: 3cqw; border-radius: 3cqw; background: #f7f5ff; transform: rotate(6deg); }
+.v2 .sortra-files { right: 5%; bottom: 8%; display: flex; flex-direction: column; gap: 2cqw; padding: 2.6cqw; border-radius: 3cqw; background: #f7f5ff; transform: rotate(6deg); }
 .v2 .sortra-files span { display: flex; align-items: center; gap: 2cqw; font-size: 3.4cqw; font-weight: 600; }
 .v2 .sortra-files svg { width: 4.5cqw; height: 4.5cqw; color: #6255ed; }
 .v2 .sortra-files span:last-child { color: #6255ed; }
+/* Featured covers: no text at thumbnail size (it is unreadable), and the
+   composition's own light and grain give way to the cover-wide layer. */
+.v2 .featured-cover :is(.shot-text, .shot-light, .shot-grain) { display: none; }
+/* Hover, like every other cover: the composition comes closer and the light
+   brightens. */
+.v2 .featured-cover-zoom { transform-origin: 50% 60%; transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1); }
+.v2 .group:is(:hover, :focus-visible) .featured-cover-zoom { transform: scale(1.04); }
+/* Each piece of the composition moves by its own --hx/--hy (set per Float):
+   cards and notifications spread out, the device lifts. */
+.v2 .featured-cover .shot-hover { transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1); }
+.v2 .group:is(:hover, :focus-visible) .featured-cover .shot-hover { transform: translate(var(--hx, 0), var(--hy, 0)); }
+.v2 .featured-cover-light { transition: opacity 700ms ease; opacity: 0.8; }
+.v2 .group:is(:hover, :focus-visible) .featured-cover-light { opacity: 1; }
+/* Every cover's corner icon tilts on hover (hand-built and editorial alike). */
+.v2 .project-thumbnail .thumbnail-brand svg { transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+.v2 .group:is(:hover, :focus-visible) .project-thumbnail .thumbnail-brand svg { transform: rotate(-12deg) scale(1.15); }
+
 /* Covers from covers.ts (editorial-cover.tsx). Every piece rests at
    (--x, --y, --r) and moves to (--hx, --hy, --hr, --s) while its row is
    hovered or focused. */
@@ -538,8 +556,6 @@ html:not(.js) .v2 [data-reveal] {
 .v2 .cover .thumbnail-brand { z-index: 4; }
 .v2 .cover-glow { position: absolute; inset: 0; opacity: 0.85; transform-origin: 88% 100%; transition: opacity 700ms ease, transform 900ms cubic-bezier(0.22, 1, 0.36, 1); }
 .v2 .group:is(:hover, :focus-visible) .cover-glow { opacity: 1; transform: scale(1.3); }
-.v2 .cover-icon { transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1); }
-.v2 .group:is(:hover, :focus-visible) .cover-icon { transform: rotate(-12deg) scale(1.15); }
 
 /* KanarRadar: rings pulse out from behind the phone, a beam sweeps. */
 .v2 .cover-radar { position: absolute; left: 52%; top: 52%; width: 0; height: 0; }
@@ -600,7 +616,7 @@ html:not(.js) .v2 [data-reveal] {
 .v2 .group:is(:hover, :focus-visible) .cover-brackets { transform: translateX(-4cqw); }
 
 @media (prefers-reduced-motion: reduce) {
-  .v2 .cover-piece, .v2 .cover-piece img, .v2 .cover-glow, .v2 .cover-icon, .v2 .cover-route path, .v2 .cover-flashlight, .v2 .cover-brackets { transition: none; }
+  .v2 .cover-piece, .v2 .cover-piece img, .v2 .cover-glow, .v2 .thumbnail-brand svg, .v2 .featured-cover-zoom, .v2 .featured-cover-light, .v2 .featured-cover .shot-hover, .v2 .cover-route path, .v2 .cover-flashlight, .v2 .cover-brackets { transition: none; }
   .v2 .cover-radar i, .v2 .cover-radar-beam, .v2 .cover-wave i, .v2 .cover-spark path, .v2 .cover-discord-avatar svg { animation: none; }
   .v2 .cover-radar i { opacity: 0.2; transform: scale(0.6); }
 }

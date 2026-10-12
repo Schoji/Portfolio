@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { stageBg, type Featured } from "../featured";
-import { featuredShots, InCover } from "./featured-shots";
+import { featuredShots, GRAIN, InCover, LIGHT } from "./featured-shots";
 
 /**
  * The home-page composition of a featured project, reused as its cover on
@@ -53,18 +53,22 @@ export function FeaturedCover({ p }: { p: Featured }) {
       className="project-thumbnail featured-cover relative aspect-[16/10] overflow-hidden rounded-[16px] lg:rounded-[20px]"
       style={stageBg(p)}
     >
+      {/* One light and one grain across the whole cover: the composition's own
+          stop at its square edge and showed as a second background. */}
+      <div className="featured-cover-light absolute inset-0" style={{ background: LIGHT }} />
       {Shot && (
         <div
           className="absolute top-0 left-0"
           style={{ width: d.w, height: d.h, transform: `translateX(${frame.x}px) scale(${frame.scale})`, transformOrigin: "0 0" }}
         >
-          <div className="relative h-full w-full">
+          <div className="featured-cover-zoom relative h-full w-full">
             <InCover.Provider value>
               <Shot p={p} />
             </InCover.Provider>
           </div>
         </div>
       )}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
     </div>
   );
 }

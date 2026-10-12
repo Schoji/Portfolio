@@ -204,7 +204,7 @@ function CursorArrow() {
 /* Cover                                                               */
 /* ------------------------------------------------------------------ */
 
-export default function EditorialCover({ c, title }: { c: Cover; title: string }) {
+export default function EditorialCover({ c }: { c: Cover }) {
   const Icon = c.icon;
   const behind = c.decor === "radar" || c.decor === "path" || c.decor === "wave" || c.decor === "brackets";
   return (
@@ -216,8 +216,7 @@ export default function EditorialCover({ c, title }: { c: Cover; title: string }
       <div className="cover-glow" style={{ background: `radial-gradient(ellipse at 88% 100%, ${c.ground[1]}, transparent 68%)` }} />
       {behind && <Decor c={c} />}
       <span className="thumbnail-brand">
-        <Icon className="cover-icon" />
-        {title}
+        <Icon />
       </span>
       {c.layout === "fan" && <Fan images={c.images} />}
       {c.layout === "stack" && <Stack images={c.images} />}

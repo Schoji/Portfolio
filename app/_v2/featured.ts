@@ -25,7 +25,7 @@ export function stageBg(p: Featured) {
   return { backgroundImage: `linear-gradient(180deg, ${p.color.from}, ${p.color.to})` };
 }
 
-const CLAY = { from: "#E68A68", to: "#CF6643", shadow: "rgb(64 20 5 / 0.28)" };
+const PERIWINKLE = { from: "#B4C6FB", to: "#8197EE", shadow: "rgb(22 34 92 / 0.3)" };
 const LILAC = { from: "#BEA6F3", to: "#9A78E2", shadow: "rgb(38 13 77 / 0.35)" };
 const BUTTER = { from: "#F7DE88", to: "#EDC24F", shadow: "rgb(77 58 0 / 0.3)" };
 
@@ -51,7 +51,7 @@ export const featured: Featured[] = [
     tags: ["Flutter", "Supabase", "Python", "Beautiful Soup"],
     layout: "mobile",
     visual: { kind: "phone", src: "/plan_pm/lectures.webp", alt: "Plan PM timetable for a Tuesday, four classes in dark mode" },
-    color: CLAY,
+    color: PERIWINKLE,
     links: linksFor("plan-pm"),
   },
   {

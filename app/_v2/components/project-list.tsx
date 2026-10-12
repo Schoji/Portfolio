@@ -62,12 +62,12 @@ export default function ProjectList({ projects }: { projects: ListedProject[] })
       <ul className="flex flex-col gap-2" aria-live="polite">
         {visible.map((p, i) => (
           <li key={p.slug}>
-            <Segment delay={Math.min(i, 6) * 0.04} className="bg-[var(--bg-elevated)]">
+            <Segment enter="slide" delay={Math.min(i, 3) * 0.08} className="bg-[var(--bg-elevated)]">
               <Link
                 href={`/projects/${p.slug}`}
                 className="group grid gap-6 p-3 pb-7 transition-colors hover:bg-white/[0.03] sm:grid-cols-[minmax(0,280px)_1fr] sm:items-center sm:pb-3 lg:grid-cols-[320px_1fr_auto] lg:gap-10"
               >
-                <ProjectThumbnail slug={p.slug} title={p.title} image={p.image} color={KIND[p.kind].color} />
+                <ProjectThumbnail slug={p.slug} image={p.image} color={KIND[p.kind].color} />
                 <div className="flex min-w-0 flex-col gap-2 px-4 sm:px-0">
                   <h2 className="font-display t-tile">{p.title}</h2>
                   <p className="t-body max-w-[620px] text-white/72">{p.summary}</p>

@@ -27,22 +27,38 @@ export function reveal(delay = 0) {
   } satisfies HTMLMotionProps<"div">;
 }
 
+/**
+ * Entrance for rows in a long list: each slides up from below on its own as
+ * the visitor scrolls to it, instead of growing in place.
+ */
+export function slideUp(delay = 0) {
+  return {
+    initial: { opacity: 0, y: 96 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.25 },
+    transition: { duration: 0.9, ease: EASE_OUT, delay },
+  } satisfies HTMLMotionProps<"div">;
+}
+
 /** A rounded colour block, the building unit of every screen. */
 export function Segment({
   className = "",
   style,
   delay = 0,
+  enter = "grow",
   children,
 }: {
   className?: string;
   style?: React.CSSProperties;
   delay?: number;
+  /** `grow` for screens (default), `slide` for rows of a list. */
+  enter?: "grow" | "slide";
   children?: ReactNode;
 }) {
   return (
     <motion.div
       data-reveal
-      {...reveal(delay)}
+      {...(enter === "slide" ? slideUp(delay) : reveal(delay))}
       style={style}
       className={`relative overflow-hidden rounded-[24px] lg:rounded-[32px] ${className}`}
     >

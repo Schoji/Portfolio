@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 import { Box, Heart, Mic, Star, X } from "lucide-react";
-import { createContext, useContext, type CSSProperties, type ReactNode } from "react";
+import { createContext, useContext, useState, type CSSProperties, type ReactNode } from "react";
 import type { Featured } from "../featured";
 import { EASE_OUT } from "./segment";
 
@@ -31,19 +31,19 @@ function useSizes(full: string) {
   return useContext(InCover) ? "200px" : full;
 }
 
-const GRAIN =
+/** Soft light from the top left. Exported so a cover can spread it edge to edge. */
+export const LIGHT = "radial-gradient(120% 80% at 15% 0%, rgb(255 255 255 / 0.32), transparent 60%)";
+
+export const GRAIN =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 /** Light from the top left, grain over the gradient, and the logo watermark. */
 function Atmosphere({ children }: { children?: ReactNode }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div
-        className="absolute inset-0"
-        style={{ background: "radial-gradient(120% 80% at 15% 0%, rgb(255 255 255 / 0.32), transparent 60%)" }}
-      />
+      <div className="shot-light absolute inset-0" style={{ background: LIGHT }} />
       {children}
-      <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
+      <div className="shot-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: GRAIN }} />
     </div>
   );
 }
@@ -55,6 +55,7 @@ function Float({
   rotate = 0,
   delay = 0.6,
   drift = 0,
+  hover = [0, -8],
   children,
 }: {
   className?: string;
@@ -63,6 +64,8 @@ function Float({
   delay?: number;
   /** Phase offset of the idle drift, in seconds. */
   drift?: number;
+  /** Where the piece moves (x, y in % of itself) while its /projects cover is hovered. */
+  hover?: [number, number];
   children: ReactNode;
 }) {
   return (
@@ -75,8 +78,10 @@ function Float({
       className={`absolute ${className}`}
       style={style}
     >
-      <div className="shot-drift" style={{ animationDelay: `${-drift}s` }}>
-        <div style={{ transform: `rotate(${rotate}deg)` }}>{children}</div>
+      <div className="shot-hover" style={{ "--hx": `${hover[0]}%`, "--hy": `${hover[1]}%` } as CSSProperties}>
+        <div className="shot-drift" style={{ animationDelay: `${-drift}s` }}>
+          <div style={{ transform: `rotate(${rotate}deg)` }}>{children}</div>
+        </div>
       </div>
     </motion.div>
   );
@@ -114,7 +119,9 @@ function Stage({ p, watermark, children }: { p: Featured; watermark: ReactNode; 
         className={`shot-composition absolute left-1/2 top-[10%] w-[68%] max-w-[380px] -translate-x-1/2 [container-type:inline-size] ${p.slug === "until-done" ? "shot-composition-reverse" : ""}`}
         style={{ aspectRatio: "380 / 826" }}
       >
-        <Phone p={p} />
+        <div className="shot-hover absolute inset-0" style={{ "--hx": "0%", "--hy": "-3%" } as CSSProperties}>
+          <Phone p={p} />
+        </div>
         {children}
       </motion.div>
     </>
@@ -148,12 +155,14 @@ function DolphinMark({ className = "", style }: { className?: string; style?: CS
 }
 
 const CLASSES = [
-  { src: "/v2/featured/plan-pm-lecture-1.webp", ratio: "1110 / 285", top: 47, left: -16, rotate: -4 },
-  { src: "/v2/featured/plan-pm-lecture-2.webp", ratio: "1110 / 285", top: 63, left: 13, rotate: 3 },
+  // Positions match the cards' own place on the screen (58.7% and 70.9% down,
+  // 4% in), nudged up and out so they read as lifted off the timetable.
+  { src: "/v2/featured/plan-pm-lecture-1.webp", ratio: "1104 / 279", top: 56, left: -9, rotate: -5 },
+  { src: "/v2/featured/plan-pm-lecture-2.webp", ratio: "1104 / 279", top: 70, left: 14, rotate: 4 },
 ];
 
 function PlanPmShot({ p }: { p: Featured }) {
-  const shadow = "rgb(64 20 5 / 0.45)";
+  const shadow = "rgb(22 34 92 / 0.4)";
   return (
     <Stage
       p={p}
@@ -165,7 +174,7 @@ function PlanPmShot({ p }: { p: Featured }) {
       }
     >
       {/* App icon, as it sits on the home screen. */}
-      <Float className="-right-[13%] top-[3%] w-[24cqw]" rotate={9} delay={0.55} drift={1.2}>
+      <Float className="-right-[13%] top-[3%] w-[24cqw]" rotate={9} delay={0.55} drift={1.2} hover={[18, -18]}>
         <div
           className="grid aspect-square place-items-center rounded-[22%] bg-white"
           style={{ boxShadow: `0 1px 0 rgb(255 255 255 / 0.6) inset, 0 20px 40px -8px ${shadow}` }}
@@ -178,13 +187,14 @@ function PlanPmShot({ p }: { p: Featured }) {
       {CLASSES.map((c, i) => (
         <Float
           key={c.src}
-          className="w-[100%]"
+          className="w-[96%]"
           style={{ top: `${c.top}%`, left: `${c.left}%`, zIndex: i + 1 }}
           rotate={c.rotate}
           delay={0.8 + i * 0.15}
           drift={i * 1.3}
+          hover={i === 0 ? [-12, -30] : [12, 30]}
         >
-          <Crop src={c.src} ratio={c.ratio} radius="5.5cqw" shadow={shadow} />
+          <Crop src={c.src} ratio={c.ratio} radius="5.2cqw" shadow={shadow} />
         </Float>
       ))}
     </Stage>
@@ -221,9 +231,11 @@ function Check({ className = "", style, color }: { className?: string; style?: C
 function Notification({ title, body, time }: { title: string; body: string; time: string }) {
   return (
     <div
-      className="flex items-start gap-[3.4cqw] rounded-[6cqw] border border-white/10 p-[3.8cqw] text-white backdrop-blur-xl backdrop-saturate-150"
+      className="flex items-start gap-[3.4cqw] rounded-[6cqw] border border-white/10 p-[3.8cqw] text-white"
       style={{
-        background: "rgb(30 30 32 / 0.78)",
+        // Solid rather than backdrop-blurred: the blur drew vertical stripes
+        // while the cards drift and scale.
+        background: "rgb(30 30 32 / 0.95)",
         boxShadow: "0 1px 0 rgb(255 255 255 / 0.12) inset, 0 24px 48px -10px rgb(77 58 0 / 0.5)",
       }}
     >
@@ -268,6 +280,7 @@ function UntilDoneShot({ p }: { p: Featured }) {
           rotate={[-3, 2.5, -1.5][i]}
           delay={0.6 + i * 0.35}
           drift={i * 1.3}
+          hover={([[-10, -40], [10, 0], [-8, 40]] as [number, number][])[i]}
         >
           <Notification {...n} />
         </Float>
@@ -276,9 +289,55 @@ function UntilDoneShot({ p }: { p: Featured }) {
   );
 }
 
+type Swipe = "pass" | "like" | "superlike";
+
+// Where each card sits in the deck, front first.
+const DECK_SLOTS = [
+  { x: "0%", y: "0%", rotate: -5, rotateX: 5, rotateY: -12, scale: 1, zIndex: 3 },
+  { x: "-9%", y: "-3%", rotate: -16, rotateX: 0, rotateY: 0, scale: 0.97, zIndex: 2 },
+  { x: "8%", y: "-8%", rotate: 12, rotateX: 0, rotateY: 0, scale: 0.94, zIndex: 1 },
+];
+
+// Where a card flies when swiped: left for pass, right for like, up for a super like.
+const SWIPE_OUT: Record<Swipe, { x: string; y: string; rotate: number }> = {
+  pass: { x: "-130%", y: "8%", rotate: -28 },
+  like: { x: "130%", y: "8%", rotate: 28 },
+  superlike: { x: "0%", y: "-140%", rotate: 0 },
+};
+
+/**
+ * Linder's deck, semi-interactive on the home page: the three buttons swipe
+ * the front profile away (left, right or up) and it rejoins at the back, so
+ * the distros loop. On a /projects cover the deck is inside a link, so the
+ * buttons are drawn but do nothing there.
+ */
 function LinderShot({ p }: { p: Featured }) {
+  const inCover = useContext(InCover);
   const back = useSizes("(min-width: 1024px) 440px, 65vw");
   const front = useSizes("(min-width: 1600px) 480px, (min-width: 1024px) 440px, 65vw");
+  const profiles = [
+    { src: p.visual.src, alt: p.visual.alt },
+    { src: "/v2/linder/tuxedo.webp", alt: "Linder dating profile for TUXEDO OS" },
+    { src: "/v2/linder/pureos.webp", alt: "Linder dating profile for PureOS" },
+  ];
+  const [top, setTop] = useState(0);
+  const [swipe, setSwipe] = useState<Swipe | null>(null);
+
+  const go = (kind: Swipe) => {
+    if (!swipe) setSwipe(kind);
+  };
+  const landed = () => {
+    if (!swipe) return;
+    setSwipe(null);
+    setTop((t) => (t + 1) % profiles.length);
+  };
+
+  const controls: { kind: Swipe; label: string; className: string; icon: ReactNode }[] = [
+    { kind: "pass", label: "Pass", className: "linder-pass", icon: <X strokeWidth={2.5} /> },
+    { kind: "superlike", label: "Super like", className: "linder-superlike", icon: <Star className="fill-current" strokeWidth={2.5} /> },
+    { kind: "like", label: "Like", className: "linder-like", icon: <Heart strokeWidth={2.5} /> },
+  ];
+
   return (
     <>
       <Atmosphere>
@@ -286,29 +345,51 @@ function LinderShot({ p }: { p: Featured }) {
       </Atmosphere>
       <div aria-hidden className="absolute left-[8%] top-[7%] flex items-center gap-3 text-black">
         <Image src="/v2/linder/icon.svg" alt="" width={40} height={40} className="rounded-xl" />
-        <span className="font-display text-3xl">Linder</span>
+        <span className="shot-text font-display text-3xl">Linder</span>
       </div>
-      <motion.div
-        data-reveal
-        initial={{ opacity: 0, y: 60 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 1, ease: EASE_OUT, delay: 0.25 }}
-        className="linder-deck"
-      >
-        <div aria-hidden className="linder-card linder-card-back">
-          <Image src="/v2/linder/pureos.webp" alt="" fill sizes={back} />
-        </div>
-        <div aria-hidden className="linder-card linder-card-middle">
-          <Image src="/v2/linder/tuxedo.webp" alt="" fill sizes={back} />
-        </div>
-        <div className="linder-card linder-card-front" style={{ boxShadow: `0 35px 65px -15px ${p.color.shadow}` }}>
-          <Image src={p.visual.src} alt={p.visual.alt} fill sizes={front} />
-          <div aria-hidden className="shot-glass" />
-        </div>
-      </motion.div>
-      <div aria-hidden className="linder-controls">
-        <span className="linder-pass"><X strokeWidth={2.5} /></span><span className="linder-superlike"><Star className="fill-current" strokeWidth={2.5} /></span><span className="linder-like"><Heart strokeWidth={2.5} /></span>
+      <div className="shot-hover absolute inset-0" style={{ "--hx": "0%", "--hy": "-5%" } as CSSProperties}>
+        <motion.div
+          data-reveal
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1, ease: EASE_OUT, delay: 0.25 }}
+          className="linder-deck"
+        >
+          {profiles.map((profile, i) => {
+            const slot = (i - top + profiles.length) % profiles.length;
+            const leaving = slot === 0 && swipe !== null;
+            const pose = leaving ? { ...DECK_SLOTS[0], ...SWIPE_OUT[swipe], opacity: 0, zIndex: 4 } : { ...DECK_SLOTS[slot], opacity: 1 };
+            return (
+              <motion.div
+                key={profile.src}
+                aria-hidden={slot !== 0}
+                className="linder-card"
+                initial={false}
+                animate={pose}
+                transition={{ duration: leaving ? 0.42 : 0.6, ease: leaving ? [0.4, 0, 1, 1] : EASE_OUT }}
+                onAnimationComplete={leaving ? landed : undefined}
+                style={{ zIndex: pose.zIndex, boxShadow: slot === 0 ? `0 35px 65px -15px ${p.color.shadow}` : undefined }}
+              >
+                <Image src={profile.src} alt={slot === 0 ? profile.alt : ""} fill sizes={slot === 0 ? front : back} />
+                {slot === 0 && <div aria-hidden className="shot-glass" />}
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+      <div className="linder-controls" aria-hidden={inCover || undefined}>
+        {controls.map((c) =>
+          inCover ? (
+            <span key={c.kind} className={c.className}>
+              {c.icon}
+            </span>
+          ) : (
+            <button key={c.kind} type="button" aria-label={c.label} className={c.className} onClick={() => go(c.kind)}>
+              {c.icon}
+            </button>
+          ),
+        )}
       </div>
     </>
   );
@@ -321,7 +402,7 @@ function GcodecShot({ p }: { p: Featured }) {
       <div aria-hidden className="gcodec-grid" />
       <div aria-hidden className="absolute left-[8%] top-[7%] flex items-center gap-3 text-white">
         <span className="grid size-10 place-items-center rounded-xl border border-white/20 bg-black/90 text-[var(--seg-sage)]"><Box size={24} strokeWidth={1.5} /></span>
-        <span className="font-display text-3xl">GCodec</span>
+        <span className="shot-text font-display text-3xl">GCodec</span>
       </div>
       <motion.div
         data-reveal
@@ -338,19 +419,21 @@ function GcodecShot({ p }: { p: Featured }) {
           <div aria-hidden className="gcodec-floor" />
         </div>
       </motion.div>
-      <motion.div
-        data-reveal
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 1, ease: EASE_OUT, delay: 0.4 }}
-        className="gcodec-benchy"
-      >
-        <div className="shot-drift relative h-full w-full">
-          <Image src="/v2/gcodec/benchy-toolpaths-v2.webp" alt="Benchy floating above the viewer, rendered from its original G-code toolpaths" fill unoptimized sizes="(min-width: 1024px) 700px, 90vw" className="object-contain" />
-        </div>
-      </motion.div>
-      <div className="gcodec-legend">
+      <div className="shot-hover absolute inset-0" style={{ "--hx": "0%", "--hy": "-7%" } as CSSProperties}>
+        <motion.div
+          data-reveal
+          initial={{ opacity: 0, y: 80 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1, ease: EASE_OUT, delay: 0.4 }}
+          className="gcodec-benchy"
+        >
+          <div className="shot-drift relative h-full w-full">
+            <Image src="/v2/gcodec/benchy-toolpaths-v2.webp" alt="Benchy floating above the viewer, rendered from its original G-code toolpaths" fill unoptimized sizes="(min-width: 1024px) 700px, 90vw" className="object-contain" />
+          </div>
+        </motion.div>
+      </div>
+      <div className="shot-text gcodec-legend">
         <span><i className="gcodec-extrusion" />Extrusion</span>
         <span><i className="gcodec-travel" />Travel</span>
         <span><i className="gcodec-retraction" />Retraction</span>
@@ -401,26 +484,26 @@ function AleksyShot({ p }: { p: Featured }) {
     <>
       <Atmosphere />
       <div aria-hidden className="absolute bottom-[22%] left-[14%] h-[8%] w-[72%] rounded-[50%] bg-black/20 blur-2xl" />
-      <Float className="inset-[4%]" delay={0.2}>
+      <Float className="inset-[4%]" delay={0.2} hover={[0, -3]}>
         <div className="relative aspect-square w-full" style={{ filter: `drop-shadow(0 28px 24px ${p.color.shadow})` }}>
           <Image src={p.visual.src} alt={p.visual.alt} fill sizes={sizes} className="object-contain" />
         </div>
       </Float>
       <div className="absolute inset-0" style={{ containerType: "inline-size" }}>
-        <Float className="left-[7%] top-[12%] w-[43%]" rotate={-7} delay={0.5} drift={1}>
+        <Float className="shot-text left-[7%] top-[12%] w-[43%]" rotate={-7} delay={0.5} drift={1}>
           <div className="aleksy-bubble aleksy-bubble-light">
             <span className="aleksy-caption">WAKE WORD</span>
             <span className="aleksy-phrase">“Hey, Aleksy”</span>
           </div>
         </Float>
-        <Float className="right-[6%] top-[20%] w-[32%]" rotate={9} delay={0.7} drift={3}>
+        <Float className="right-[6%] top-[20%] w-[32%]" rotate={9} delay={0.7} drift={3} hover={[16, -16]}>
           <div className="aleksy-oled">
             <AleksyFace />
           </div>
         </Float>
-        <Float className="bottom-[22%] left-[6%] w-[47%]" rotate={-5} delay={0.8} drift={2}>
+        <Float className="bottom-[22%] left-[6%] w-[47%]" rotate={-5} delay={0.8} drift={2} hover={[-14, 14]}>
           <div className="aleksy-bubble aleksy-bubble-dark">
-            <span className="aleksy-caption flex items-center gap-2"><Mic size={14} aria-hidden /> LISTENING</span>
+            <span className="shot-text aleksy-caption flex items-center gap-2"><Mic size={14} aria-hidden /> LISTENING</span>
             <div className="aleksy-wave" aria-hidden>
               {[20, 35, 60, 42, 78, 100, 68, 40, 82, 58, 100, 72, 45, 65, 90, 52, 30, 48, 20].map((height, i) => (
                 <i key={i} style={{ height: `${height}%` }} />
@@ -428,7 +511,7 @@ function AleksyShot({ p }: { p: Featured }) {
             </div>
           </div>
         </Float>
-        <Float className="bottom-[9%] right-[6%] w-[49%]" rotate={6} delay={1} drift={4}>
+        <Float className="shot-text bottom-[9%] right-[6%] w-[49%]" rotate={6} delay={1} drift={4}>
           <div className="aleksy-bubble aleksy-bubble-light">
             <span className="aleksy-caption">VOICE RESPONSE</span>
             <span className="aleksy-phrase">“One moment…”</span>
