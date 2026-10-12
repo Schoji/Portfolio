@@ -30,10 +30,6 @@ export default function Hero() {
             <Button href="#work" variant="inverse">
               See my work
             </Button>
-            {/* TODO: point at the CV PDF once it exists. */}
-            <Button href="#" variant="secondary-light">
-              Download CV
-            </Button>
           </SegmentFooter>
         </Segment>
 

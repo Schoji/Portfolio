@@ -107,7 +107,7 @@ white "Get in touch" pill on the right. No arrows in button labels.
 
 | # | Screen | Layout | Status |
 |---|--------|--------|--------|
-| 01 | Hero | Three bentos: paper segment ("Hi, I'm Piotr." + lead, footer: See my work / Download CV) + smaller portrait (top right) + dark facts tile (bottom right: Szczecin, Politechnika Morska, project count) | Built (changed in code: the full-height portrait was too dominant) |
+| 01 | Hero | Three bentos: paper segment ("Hi, I'm Piotr." + lead, footer: See my work; Download CV removed until there is a CV to share) + smaller portrait (top right) + dark facts tile (bottom right: Szczecin, Politechnika Morska, project count) | Built (changed in code: the full-height portrait was too dominant) |
 | 02 | About | Dark segment (quote + lead, footer "Tools I reach for first" tags) + sage segment ("18 projects since 2022", breakdown 7 web / 4 mobile / 3 desktop / 3 hardware / 1 game) | Approved |
 | 03a | Project — mobile | Clay segment with one phone bleeding off the bottom (left, 500 px) + dark info segment (tabs 01/05, title, lead, meta, footer tags + buttons) | Approved — Plan PM stays in this layout |
 | 03b | Project — landscape (desktop/web) | Full-width coloured "stage" with one large window bleeding off the bottom + dark info bar below (title 64 px + meta + tags left, lead + buttons right) | Mostly OK, "something is slightly off" — revisit |
@@ -201,4 +201,5 @@ white "Get in touch" pill on the right. No arrows in button labels.
   lecturer's name (the expanded class card). The two floating class cards on the home screen are
   crops of `public/plan_pm/lectures.webp`.
 - Other project images come from `public/` (convert `.webp` to PNG for Figma).
-- "Download CV" requires a CV PDF that does not exist yet.
+- "Download CV" was removed from the hero: there is no public CV yet. Add it back only with a
+  PDF that is safe to publish (no home address or phone number).
