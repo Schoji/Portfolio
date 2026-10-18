@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local editor/agent config
+.claude/
+
+# review screenshots (site images live in public/)
+/screenshots/
