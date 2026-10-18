@@ -7,6 +7,7 @@ import { Segment } from "./segment";
 import { TechTag } from "./ui";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { KIND } from "../kinds";
+import { trackProjectOpened } from "../analytics";
 
 /** Plain data only: the full Project holds icon components, which cannot cross into a client tree. */
 export type ListedProject = {
@@ -65,6 +66,7 @@ export default function ProjectList({ projects }: { projects: ListedProject[] })
             <Segment enter="slide" delay={Math.min(i, 3) * 0.08} className="bg-[var(--bg-elevated)]">
               <Link
                 href={`/projects/${p.slug}`}
+                onClick={() => trackProjectOpened(p.slug, "list")}
                 className="group grid gap-6 p-3 pb-7 transition-colors hover:bg-white/[0.03] sm:grid-cols-[minmax(0,280px)_1fr] sm:items-center sm:pb-3 lg:grid-cols-[320px_1fr_auto] lg:gap-10"
               >
                 <ProjectThumbnail slug={p.slug} image={p.image} color={KIND[p.kind].color} />

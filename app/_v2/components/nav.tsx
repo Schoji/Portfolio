@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { trackNav } from "../analytics";
 
 const LINKS = [
   { id: "work", label: "Work", href: "/#work" },
@@ -92,7 +93,7 @@ export default function Nav({ active: fixed }: { active?: NavId | null } = {}) {
                     <Link
                       href={l.href}
                       className={cls}
-                      onClick={() => setOpen(false)}
+                      onClick={() => { setOpen(false); trackNav(l.id); }}
                       aria-current={isActive ? "true" : undefined}
                     >
                       {l.label}
@@ -105,7 +106,7 @@ export default function Nav({ active: fixed }: { active?: NavId | null } = {}) {
         </div>
         <Link
           href="/#contact"
-          onClick={() => setOpen(false)}
+          onClick={() => { setOpen(false); trackNav("get-in-touch"); }}
           className="t-nav pointer-events-auto rounded-full bg-white px-[22px] py-3.5 text-black transition-colors hover:bg-white/90"
         >
           Get in touch

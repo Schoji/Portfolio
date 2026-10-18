@@ -8,6 +8,7 @@ import type { ComponentType } from "react";
 import { SITE_EMAIL } from "../../site";
 import { Button, SegmentFooter } from "./ui";
 import { Segment, reveal } from "./segment";
+import { trackContact } from "../analytics";
 
 type Channel = {
   name: string;
@@ -73,10 +74,10 @@ export default function Contact() {
           <SegmentFooter tone="light" className="flex flex-col gap-5 border-black/14 pt-7">
             <p className="font-display t-title break-all sm:break-normal">{SITE_EMAIL}</p>
             <div className="flex flex-wrap gap-2.5">
-              <Button href={`mailto:${SITE_EMAIL}`} variant="inverse">
+              <Button href={`mailto:${SITE_EMAIL}`} variant="inverse" onClick={() => trackContact("email", "mailto")}>
                 Write an email
               </Button>
-              <Button onClick={() => copy("email", SITE_EMAIL)} variant="secondary-light">
+              <Button onClick={() => { copy("email", SITE_EMAIL); trackContact("email", "copy"); }} variant="secondary-light">
                 <span aria-live="polite">{copied === "email" ? "Copied" : "Copy address"}</span>
               </Button>
             </div>
@@ -111,11 +112,21 @@ export default function Contact() {
             return (
               <motion.li data-reveal key={c.name} {...reveal(0.08 + i * 0.06)} style={{ "--brand": c.brand } as React.CSSProperties}>
                 {c.url ? (
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" className={cls}>
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackContact(c.name.toLowerCase(), "open")}
+                    className={cls}
+                  >
                     {body}
                   </a>
                 ) : (
-                  <button type="button" onClick={() => copy(c.name, c.handle)} className={`${cls} w-full`}>
+                  <button
+                    type="button"
+                    onClick={() => { copy(c.name, c.handle); trackContact(c.name.toLowerCase(), "copy"); }}
+                    className={`${cls} w-full`}
+                  >
                     {body}
                   </button>
                 )}

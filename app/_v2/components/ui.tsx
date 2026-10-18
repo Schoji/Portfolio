@@ -67,6 +67,7 @@ export function Button({
         href={href}
         className={cls}
         download={download || undefined}
+        onClick={onClick}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {inner}

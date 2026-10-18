@@ -10,6 +10,7 @@ import { featured, stageBg, type Featured } from "../featured";
 import { featuredShots } from "./featured-shots";
 import { Rise, Segment } from "./segment";
 import { BuiltWith, Button, SegmentFooter } from "./ui";
+import { trackProjectLink, trackProjectOpened, trackSeeAllProjects } from "../analytics";
 
 const N = featured.length;
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -116,27 +117,28 @@ function Actions({ p }: { p: Featured }) {
     <div className="flex flex-wrap gap-2">
       <Link
         href={`/projects/${p.slug}`}
+        onClick={() => trackProjectOpened(p.slug, "featured")}
         className="t-button inline-flex h-[52px] items-center rounded-full bg-white px-[26px] text-black transition-colors hover:bg-white/90"
       >
         Check it out
       </Link>
       {p.links.github && (
-        <Button href={p.links.github} external variant="secondary" icon={SiGithub}>
+        <Button href={p.links.github} external variant="secondary" icon={SiGithub} onClick={() => trackProjectLink(p.slug, "github")}>
           GitHub
         </Button>
       )}
       {p.links.appStore && (
-        <Button href={p.links.appStore} external variant="secondary" icon={SiApple}>
+        <Button href={p.links.appStore} external variant="secondary" icon={SiApple} onClick={() => trackProjectLink(p.slug, "app-store")}>
           App Store
         </Button>
       )}
       {p.links.googlePlay && (
-        <Button href={p.links.googlePlay} external variant="secondary" icon={SiGoogleplay}>
+        <Button href={p.links.googlePlay} external variant="secondary" icon={SiGoogleplay} onClick={() => trackProjectLink(p.slug, "google-play")}>
           Google Play
         </Button>
       )}
       {p.links.site && (
-        <Button href={p.links.site} external variant="secondary" icon={Globe}>
+        <Button href={p.links.site} external variant="secondary" icon={Globe} onClick={() => trackProjectLink(p.slug, "live-site")}>
           Live site
         </Button>
       )}
@@ -218,6 +220,7 @@ export default function Projects() {
           </div>
           <Link
             href="/projects"
+            onClick={() => trackSeeAllProjects()}
             className="t-button inline-flex h-[52px] shrink-0 items-center self-start rounded-full bg-white px-6 text-black transition-colors hover:bg-white/90 sm:self-auto"
           >
             See all {projects.length} projects
