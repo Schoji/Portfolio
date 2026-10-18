@@ -114,6 +114,13 @@ export default function RootLayout({
             __html: `document.documentElement.classList.add("js")`,
           }}
         />
+        {process.env.NODE_ENV === "development" && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.naturalWidth;c.height=i.naturalHeight;var x=c.getContext("2d");x.drawImage(i,0,0);x.globalCompositeOperation="source-atop";x.globalAlpha=0.65;x.fillStyle="#ff2d2d";x.fillRect(0,0,c.width,c.height);var l=document.querySelector("link[rel='icon']");if(l){l.href=c.toDataURL("image/png");}};i.src="/icon.png";})();`,
+            }}
+          />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

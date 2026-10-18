@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { trackNav } from "../analytics";
 
+/** Red-tinted topbar so a local dev build is unmistakable next to production. */
+const DEV = process.env.NODE_ENV === "development";
+
 const LINKS = [
   { id: "work", label: "Work", href: "/#work" },
   { id: "about", label: "About", href: "/#about" },
@@ -57,7 +60,7 @@ export default function Nav({ active: fixed }: { active?: NavId | null } = {}) {
   return (
     // A black band behind the bar that fades out below it: segments scroll under
     // the band instead of meeting the pills edge to edge.
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 bg-black after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-gradient-to-b after:from-black after:to-transparent">
+    <header className={`pointer-events-none fixed inset-x-0 top-0 z-50 after:absolute after:inset-x-0 after:top-full after:h-6 after:bg-gradient-to-b after:to-transparent ${DEV ? "bg-red-600 after:from-red-600" : "bg-black after:from-black"}`}>
       <div className="container-v2 flex items-center justify-between gap-3 pt-4 pb-3">
         <div className="pointer-events-auto flex items-center gap-2">
           <Link
