@@ -971,4 +971,60 @@ export const projects: Project[] = [
     buttonText: "Visit knipm.edu.pl",
     buttonURL: "https://knipm.edu.pl",
   },
+  {
+    slug: "filharmonia",
+    kind: "web",
+    imageSource: [
+      "/filharmonia/home.webp",
+      "/filharmonia/events.webp",
+      "/filharmonia/repertoire.webp",
+      "/filharmonia/concert.webp",
+      "/filharmonia/choose.webp",
+      "/filharmonia/assistant.webp",
+    ],
+    title: "Filharmonia Szczecin",
+    seoTitle: "Filharmonia Szczecin — Philharmonic Website Concept",
+    seoDescription:
+      "A concept redesign of the Szczecin Philharmonic website: a six-step guide with a filtered repertoire, an AI assistant and WCAG 2.2 AA accessibility.",
+    tagline: "The Szczecin Philharmonic reimagined as a guide, not a notice board.",
+    year: "2026",
+    status: "Hackathon prototype — WUD 2026",
+    role: "Team of 6 — UI/UX in Figma & frontend, later full-stack",
+    description:
+      "A concept for a new website of the Szczecin Philharmonic, built at the WUD 2026 hackathon. Instead of a list of announcements, it is a guide: six steps from discovering a concert to buying a ticket and getting there — with a repertoire you can filter by mood, an AI assistant grounded in the Philharmonic's own data, and a mobile-first layout for the 74% of visitors who arrive on a phone.",
+    story:
+      "WUD 2026 asked one question: how does a visitor decide, in a few seconds, that they want to be there? Our answer was a six-step journey — discover, choose, plan, buy, arrive, return — because 74% of the Philharmonic's traffic already comes from phones, and nobody opens a site to read announcements. I started on the UI/UX in Figma and the frontend, then ended up doing full-stack anyway: the multilingual interface, the accessibility pass, the AI assistant and the event-data wiring. The site is monochrome — white, black and gold drawn from the building itself — and built to WCAG 2.2 AA from the components up.",
+    features: [
+      {
+        title: "Six-Step Journey",
+        subtitle: "From 'I want to be there' to a ticket, no prior knowledge needed",
+        icon: Route,
+      },
+      {
+        title: "Repertoire with Filters",
+        subtitle: "Mood, audience, place, duration and concert cycle",
+        icon: CalendarDays,
+      },
+      {
+        title: "AI Assistant",
+        subtitle: "Grounded in Philharmonic data only, answers with event cards",
+        icon: Mic,
+      },
+      {
+        title: "Help Me Choose",
+        subtitle: "Five questions, then 3–5 tailored concert proposals",
+        icon: Sparkles,
+      },
+      {
+        title: "Multilingual & WCAG 2.2 AA",
+        subtitle: "Polish, English and German; accessibility built into the components",
+        icon: Accessibility,
+      },
+    ],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Supabase", "PostHog"],
+    invertOrder: false,
+    phone: false,
+    buttonText: "GitHub",
+    buttonURL: "https://github.com/DudeQ7/wud2026",
+  },
 ];

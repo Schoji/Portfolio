@@ -4,6 +4,7 @@ import {
   Cpu,
   Ghost,
   Landmark,
+  Music,
   Navigation,
   NotebookPen,
   Radar,
@@ -128,5 +129,13 @@ export const COVERS: Record<string, Cover> = {
     layout: "stack",
     images: ["/kni_site/1.webp", "/kni_site/2.webp", "/kni_site/3.webp"],
     decor: "brackets",
+  },
+  filharmonia: {
+    ground: ["#141414", "#8a6d2f"],
+    ink: "#ffffff",
+    accent: "#ad9450",
+    icon: Music,
+    layout: "stack",
+    images: ["/filharmonia/home.webp", "/filharmonia/repertoire.webp", "/filharmonia/concert.webp"],
   },
 };
