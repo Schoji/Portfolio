@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { GalaxyBackdrop } from "./components/galaxy-backdrop";
 import { MotionPreferences } from "./components/segment";
 import "./v2.css";
 
@@ -37,7 +38,11 @@ export const darkViewport: Viewport = { colorScheme: "dark", themeColor: "#00000
 export default function Shell({ children }: { children: ReactNode }) {
   return (
     <div className={`v2 ${bricolage.variable} ${geist.variable} ${geistMono.variable} min-h-screen`}>
-      <MotionPreferences>{children}</MotionPreferences>
+      <GalaxyBackdrop />
+      {/* Positioned so it paints above the fixed backdrop. */}
+      <div className="relative">
+        <MotionPreferences>{children}</MotionPreferences>
+      </div>
     </div>
   );
 }
