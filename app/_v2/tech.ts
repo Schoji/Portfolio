@@ -1,6 +1,7 @@
 import type { IconType } from "react-icons";
 import {
   SiArduino,
+  SiAutodesk,
   SiBlender,
   SiC,
   SiCmake,
@@ -38,6 +39,7 @@ import {
   SiSocketdotio,
   SiSqlalchemy,
   SiSqlite,
+  SiStmicroelectronics,
   SiSupabase,
   SiTailwindcss,
   SiTauri,
@@ -53,6 +55,7 @@ import {
  */
 const TECH: Record<string, { icon?: IconType; color: string }> = {
   "Arduino IDE": { icon: SiArduino, color: "#00979D" },
+  "Autodesk Fusion": { icon: SiAutodesk, color: "#FFFFFF" },
   Blender: { icon: SiBlender, color: "#F5792A" },
   C: { icon: SiC, color: "#8CA6D9" },
   "C++ Embedded": { icon: SiCplusplus, color: "#6FA8E0" },
@@ -87,6 +90,7 @@ const TECH: Record<string, { icon?: IconType; color: string }> = {
   PostgreSQL: { icon: SiPostgresql, color: "#6CA0D8" },
   pgvector: { icon: SiPostgresql, color: "#6CA0D8" },
   Python: { icon: SiPython, color: "#FFD43B" },
+  "Raspberry Pi": { icon: SiRaspberrypi, color: "#E5486E" },
   "Raspberry Pi 5": { icon: SiRaspberrypi, color: "#E5486E" },
   React: { icon: SiReact, color: "#61DAFB" },
   RxDart: { icon: SiReactivex, color: "#E83E8C" },
@@ -94,6 +98,7 @@ const TECH: Record<string, { icon?: IconType; color: string }> = {
   WebSockets: { icon: SiSocketdotio, color: "#FFFFFF" },
   SQLAlchemy: { icon: SiSqlalchemy, color: "#E8735B" },
   SQLite: { icon: SiSqlite, color: "#5EB4E8" },
+  STM32: { icon: SiStmicroelectronics, color: "#3CB4E6" },
   Supabase: { icon: SiSupabase, color: "#3ECF8E" },
   Tailwind: { icon: SiTailwindcss, color: "#38BDF8" },
   "Tailwind CSS": { icon: SiTailwindcss, color: "#38BDF8" },

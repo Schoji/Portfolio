@@ -9,6 +9,7 @@ import {
   NotebookPen,
   Radar,
   Route,
+  ScanEye,
   TrendingUp,
   Users,
 } from "lucide-react";
@@ -137,5 +138,13 @@ export const COVERS: Record<string, Cover> = {
     icon: Music,
     layout: "stack",
     images: ["/filharmonia/home.webp", "/filharmonia/repertoire.webp", "/filharmonia/concert.webp"],
+  },
+  "world-of-drones": {
+    ground: ["#1a1410", "#e8622c"],
+    ink: "#ffffff",
+    accent: "#f07a3e",
+    icon: ScanEye,
+    layout: "polaroids",
+    images: ["/world_of_drones/drone.webp", "/world_of_drones/dashboard.webp", "/world_of_drones/team-photo.webp"],
   },
 };
